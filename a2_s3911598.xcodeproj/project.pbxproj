@@ -7,11 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		81B7E1AB2CAB9119001BA47F /* Auth0 in Frameworks */ = {isa = PBXBuildFile; productRef = 81B7E1AA2CAB9119001BA47F /* Auth0 */; };
+		81F7C4DB2CAB67C6003E366F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81F7C4DA2CAB67C6003E366F /* Assets.xcassets */; };
+		81F7C4DE2CAB808C003E366F /* Auth0.plist in Resources */ = {isa = PBXBuildFile; fileRef = 81F7C4DD2CAB808B003E366F /* Auth0.plist */; };
+		81F7C4E02CAB8448003E366F /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7C4DF2CAB8448003E366F /* Profile.swift */; };
 		B081B1022CAA923800508E5D /* TaskRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B081B1012CAA923800508E5D /* TaskRepository.swift */; };
 		B081B1062CAA92A700508E5D /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B081B1052CAA92A700508E5D /* DataManager.swift */; };
 		B081B1082CAA92CE00508E5D /* MoodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B081B1072CAA92CE00508E5D /* MoodView.swift */; };
 		B081B10A2CAA938000508E5D /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B081B1092CAA938000508E5D /* DateFormatter.swift */; };
-		B081B10C2CAA94FF00508E5D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B081B10B2CAA94FF00508E5D /* Assets.xcassets */; };
 		B0CF7F1A2CAA870D006D1087 /* a2_s3911598App.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CF7F192CAA870D006D1087 /* a2_s3911598App.swift */; };
 		B0CF7F1C2CAA870D006D1087 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CF7F1B2CAA870D006D1087 /* ContentView.swift */; };
 		B0CF7F1E2CAA870D006D1087 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CF7F1D2CAA870D006D1087 /* Item.swift */; };
@@ -41,11 +44,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		81F7C4DA2CAB67C6003E366F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../../IPSE/WEEK6/L6_code/Example1/Landmarks/Assets.xcassets; sourceTree = "<group>"; };
+		81F7C4DD2CAB808B003E366F /* Auth0.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Auth0.plist; sourceTree = "<group>"; };
+		81F7C4DF2CAB8448003E366F /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		B081B1012CAA923800508E5D /* TaskRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRepository.swift; sourceTree = "<group>"; };
 		B081B1052CAA92A700508E5D /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		B081B1072CAA92CE00508E5D /* MoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodView.swift; sourceTree = "<group>"; };
 		B081B1092CAA938000508E5D /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
-		B081B10B2CAA94FF00508E5D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = "../../../../Documents/GitHub/a2-s3911598/a2_s3911598/a2_s3911598/Assets.xcassets"; sourceTree = "<group>"; };
 		B0CF7F162CAA870D006D1087 /* a2_s3911598.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = a2_s3911598.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0CF7F192CAA870D006D1087 /* a2_s3911598App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = a2_s3911598App.swift; sourceTree = "<group>"; };
 		B0CF7F1B2CAA870D006D1087 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -65,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81B7E1AB2CAB9119001BA47F /* Auth0 in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -97,6 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				B081B1052CAA92A700508E5D /* DataManager.swift */,
+				81F7C4DF2CAB8448003E366F /* Profile.swift */,
 			);
 			name = Data;
 			path = "New Group/Data";
@@ -125,7 +132,7 @@
 		B0CF7F182CAA870D006D1087 /* a2_s3911598 */ = {
 			isa = PBXGroup;
 			children = (
-				B081B10B2CAA94FF00508E5D /* Assets.xcassets */,
+				81F7C4DA2CAB67C6003E366F /* Assets.xcassets */,
 				B081B1042CAA928C00508E5D /* Data */,
 				B081B1002CAA921700508E5D /* Repository */,
 				B0CF7FB22CAA8E14006D1087 /* Models */,
@@ -134,6 +141,7 @@
 				B0CF7F1B2CAA870D006D1087 /* ContentView.swift */,
 				B0CF7F1D2CAA870D006D1087 /* Item.swift */,
 				B0CF7F212CAA870E006D1087 /* Preview Content */,
+				81F7C4DD2CAB808B003E366F /* Auth0.plist */,
 			);
 			path = a2_s3911598;
 			sourceTree = "<group>";
@@ -197,6 +205,9 @@
 			dependencies = (
 			);
 			name = a2_s3911598;
+			packageProductDependencies = (
+				81B7E1AA2CAB9119001BA47F /* Auth0 */,
+			);
 			productName = a2_s3911598;
 			productReference = B0CF7F162CAA870D006D1087 /* a2_s3911598.app */;
 			productType = "com.apple.product-type.application";
@@ -269,6 +280,9 @@
 				Base,
 			);
 			mainGroup = B0CF7F0D2CAA870D006D1087;
+			packageReferences = (
+				81F7C4DC2CAB7535003E366F /* XCRemoteSwiftPackageReference "Auth0" */,
+			);
 			productRefGroup = B0CF7F172CAA870D006D1087 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -286,7 +300,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B0CF7F232CAA870E006D1087 /* Preview Assets.xcassets in Resources */,
-				B081B10C2CAA94FF00508E5D /* Assets.xcassets in Resources */,
+				81F7C4DE2CAB808C003E366F /* Auth0.plist in Resources */,
+				81F7C4DB2CAB67C6003E366F /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -312,6 +327,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B081B10A2CAA938000508E5D /* DateFormatter.swift in Sources */,
+				81F7C4E02CAB8448003E366F /* Profile.swift in Sources */,
 				B081B1022CAA923800508E5D /* TaskRepository.swift in Sources */,
 				B0CF7F1C2CAA870D006D1087 /* ContentView.swift in Sources */,
 				B0CF7F1E2CAA870D006D1087 /* Item.swift in Sources */,
@@ -643,6 +659,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		81F7C4DC2CAB7535003E366F /* XCRemoteSwiftPackageReference "Auth0" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/auth0/Auth0.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.9.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		81B7E1AA2CAB9119001BA47F /* Auth0 */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 81F7C4DC2CAB7535003E366F /* XCRemoteSwiftPackageReference "Auth0" */;
+			productName = Auth0;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B0CF7F0E2CAA870D006D1087 /* Project object */;
 }
