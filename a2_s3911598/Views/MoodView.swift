@@ -34,7 +34,7 @@ struct MoodView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                Text("Daily Tasks")
+                Text("Moods")
                     .font(.custom("Chalkboard SE", size: 24))
                     .padding([.leading, .top], 16)
                 
