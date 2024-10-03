@@ -21,19 +21,16 @@ class TaskRepository {
     func addTask(context: ModelContext, title: String, description: String, time: Date, sharedWith: [String]) {
         let task = Task(title: title, description: description, time: time, sharedWith: sharedWith)
         context.insert(task)
-        DataManager.shared.saveContext(context: context)
         print("Task added: \(task.title)")
     }
     
     func markTaskCompleted(context: ModelContext, task: Task) {
         task.isCompleted = true
-        DataManager.shared.saveContext(context: context)
         print("Task marked as completed: \(task.title)")
     }
 
     func deleteTask(context: ModelContext, task: Task) {
         context.delete(task)
-        DataManager.shared.saveContext(context: context)
     }
 }
 

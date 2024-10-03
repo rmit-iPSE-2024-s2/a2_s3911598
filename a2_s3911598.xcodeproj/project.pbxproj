@@ -23,7 +23,6 @@
 		B0CF7FB12CAA8DD7006D1087 /* DailyTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CF7FB02CAA8DD7006D1087 /* DailyTaskView.swift */; };
 		B0CF7FB42CAA8E24006D1087 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CF7FB32CAA8E24006D1087 /* Task.swift */; };
 		B0E0FA1C2CACD2380028F724 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B0E0FA1B2CACD2380028F724 /* Assets.xcassets */; };
-		B0E0FA1D2CACD2B30028F724 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B081B1052CAA92A700508E5D /* DataManager.swift */; };
 		B0E0FA2A2CAE262B0028F724 /* TaskCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E0FA292CAE262B0028F724 /* TaskCardView.swift */; };
 		B0E0FA2C2CAE265D0028F724 /* TaskDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E0FA2B2CAE265D0028F724 /* TaskDetailView.swift */; };
 /* End PBXBuildFile section */
@@ -49,7 +48,6 @@
 		81F7C4DD2CAB808B003E366F /* Auth0.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Auth0.plist; sourceTree = "<group>"; };
 		81F7C4DF2CAB8448003E366F /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Profile.swift; path = ../../Data/Profile.swift; sourceTree = "<group>"; };
 		B081B1012CAA923800508E5D /* TaskRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRepository.swift; sourceTree = "<group>"; };
-		B081B1052CAA92A700508E5D /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		B081B1072CAA92CE00508E5D /* MoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodView.swift; sourceTree = "<group>"; };
 		B081B1092CAA938000508E5D /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 		B0CF7F162CAA870D006D1087 /* a2_s3911598.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = a2_s3911598.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -106,7 +104,6 @@
 		B081B1042CAA928C00508E5D /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				B081B1052CAA92A700508E5D /* DataManager.swift */,
 				81F7C4DF2CAB8448003E366F /* Profile.swift */,
 			);
 			name = Data;
@@ -342,7 +339,6 @@
 			files = (
 				B0E0FA2C2CAE265D0028F724 /* TaskDetailView.swift in Sources */,
 				B081B10A2CAA938000508E5D /* DateFormatter.swift in Sources */,
-				B0E0FA1D2CACD2B30028F724 /* DataManager.swift in Sources */,
 				81F7C4E02CAB8448003E366F /* Profile.swift in Sources */,
 				B081B1022CAA923800508E5D /* TaskRepository.swift in Sources */,
 				B0CF7F1C2CAA870D006D1087 /* ContentView.swift in Sources */,
