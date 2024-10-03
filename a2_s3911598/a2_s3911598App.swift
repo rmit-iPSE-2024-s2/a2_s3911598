@@ -15,6 +15,7 @@ struct a2_s3911598App: App {
         
         WindowGroup {
             ContentView()
+                .modelContainer(for: [Mood.self])
         }
     }
 }
