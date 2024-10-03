@@ -12,7 +12,28 @@ struct DailyTaskView: View {
     @Environment(\.modelContext) private var modelContext
     @State private var tasks: [Task] = []
     @State private var showingCreateTaskView = false
+    
+    var sharedTasksBinding: [Binding<Task>] {
+        $tasks.enumerated()
+            .compactMap { index, taskBinding in
+                if tasks[index].sharedWith.isEmpty == false {
+                    return taskBinding
+                } else {
+                    return nil
+                }
+            }
+    }
 
+    var myTasksBinding: [Binding<Task>] {
+        $tasks.enumerated()
+            .compactMap { index, taskBinding in
+                if tasks[index].sharedWith.isEmpty {
+                    return taskBinding
+                } else {
+                    return nil
+                }
+            }
+    }
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -36,16 +57,18 @@ struct DailyTaskView: View {
                 let sharedTasks = tasks.filter { !$0.sharedWith.isEmpty }
                 let myTasks = tasks.filter { $0.sharedWith.isEmpty }
                 Section(header: Text("Shared Tasks").font(.custom("Chalkboard SE", size: 20)).padding(.top, -10)) {
-                    ForEach(sharedTasks) { task in
-                        TaskCard(task: task)
-                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                                Button(role: .destructive) {
-                                    deleteTask(task)
-                                } label: {
-                                    Label("Delete", systemImage: "trash")
+                    ForEach(sharedTasksBinding, id: \.id) { $task in
+                        NavigationLink(destination: TaskDetailView(task: $task)) {
+                            TaskCard(task: task)
+                                .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                                    Button(role: .destructive) {
+                                        deleteTask(task)
+                                    } label: {
+                                        Label("Delete", systemImage: "trash")
+                                    }
+                                    .tint(.gray)
                                 }
-                                .tint(.gray)
-                            }
+                        }
                     }
                     .onDelete { offsets in
                         deleteTask(at: offsets, from: tasks)
@@ -53,16 +76,18 @@ struct DailyTaskView: View {
                 }
 
                 Section(header: Text("My Daily Tasks").font(.custom("Chalkboard SE", size: 20)).padding(.top, -10)) {
-                    ForEach(myTasks) { task in
-                        TaskCard(task: task)
-                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                                Button(role: .destructive) {
-                                    deleteTask(task)
-                                } label: {
-                                    Label("Delete", systemImage: "trash")
+                    ForEach(myTasksBinding, id: \.id) { $task in
+                        NavigationLink(destination: TaskDetailView(task: $task)) {
+                            TaskCard(task: task)
+                                .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                                    Button(role: .destructive) {
+                                        deleteTask(task)
+                                    } label: {
+                                        Label("Delete", systemImage: "trash")
+                                    }
+                                    .tint(.gray)
                                 }
-                                .tint(.gray)
-                            }
+                        }
                     }
                     .onDelete { offsets in
                         deleteTask(at: offsets, from: tasks)
@@ -151,7 +176,6 @@ struct CreateTaskView: View {
                         .padding(.horizontal)
                     
                     Button(action: {
-                        // Future implementation for selecting friends to share with
                     }) {
                         Text("Doing this with...")
                             .font(.custom("Chalkboard SE", size: 18))
@@ -207,42 +231,8 @@ struct CheckboxToggleStyle: ToggleStyle {
     }
 }
 
-
-struct TaskCard: View {
-    @Bindable var task: Task
-
-    var body: some View {
-        HStack {
-            Toggle(isOn: $task.isCompleted) {
-                VStack(alignment: .leading) {
-                    Text(task.title)
-                        .font(.custom("Chalkboard SE", size: 18))
-                        .foregroundColor(.white)
-                    Text(task.taskDescription)
-                        .font(.custom("Chalkboard SE", size: 16))
-                        .foregroundColor( .white.opacity(0.7))
-                    if !task.sharedWith.isEmpty {
-                        Text("Doing with: \(task.sharedWith.joined(separator: ", "))")
-                            .font(.custom("Chalkboard SE", size: 14))
-                            .foregroundColor(.white.opacity(0.5))
-                    }
-                }
-            }
-            .toggleStyle(CheckboxToggleStyle())
-            Spacer()
-            Text(task.time, style: .time)
-                .foregroundColor(.white)
-                .font(.custom("Chalkboard SE", size: 16))
-        }
-        .padding()
-        .background(task.isCompleted ? Color("secondaryLilac") : Color("primaryMauve"))
-        .cornerRadius(10)
-        .shadow(radius: 5)
-    }
-}
-struct DailyTaskView_Previews: PreviewProvider {
-    static var previews: some View {
-        DailyTaskView()
-    }
-}
-
+//struct DailyTaskView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        DailyTaskView()
+//    }
+//}

@@ -71,7 +71,6 @@ struct MainTabView: View {
         TabView {
             NavigationView {
                 DailyTaskView().modelContainer(for: [Task.self])
-                    .navigationTitle("Daily Tasks")
                     .navigationBarItems(trailing: HStack {
                         Text("Welcome, \(userProfile.name)")
                             .font(.subheadline)
@@ -89,7 +88,6 @@ struct MainTabView: View {
             
             NavigationView {
                 MoodView()
-                    .navigationTitle("Mood Tracker")
             }
             .tabItem {
                 Label("Moods", systemImage: "face.smiling")

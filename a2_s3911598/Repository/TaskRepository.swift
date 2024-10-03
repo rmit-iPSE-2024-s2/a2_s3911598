@@ -24,6 +24,12 @@ class TaskRepository {
         DataManager.shared.saveContext(context: context)
         print("Task added: \(task.title)")
     }
+    
+    func markTaskCompleted(context: ModelContext, task: Task) {
+        task.isCompleted = true
+        DataManager.shared.saveContext(context: context)
+        print("Task marked as completed: \(task.title)")
+    }
 
     func deleteTask(context: ModelContext, task: Task) {
         context.delete(task)
