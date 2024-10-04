@@ -25,6 +25,11 @@
 		B0E0FA1C2CACD2380028F724 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B0E0FA1B2CACD2380028F724 /* Assets.xcassets */; };
 		B0E0FA2A2CAE262B0028F724 /* TaskCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E0FA292CAE262B0028F724 /* TaskCardView.swift */; };
 		B0E0FA2C2CAE265D0028F724 /* TaskDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E0FA2B2CAE265D0028F724 /* TaskDetailView.swift */; };
+		B0E0FA2E2CAF69940028F724 /* Mood.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E0FA2D2CAF69940028F724 /* Mood.swift */; };
+		B0E0FA302CAF6A0D0028F724 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E0FA2F2CAF6A0D0028F724 /* CalendarView.swift */; };
+		B0E0FA322CAF6A270028F724 /* MoodDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E0FA312CAF6A270028F724 /* MoodDetailView.swift */; };
+		B0E0FA342CAF6A300028F724 /* MoodTrackingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E0FA332CAF6A300028F724 /* MoodTrackingView.swift */; };
+		B0E0FA362CAF6A3A0028F724 /* MoodRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E0FA352CAF6A3A0028F724 /* MoodRepository.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +70,11 @@
 		B0E0FA1B2CACD2380028F724 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B0E0FA292CAE262B0028F724 /* TaskCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCardView.swift; sourceTree = "<group>"; };
 		B0E0FA2B2CAE265D0028F724 /* TaskDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailView.swift; sourceTree = "<group>"; };
+		B0E0FA2D2CAF69940028F724 /* Mood.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mood.swift; sourceTree = "<group>"; };
+		B0E0FA2F2CAF6A0D0028F724 /* CalendarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CalendarView.swift; path = a2_s3911598/Views/CalendarView.swift; sourceTree = SOURCE_ROOT; };
+		B0E0FA312CAF6A270028F724 /* MoodDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoodDetailView.swift; sourceTree = "<group>"; };
+		B0E0FA332CAF6A300028F724 /* MoodTrackingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoodTrackingView.swift; sourceTree = "<group>"; };
+		B0E0FA352CAF6A3A0028F724 /* MoodRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoodRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +106,7 @@
 		B081B1002CAA921700508E5D /* Repository */ = {
 			isa = PBXGroup;
 			children = (
+				B0E0FA352CAF6A3A0028F724 /* MoodRepository.swift */,
 				B081B1012CAA923800508E5D /* TaskRepository.swift */,
 			);
 			path = Repository;
@@ -175,6 +186,9 @@
 		B0CF7FAF2CAA8DC1006D1087 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B0E0FA332CAF6A300028F724 /* MoodTrackingView.swift */,
+				B0E0FA312CAF6A270028F724 /* MoodDetailView.swift */,
+				B0E0FA2F2CAF6A0D0028F724 /* CalendarView.swift */,
 				B0E0FA282CAE26100028F724 /* DailyTaskView */,
 				B081B1072CAA92CE00508E5D /* MoodView.swift */,
 			);
@@ -184,6 +198,7 @@
 		B0CF7FB22CAA8E14006D1087 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				B0E0FA2D2CAF69940028F724 /* Mood.swift */,
 				B0CF7FB32CAA8E24006D1087 /* Task.swift */,
 				B081B1092CAA938000508E5D /* DateFormatter.swift */,
 			);
@@ -339,14 +354,19 @@
 			files = (
 				B0E0FA2C2CAE265D0028F724 /* TaskDetailView.swift in Sources */,
 				B081B10A2CAA938000508E5D /* DateFormatter.swift in Sources */,
+				B0E0FA322CAF6A270028F724 /* MoodDetailView.swift in Sources */,
 				81F7C4E02CAB8448003E366F /* Profile.swift in Sources */,
+				B0E0FA342CAF6A300028F724 /* MoodTrackingView.swift in Sources */,
 				B081B1022CAA923800508E5D /* TaskRepository.swift in Sources */,
+				B0E0FA2E2CAF69940028F724 /* Mood.swift in Sources */,
 				B0CF7F1C2CAA870D006D1087 /* ContentView.swift in Sources */,
+				B0E0FA302CAF6A0D0028F724 /* CalendarView.swift in Sources */,
 				B0CF7F1E2CAA870D006D1087 /* Item.swift in Sources */,
 				B081B1082CAA92CE00508E5D /* MoodView.swift in Sources */,
 				B0CF7FB42CAA8E24006D1087 /* Task.swift in Sources */,
 				B0CF7F1A2CAA870D006D1087 /* a2_s3911598App.swift in Sources */,
 				B0CF7FB12CAA8DD7006D1087 /* DailyTaskView.swift in Sources */,
+				B0E0FA362CAF6A3A0028F724 /* MoodRepository.swift in Sources */,
 				B0E0FA2A2CAE262B0028F724 /* TaskCardView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
