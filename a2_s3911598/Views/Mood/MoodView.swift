@@ -64,13 +64,31 @@ struct MoodView: View {
                                     .foregroundColor(.primary)
                             }
                         }
+                    }
+                    .padding(.vertical)
+                }
+                
+                // “How do you feel today” 卡片
+                cardView {
+                    VStack(alignment: .leading, spacing: 10) {
+                        HStack {
+                            Text("How do you feel today?")
+                                .font(Font.custom("Chalkboard SE", size: 20))
+                            Spacer()
+                        }
+                        .padding(.horizontal)
                         
-                        Spacer()
+                        // Go record 按钮
                         Button(action: {
                             showMoodTracking = true
                         }) {
                             Text("Go record")
                                 .font(Font.custom("Chalkboard SE", size: 16))
+                                .padding()
+                                .frame(maxWidth: .infinity)
+                                .background(Color.blue)
+                                .foregroundColor(.white)
+                                .cornerRadius(10)
                         }
                         .sheet(isPresented: $showMoodTracking) {
                             MoodTrackingView(isActive: $showMoodTracking, repository: repository)
@@ -79,29 +97,26 @@ struct MoodView: View {
                     .padding(.vertical)
                 }
                 
-                // 情绪分布图表
-                cardView {
-                    VStack(alignment: .leading, spacing: 10) {
-                        HStack {
-                            Text("🌼 Recent mood distribution")
+                // 显示今天的心情记录
+                if let todayMood = moodForToday() {
+                    cardView {
+                        VStack(alignment: .leading, spacing: 10) {
+                            Text("Today's Mood Record")
                                 .font(Font.custom("Chalkboard SE", size: 20))
-                            Spacer()
+                            Text("Time: \(timeFormatter.string(from: todayMood.date))")
+                                .font(Font.custom("Chalkboard SE", size: 18))
+                            Text("Mood: \(getMoodDescription(for: todayMood.moodLevel))")
+                                .font(Font.custom("Chalkboard SE", size: 18))
                         }
-                        .padding(.horizontal)
-                        
-                        // 使用数据库中获取的情绪数据绘制图表
-                        Chart {
-                            ForEach(moodData) { mood in
-                                BarMark(
-                                    x: .value("Date", mood.date),
-                                    y: .value("Mood Level", mood.moodLevel)
-                                )
-                            }
-                        }
-                        .frame(height: 200)
                         .padding()
                     }
-                    .padding(.vertical)
+                    .padding(.bottom)
+                } else {
+                    // 如果没有今天的心情记录，显示提示信息
+                    Text("No mood recorded for today yet.")
+                        .font(Font.custom("Chalkboard SE", size: 18))
+                        .foregroundColor(.gray)
+                        .padding()
                 }
                 
                 Spacer()
@@ -113,14 +128,27 @@ struct MoodView: View {
         }
     }
     
+    // 获取当天的心情记录
+    func moodForToday() -> Mood? {
+        let today = Calendar.current.startOfDay(for: Date())  // 获取今天的日期的开始时间
+        return moodData.first(where: { Calendar.current.isDate($0.date, inSameDayAs: today) })
+    }
+    
+    // 时间格式化器
+    var timeFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        return formatter
+    }
+    
     // Helper: 获取情绪描述
-    func getMoodDescription(for level: Int) -> String {
-        switch level {
-        case 1: return "Very Unpleasant"
-        case 2: return "Unpleasant"
-        case 3: return "Neutral"
-        case 4: return "Pleasant"
-        case 5: return "Very Pleasant"
+    func getMoodDescription(for mood: String) -> String {
+        switch mood {
+        case "Very Unpleasant": return "Very Unpleasant"
+        case "Unpleasant": return "Unpleasant"
+        case "Neutral": return "Neutral"
+        case "Pleasant": return "Pleasant"
+        case "Very Pleasant": return "Very Pleasant"
         default: return "Unknown"
         }
     }

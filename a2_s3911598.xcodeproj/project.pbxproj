@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		819F27502CAF707C00F3DF50 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819F274F2CAF707C00F3DF50 /* Profile.swift */; };
 		81B7E1AB2CAB9119001BA47F /* Auth0 in Frameworks */ = {isa = PBXBuildFile; productRef = 81B7E1AA2CAB9119001BA47F /* Auth0 */; };
 		81F7C4DE2CAB808C003E366F /* Auth0.plist in Resources */ = {isa = PBXBuildFile; fileRef = 81F7C4DD2CAB808B003E366F /* Auth0.plist */; };
-		81F7C4E02CAB8448003E366F /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7C4DF2CAB8448003E366F /* Profile.swift */; };
 		B081B1022CAA923800508E5D /* TaskRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B081B1012CAA923800508E5D /* TaskRepository.swift */; };
 		B081B1082CAA92CE00508E5D /* MoodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B081B1072CAA92CE00508E5D /* MoodView.swift */; };
 		B081B10A2CAA938000508E5D /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B081B1092CAA938000508E5D /* DateFormatter.swift */; };
@@ -50,8 +50,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		819F274F2CAF707C00F3DF50 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		81F7C4DD2CAB808B003E366F /* Auth0.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Auth0.plist; sourceTree = "<group>"; };
-		81F7C4DF2CAB8448003E366F /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Profile.swift; path = ../../Data/Profile.swift; sourceTree = "<group>"; };
 		B081B1012CAA923800508E5D /* TaskRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRepository.swift; sourceTree = "<group>"; };
 		B081B1072CAA92CE00508E5D /* MoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodView.swift; sourceTree = "<group>"; };
 		B081B1092CAA938000508E5D /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
@@ -71,7 +71,7 @@
 		B0E0FA292CAE262B0028F724 /* TaskCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCardView.swift; sourceTree = "<group>"; };
 		B0E0FA2B2CAE265D0028F724 /* TaskDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailView.swift; sourceTree = "<group>"; };
 		B0E0FA2D2CAF69940028F724 /* Mood.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mood.swift; sourceTree = "<group>"; };
-		B0E0FA2F2CAF6A0D0028F724 /* CalendarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CalendarView.swift; path = a2_s3911598/Views/CalendarView.swift; sourceTree = SOURCE_ROOT; };
+		B0E0FA2F2CAF6A0D0028F724 /* CalendarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CalendarView.swift; path = a2_s3911598/Views/Mood/CalendarView.swift; sourceTree = SOURCE_ROOT; };
 		B0E0FA312CAF6A270028F724 /* MoodDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoodDetailView.swift; sourceTree = "<group>"; };
 		B0E0FA332CAF6A300028F724 /* MoodTrackingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoodTrackingView.swift; sourceTree = "<group>"; };
 		B0E0FA352CAF6A3A0028F724 /* MoodRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoodRepository.swift; sourceTree = "<group>"; };
@@ -103,6 +103,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8110FF6B2CB0129F000A5888 /* Mood */ = {
+			isa = PBXGroup;
+			children = (
+				B0E0FA312CAF6A270028F724 /* MoodDetailView.swift */,
+				B0E0FA332CAF6A300028F724 /* MoodTrackingView.swift */,
+				B0E0FA2F2CAF6A0D0028F724 /* CalendarView.swift */,
+				B081B1072CAA92CE00508E5D /* MoodView.swift */,
+			);
+			path = Mood;
+			sourceTree = "<group>";
+		};
+		819F274E2CAF706400F3DF50 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				819F274F2CAF707C00F3DF50 /* Profile.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
 		B081B1002CAA921700508E5D /* Repository */ = {
 			isa = PBXGroup;
 			children = (
@@ -110,15 +129,6 @@
 				B081B1012CAA923800508E5D /* TaskRepository.swift */,
 			);
 			path = Repository;
-			sourceTree = "<group>";
-		};
-		B081B1042CAA928C00508E5D /* Data */ = {
-			isa = PBXGroup;
-			children = (
-				81F7C4DF2CAB8448003E366F /* Profile.swift */,
-			);
-			name = Data;
-			path = "New Group/Data";
 			sourceTree = "<group>";
 		};
 		B0CF7F0D2CAA870D006D1087 = {
@@ -144,8 +154,7 @@
 		B0CF7F182CAA870D006D1087 /* a2_s3911598 */ = {
 			isa = PBXGroup;
 			children = (
-				B0E0FA1B2CACD2380028F724 /* Assets.xcassets */,
-				B081B1042CAA928C00508E5D /* Data */,
+				819F274E2CAF706400F3DF50 /* Data */,
 				B081B1002CAA921700508E5D /* Repository */,
 				B0CF7FB22CAA8E14006D1087 /* Models */,
 				B0CF7FAF2CAA8DC1006D1087 /* Views */,
@@ -154,6 +163,7 @@
 				B0CF7F1D2CAA870D006D1087 /* Item.swift */,
 				B0CF7F212CAA870E006D1087 /* Preview Content */,
 				81F7C4DD2CAB808B003E366F /* Auth0.plist */,
+				B0E0FA1B2CACD2380028F724 /* Assets.xcassets */,
 			);
 			path = a2_s3911598;
 			sourceTree = "<group>";
@@ -186,11 +196,8 @@
 		B0CF7FAF2CAA8DC1006D1087 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				B0E0FA332CAF6A300028F724 /* MoodTrackingView.swift */,
-				B0E0FA312CAF6A270028F724 /* MoodDetailView.swift */,
-				B0E0FA2F2CAF6A0D0028F724 /* CalendarView.swift */,
+				8110FF6B2CB0129F000A5888 /* Mood */,
 				B0E0FA282CAE26100028F724 /* DailyTaskView */,
-				B081B1072CAA92CE00508E5D /* MoodView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -355,13 +362,13 @@
 				B0E0FA2C2CAE265D0028F724 /* TaskDetailView.swift in Sources */,
 				B081B10A2CAA938000508E5D /* DateFormatter.swift in Sources */,
 				B0E0FA322CAF6A270028F724 /* MoodDetailView.swift in Sources */,
-				81F7C4E02CAB8448003E366F /* Profile.swift in Sources */,
 				B0E0FA342CAF6A300028F724 /* MoodTrackingView.swift in Sources */,
 				B081B1022CAA923800508E5D /* TaskRepository.swift in Sources */,
 				B0E0FA2E2CAF69940028F724 /* Mood.swift in Sources */,
 				B0CF7F1C2CAA870D006D1087 /* ContentView.swift in Sources */,
 				B0E0FA302CAF6A0D0028F724 /* CalendarView.swift in Sources */,
 				B0CF7F1E2CAA870D006D1087 /* Item.swift in Sources */,
+				819F27502CAF707C00F3DF50 /* Profile.swift in Sources */,
 				B081B1082CAA92CE00508E5D /* MoodView.swift in Sources */,
 				B0CF7FB42CAA8E24006D1087 /* Task.swift in Sources */,
 				B0CF7F1A2CAA870D006D1087 /* a2_s3911598App.swift in Sources */,

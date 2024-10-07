@@ -6,8 +6,6 @@ enum MoodViewDestination: Hashable {
     case moodTracking
 }
 
-
-
 // 合并后的 ContentView
 struct ContentView: View {
     @State private var isAuthenticated = false
@@ -67,10 +65,16 @@ struct MainTabView: View {
     var userProfile: Profile
     var logoutAction: () -> Void
     
+    @State private var isShowingMoodTracking = false
+    @Environment(\.modelContext) private var modelContext
+
     var body: some View {
+        let moodRepository = MoodRepository(context: modelContext) // 实例化 MoodRepository
+        
         TabView {
             NavigationView {
                 DailyTaskView().modelContainer(for: [Task.self])
+                    .navigationTitle("Daily Tasks")
                     .navigationBarItems(trailing: HStack {
                         Text("Welcome, \(userProfile.name)")
                             .font(.subheadline)
@@ -87,8 +91,11 @@ struct MainTabView: View {
             }
             
             NavigationView {
-                MoodView()
+                // 传递 isActive 和 moodRepository 参数
+                MoodView(context: modelContext)  // 使用 modelContext
+                    .navigationTitle("Mood Tracker")
             }
+
             .tabItem {
                 Label("Moods", systemImage: "face.smiling")
             }
@@ -111,6 +118,8 @@ struct MainTabView: View {
         }
     }
 }
+
+
 
 // 其他视图
 struct FriendView: View {

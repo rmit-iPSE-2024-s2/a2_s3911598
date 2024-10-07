@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MoodDetailView: View {
+    @Environment(\.modelContext) private var modelContext
     @State private var moodText: String = ""
     @Binding var isActive: Bool
     @Binding var selectedMood: String
@@ -92,18 +93,31 @@ struct MoodDetailView: View {
 
     // Helper 函数：根据情绪标签返回描述文本
     func displayText(for mood: String) -> String {
-        switch mood {
-        case "Slightly pleasant":
+        switch mood.lowercased() {  // 将 mood 转换为小写
+        case "slightly pleasant":
             return "Keep calm and carry on."
-        case "Pleasant", "Very pleasant":
+        case "pleasant", "very pleasant":
             return "Good to know you're feeling great."
-        case "Very unpleasant":
+        case "very unpleasant":
             return "I sometimes feel very bad too, I understand how oppressively heavy that can feel."
-        case "Slightly unpleasant":
+        case "slightly unpleasant":
             return "I have been just ok at times as well."
         default:
             return "Good to know you're feeling \(mood.lowercased())!"
         }
     }
+
+    
+    func saveMood() {
+           let newMood = Mood(date: currentDate, moodLevel: selectedMood, notes: moodText)
+           modelContext.insert(newMood)
+           print(newMood)
+        do {
+            try modelContext.save()
+        } catch {
+            print("Failed to save context: \(error)")
+        }
+//        context.save()
+       }
 }
 

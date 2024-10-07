@@ -10,10 +10,12 @@ class MoodRepository: ObservableObject {
     }
     
     //add mood record
-    func addMood(date: Date = Date(), moodLevel: Int, notes: String = "", sharedWith: [String] = []) {
+    func addMood(date: Date = Date(), moodLevel: String, notes: String = "", sharedWith: [String] = []) {
         let newMood = Mood(date: date, moodLevel: moodLevel, notes: notes, sharedWith: sharedWith)
         context.insert(newMood)
-        saveContext()
+        
+        // 保存上下文，确保数据被持久化
+        saveContext()  // 这行是关键，确保数据持久保存
     }
     
     // 获取所有情绪记录，按日期排序
