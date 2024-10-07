@@ -104,12 +104,12 @@ struct MainTabView: View {
             }
             
             NavigationView {
-                SettingView()
-                    .navigationTitle("Settings")
-            }
-            .tabItem {
-                Label("Settings", systemImage: "gear")
-            }
+                            SettingsView(userProfile: userProfile, logoutAction: logoutAction) // 修改为 SettingsView
+                                .navigationTitle("Settings")
+                        }
+                        .tabItem {
+                            Label("Settings", systemImage: "gear")
+                        }
         }
     }
 }
@@ -124,12 +124,12 @@ struct FriendView: View {
     }
 }
 
-struct SettingView: View {
-    var body: some View {
-        Text("Settings Content")
-            .navigationTitle("Settings")
-    }
-}
+//struct SettingView: View {
+//    var body: some View {
+//        Text("Settings Content")
+//            .navigationTitle("Settings")
+//    }
+//}
 
 // 自定义 ViewModifier 和 ButtonStyle
 struct TitleStyle: ViewModifier {

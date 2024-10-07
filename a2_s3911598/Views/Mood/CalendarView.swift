@@ -10,17 +10,6 @@ struct CalendarView: View {
     
     var body: some View {
         VStack {
-            // 返回按钮
-            HStack {
-                Button(action: {
-                    // 返回到上一个页面的逻辑
-                }) {
-                    Image(systemName: "arrow.backward")
-                        .foregroundColor(.black)
-                        .padding()
-                }
-                Spacer()
-            }
             
             // 月份切换器
             HStack {
@@ -137,20 +126,22 @@ struct CalendarView: View {
     
     // 显示心情图标
     func moodIcon(for moodLevel: String) -> some View {
-        let iconName: String
+        let imageName: String
         switch moodLevel {
-        case "Very Unpleasant": iconName = "face.dashed"
-        case "Unpleasant": iconName = "face.smiling"
-        case "Neutral": iconName = "face.neutral"
-        case "Pleasant": iconName = "face.smiling.fill"
-        case "Very Pleasant": iconName = "face.sunglasses"
-        default: iconName = "questionmark.circle"
+        case "Very Unpleasant": imageName = "VeryUnpleasant"
+        case "Slightly UnPleasant":imageName = "SlightlyUnPleasant"
+        case "Unpleasant": imageName = "Unpleaset"
+        case "Neutral": imageName = "Normal"
+        case "Slightly Pleasant": imageName = "SlightlyPleasant"
+        case "Pleasant": imageName = "Happy"
+        case "Very Pleasant": imageName = "VeryHappy"
+        default: imageName = "questionmark.circle"
         }
-        return Image(systemName: iconName)
+        return Image(imageName)  // 使用你添加的 asset 中的图片
             .resizable()
-            .frame(width: 20, height: 20)
-            .foregroundColor(.blue)
+            .frame(width: 30, height: 30)
     }
+
 
     func generateDaysInMonth(for date: Date) -> [Date?] {
         guard let range = Calendar.current.range(of: .day, in: .month, for: date),

@@ -7,14 +7,16 @@
 
 import SwiftUI
 
-
 @main
 struct a2_s3911598App: App {
+    @AppStorage("isDarkMode") private var isDarkMode: Bool = false
 
     var body: some Scene {
-        
         WindowGroup {
             ContentView()
-        }.modelContainer(for: [Mood.self, Task.self])
+                .preferredColorScheme(isDarkMode ? .dark : .light) // base on  isDarkMode to set environment
+        }
+        .modelContainer(for: [Mood.self, Task.self])
     }
 }
+
