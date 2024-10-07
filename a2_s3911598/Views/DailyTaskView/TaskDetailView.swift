@@ -23,6 +23,17 @@ struct TaskDetailView: View {
             Text(task.taskDescription)
                 .font(.custom("Chalkboard SE", size: 16))
                 .padding(.horizontal, 16)
+            
+            if let imageData = task.imageData, let image = UIImage(data: imageData) {
+                Image(uiImage: image)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(height: 200)
+                    .clipped()
+                    .cornerRadius(10)
+                    .padding(.horizontal)
+            }
+
 
             Text("Time:")
                 .font(.custom("Chalkboard SE", size: 18))

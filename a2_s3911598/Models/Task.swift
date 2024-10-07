@@ -15,13 +15,15 @@ class Task {
     var time: Date
     var sharedWith: [String]
     var isCompleted: Bool
+    var imageData: Data?
 
-    init(title: String, taskDescription: String, time: Date, sharedWith: [String] = [], isCompleted: Bool = false) {
+    init(title: String, taskDescription: String, time: Date, sharedWith: [String] = [], isCompleted: Bool = false,imageData: Data? = nil) {
         self.title = title
         self.taskDescription = taskDescription
         self.time = time
         self.sharedWith = sharedWith
         self.isCompleted = isCompleted
+        self.imageData = imageData
     }
 }
 
