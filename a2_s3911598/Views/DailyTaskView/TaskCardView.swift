@@ -5,10 +5,10 @@
 //  Created by zachary.zhao on 3/10/2024.
 //
 
-import Foundation
 import SwiftUI
+
 struct TaskCard: View {
-    @Bindable var task: Task
+    var task: Task
 
     var body: some View {
         HStack {
@@ -36,3 +36,4 @@ struct TaskCard: View {
         .shadow(radius: 5)
     }
 }
+

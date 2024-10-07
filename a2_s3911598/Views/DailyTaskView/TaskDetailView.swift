@@ -2,30 +2,35 @@ import SwiftUI
 
 struct TaskDetailView: View {
     @Environment(\.modelContext) private var modelContext
-    @Binding var task: Task
+    @State private var task: Task
     @State private var drawingPoints: [CGPoint] = []
     @State private var isLongPressActive = false
+
+    init(task: Task) {
+        _task = State(initialValue: task)
+    }
+
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             // Task details
             Text(task.title)
                 .font(.custom("Chalkboard SE", size: 24))
                 .padding([.top, .leading], 16)
-            
+
             Text("Description:")
                 .font(.custom("Chalkboard SE", size: 18))
                 .padding(.leading, 16)
             Text(task.taskDescription)
                 .font(.custom("Chalkboard SE", size: 16))
                 .padding(.horizontal, 16)
-            
+
             Text("Time:")
                 .font(.custom("Chalkboard SE", size: 18))
                 .padding(.leading, 16)
             Text(task.time, style: .time)
                 .font(.custom("Chalkboard SE", size: 16))
                 .padding(.horizontal, 16)
-            
+
             if !task.sharedWith.isEmpty {
                 Text("Shared With:")
                     .font(.custom("Chalkboard SE", size: 18))
@@ -34,7 +39,7 @@ struct TaskDetailView: View {
                     .font(.custom("Chalkboard SE", size: 16))
                     .padding(.horizontal, 16)
             }
-            
+
             Text("Status:")
                 .font(.custom("Chalkboard SE", size: 18))
                 .padding(.leading, 16)
@@ -42,15 +47,15 @@ struct TaskDetailView: View {
                 .font(.custom("Chalkboard SE", size: 16))
                 .padding(.horizontal, 16)
                 .foregroundColor(task.isCompleted ? .green : .red)
-            
+
             Spacer()
-            
+
             // Drawing area
             ZStack {
                 Rectangle()
                     .fill(Color(white: 0.95))
                     .cornerRadius(10)
-                
+
                 // Draw the user's gesture path
                 if !drawingPoints.isEmpty {
                     Path { path in
@@ -66,24 +71,21 @@ struct TaskDetailView: View {
                         .foregroundColor(.gray)
                 }
             }
-            .contentShape(Rectangle()) // Ensure the entire area is tappable
+            .contentShape(Rectangle())
             .gesture(
                 LongPressGesture(minimumDuration: 0.5)
                     .onEnded { _ in
                         isLongPressActive = true
-                        print("Long press detected")
                     }
                     .sequenced(before:
                         DragGesture(minimumDistance: 0, coordinateSpace: .named("drawingArea"))
                             .onChanged { value in
                                 if isLongPressActive {
                                     drawingPoints.append(value.location)
-                                    print("Added point: \(value.location)")
                                 }
                             }
-                            .onEnded { value in
+                            .onEnded { _ in
                                 if isLongPressActive {
-                                    print("Gesture ended with \(drawingPoints.count) points")
                                     if isCheckmarkShape(points: drawingPoints) {
                                         markTaskCompleted()
                                     }
@@ -93,21 +95,21 @@ struct TaskDetailView: View {
                             }
                     )
             )
-
             .frame(height: 200)
             .padding()
             .coordinateSpace(name: "drawingArea")
         }
         .navigationBarTitle("Task Details", displayMode: .inline)
     }
-    
+
     private func markTaskCompleted() {
-        print("22222")
         task.isCompleted = true
-        TaskRepository().markTaskCompleted(context: modelContext, task: task)
+        // Update the task in the model context
+        modelContext.insert(task)
     }
-    
+
     private func isCheckmarkShape(points: [CGPoint]) -> Bool {
+        // Simplified checkmark detection logic
         guard points.count >= 5 else {
             return false
         }
@@ -145,31 +147,5 @@ struct TaskDetailView: View {
 
         return true
     }
-
-
-
 }
 
-enum CheckmarkGestureState {
-    case inactive
-    case pressing
-    case drawing(points: [CGPoint])
-    
-    var points: [CGPoint] {
-        switch self {
-        case .inactive, .pressing:
-            return []
-        case .drawing(let points):
-            return points
-        }
-    }
-    
-    var isDrawing: Bool {
-        switch self {
-        case .drawing:
-            return true
-        default:
-            return false
-        }
-    }
-}

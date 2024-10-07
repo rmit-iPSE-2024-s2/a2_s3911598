@@ -10,20 +10,21 @@ import Foundation
 
 @Model
 class Task {
-    @Attribute var title: String
-    @Attribute var taskDescription: String
-    @Attribute var time: Date
-    @Attribute var sharedWith: [String]
-    @Attribute var isCompleted: Bool
-    
-    init(title: String, description: String = "", time: Date = Date(), sharedWith: [String] = [], isCompleted: Bool = false) {
+    var title: String
+    var taskDescription: String
+    var time: Date
+    var sharedWith: [String]
+    var isCompleted: Bool
+
+    init(title: String, taskDescription: String, time: Date, sharedWith: [String] = [], isCompleted: Bool = false) {
         self.title = title
-        self.taskDescription = description
+        self.taskDescription = taskDescription
         self.time = time
         self.sharedWith = sharedWith
         self.isCompleted = isCompleted
     }
 }
+
 
 
 

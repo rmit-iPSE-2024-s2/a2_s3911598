@@ -10,30 +10,11 @@ import SwiftData
 
 struct DailyTaskView: View {
     @Environment(\.modelContext) private var modelContext
-    @State private var tasks: [Task] = []
-    @State private var showingCreateTaskView = false
-    
-    var sharedTasksBinding: [Binding<Task>] {
-        $tasks.enumerated()
-            .compactMap { index, taskBinding in
-                if tasks[index].sharedWith.isEmpty == false {
-                    return taskBinding
-                } else {
-                    return nil
-                }
-            }
-    }
 
-    var myTasksBinding: [Binding<Task>] {
-        $tasks.enumerated()
-            .compactMap { index, taskBinding in
-                if tasks[index].sharedWith.isEmpty {
-                    return taskBinding
-                } else {
-                    return nil
-                }
-            }
-    }
+    // Use @Query to fetch tasks from SwiftData
+    @Query(sort: \Task.time, order: .forward) private var tasks: [Task]
+
+    @State private var showingCreateTaskView = false
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -56,9 +37,10 @@ struct DailyTaskView: View {
             List {
                 let sharedTasks = tasks.filter { !$0.sharedWith.isEmpty }
                 let myTasks = tasks.filter { $0.sharedWith.isEmpty }
+
                 Section(header: Text("Shared Tasks").font(.custom("Chalkboard SE", size: 20)).padding(.top, -10)) {
-                    ForEach(sharedTasksBinding, id: \.id) { $task in
-                        NavigationLink(destination: TaskDetailView(task: $task)) {
+                    ForEach(sharedTasks, id: \.id) { task in
+                        NavigationLink(destination: TaskDetailView(task: task)) {
                             TaskCard(task: task)
                                 .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                                     Button(role: .destructive) {
@@ -69,15 +51,12 @@ struct DailyTaskView: View {
                                     .tint(.gray)
                                 }
                         }
-                    }
-                    .onDelete { offsets in
-                        deleteTask(at: offsets, from: tasks)
                     }
                 }
 
                 Section(header: Text("My Daily Tasks").font(.custom("Chalkboard SE", size: 20)).padding(.top, -10)) {
-                    ForEach(myTasksBinding, id: \.id) { $task in
-                        NavigationLink(destination: TaskDetailView(task: $task)) {
+                    ForEach(myTasks, id: \.id) { task in
+                        NavigationLink(destination: TaskDetailView(task: task)) {
                             TaskCard(task: task)
                                 .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                                     Button(role: .destructive) {
@@ -88,45 +67,24 @@ struct DailyTaskView: View {
                                     .tint(.gray)
                                 }
                         }
-                    }
-                    .onDelete { offsets in
-                        deleteTask(at: offsets, from: tasks)
                     }
                 }
             }
             .listStyle(PlainListStyle())
             .sheet(isPresented: $showingCreateTaskView) {
-                CreateTaskView(isPresented: $showingCreateTaskView, tasks: $tasks)
+                CreateTaskView(isPresented: $showingCreateTaskView)
             }
-            .onAppear(perform: loadTasks)
         }
     }
 
-    private func loadTasks() {
-        tasks = TaskRepository().fetchAllTasks(context: modelContext)
-    }
-
-    private func deleteTask(at offsets: IndexSet, from filteredTasks: [Task]) {
-        for offset in offsets {
-            let task = filteredTasks[offset]
-            TaskRepository().deleteTask(context: modelContext, task: task)
-        }
-        loadTasks()
-    }
-    
     private func deleteTask(_ task: Task) {
-        TaskRepository().deleteTask(context: modelContext, task: task)
-        loadTasks()
+        modelContext.delete(task)
     }
-
-
 }
-
-
 
 struct CreateTaskView: View {
     @Binding var isPresented: Bool
-    @Binding var tasks: [Task]
+
     @State private var title = ""
     @State private var description = ""
     @State private var time = Date()
@@ -174,21 +132,23 @@ struct CreateTaskView: View {
                         .background(Color(white: 0.9))
                         .cornerRadius(10)
                         .padding(.horizontal)
-                    
+
                     Button(action: {
+                        // Action for sharing the task with others
                     }) {
                         Text("Doing this with...")
-                            .font(.custom("Chalkboard SE", size: 18))
+                            .font(Font.custom("Chalkboard SE", size: 18))
                             .frame(maxWidth: .infinity)
                             .padding()
                             .background(Color("primaryMauve"))
                             .foregroundColor(.white)
                             .cornerRadius(10)
                             .padding(.horizontal)
-                    }.padding(.top, 16)
+                    }
+                    .padding(.top, 16)
                 }
                 .padding([.leading, .trailing], 8)
-                
+
                 Spacer()
             }
             .toolbar {
@@ -200,8 +160,7 @@ struct CreateTaskView: View {
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Save") {
-                        TaskRepository().addTask(context: modelContext, title: title, description: description, time: time, sharedWith: [])
-                        loadTasks()
+                        saveTask()
                         isPresented = false
                     }
                     .font(.custom("Chalkboard SE", size: 18))
@@ -210,29 +169,9 @@ struct CreateTaskView: View {
         }
     }
 
-    private func loadTasks() {
-        tasks = TaskRepository().fetchAllTasks(context: modelContext)
+    private func saveTask() {
+        let newTask = Task(title: title, taskDescription: description, time: time, sharedWith: [])
+        modelContext.insert(newTask)
     }
 }
 
-
-struct CheckboxToggleStyle: ToggleStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        Button(action: {
-            configuration.isOn.toggle()
-        }) {
-            HStack {
-                Image(systemName: configuration.isOn ? "checkmark.square" : "square")
-                    .foregroundColor(.white)
-                    .imageScale(.large)
-                configuration.label
-            }
-        }
-    }
-}
-
-//struct DailyTaskView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        DailyTaskView()
-//    }
-//}
