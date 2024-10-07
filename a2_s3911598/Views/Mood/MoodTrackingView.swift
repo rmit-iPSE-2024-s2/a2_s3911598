@@ -2,7 +2,6 @@ import SwiftUI
 
 struct MoodTrackingView: View {
     @Binding var isActive: Bool
-    let repository: MoodRepository  // Used to save moods
 
     @State private var moodValue: Double = 0.5
     @State private var selectedMoodLabel = "Neutral"
@@ -116,13 +115,6 @@ struct MoodTrackingView: View {
                 Button(action: {
                     // 更新 selectedMoodLabel
                     self.selectedMoodLabel = moodLabels[Int(moodValue * Double(moodLabels.count - 1))]
-
-                    // 保存心情记录
-                    repository.addMood(
-                        moodLevel: selectedMoodLabel,  // 使用正确的 moodLevel
-                        notes: "User feels \(selectedMoodLabel)"
-                    )
-
                     self.showingMoodDetailView = true
                 }) {
                     HStack {

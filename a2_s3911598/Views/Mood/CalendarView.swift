@@ -3,18 +3,10 @@ import SwiftData
 
 struct CalendarView: View {
     @Environment(\.modelContext) private var modelContext
-    @StateObject private var moodRepository: MoodRepository
     @State private var selectedDate: Date? = nil
-    @State private var moods: [Mood] = []
-    
+    @Query private var allMoods: [Mood]
     // 当前月份
     @State private var currentMonth: Date = Date()
-
-    // 使用 environment 初始化 MoodRepository
-    init(context: ModelContext) {
-        let repository = MoodRepository(context: context)
-        _moodRepository = StateObject(wrappedValue: repository)
-    }
     
     var body: some View {
         VStack {
@@ -117,9 +109,6 @@ struct CalendarView: View {
             .padding()
         }
         .background(Color(UIColor.systemGroupedBackground))
-        .onAppear {
-            moods = moodRepository.fetchAllMoods()
-        }
     }
 
     // 显示指定日期的心情记录
@@ -143,7 +132,7 @@ struct CalendarView: View {
 
     // 获取给定日期的心情记录
     func moodForDate(_ date: Date) -> Mood? {
-        return moods.first(where: { Calendar.current.isDate($0.date, inSameDayAs: date) })
+        return allMoods.last(where: { Calendar.current.isDate($0.date, inSameDayAs: date) })
     }
     
     // 显示心情图标
@@ -199,7 +188,6 @@ struct CalendarView: View {
     func previousMonth() {
         if let newMonth = Calendar.current.date(byAdding: .month, value: -1, to: currentMonth) {
             currentMonth = newMonth
-            moods = moodRepository.fetchAllMoods() // 更新心情数据
         }
     }
     
@@ -207,7 +195,6 @@ struct CalendarView: View {
     func nextMonth() {
         if let newMonth = Calendar.current.date(byAdding: .month, value: 1, to: currentMonth) {
             currentMonth = newMonth
-            moods = moodRepository.fetchAllMoods() // 更新心情数据
         }
     }
 }

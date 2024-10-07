@@ -9,15 +9,8 @@ struct MoodView: View {
     
     // SwiftData 相关
     @Environment(\.modelContext) private var modelContext
-    @StateObject private var repository: MoodRepository  // 使用 @StateObject 以支持修改
-    
-    // 存储从数据库中获取的情绪数据
-    @State private var moodData: [Mood] = []
-    
-    // 初始化
-    init(context: ModelContext) {
-        _repository = StateObject(wrappedValue: MoodRepository(context: context))
-    }
+    @Query(sort: \Mood.date, order: .reverse) private var moodData: [Mood]
+
     
     var body: some View {
         ScrollView {
@@ -45,7 +38,7 @@ struct MoodView: View {
                                 }
                             }
                             .sheet(isPresented: $showCalendar) {
-                                CalendarView(context: modelContext)  // 传递你当前的 MoodRepository 到 CalendarView 中
+                                CalendarView()
                             
                             }
                         }
@@ -91,7 +84,7 @@ struct MoodView: View {
                                 .cornerRadius(10)
                         }
                         .sheet(isPresented: $showMoodTracking) {
-                            MoodTrackingView(isActive: $showMoodTracking, repository: repository)
+                            MoodTrackingView(isActive: $showMoodTracking)
                         }
                     }
                     .padding(.vertical)
@@ -123,15 +116,11 @@ struct MoodView: View {
             }
         }
         .background(Color("AppBackground").edgesIgnoringSafeArea(.all))
-        .onAppear {
-            moodData = repository.fetchAllMoods()  // 视图加载时更新情绪数据
-        }
     }
     
     // 获取当天的心情记录
     func moodForToday() -> Mood? {
-        let today = Calendar.current.startOfDay(for: Date())  // 获取今天的日期的开始时间
-        return moodData.first(where: { Calendar.current.isDate($0.date, inSameDayAs: today) })
+        return moodData.first(where: { Calendar.current.isDateInToday($0.date) })
     }
     
     // 时间格式化器

@@ -10,14 +10,12 @@ import SwiftData
 
 @Model
 class Mood {
-    var id: UUID
-    @Attribute var date: Date
-    @Attribute var moodLevel: String
-    @Attribute var notes: String
-    @Attribute var sharedWith: [String]
+    var date: Date
+     var moodLevel: String
+     var notes: String
+     var sharedWith: [String]
     
     init(id: UUID = UUID(),date: Date = Date(), moodLevel: String, notes: String = "", sharedWith: [String] = []) {
-        self.id = id
         self.date = date
         self.moodLevel = moodLevel
         self.notes = notes

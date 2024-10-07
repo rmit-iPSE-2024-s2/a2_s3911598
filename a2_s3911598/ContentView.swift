@@ -69,12 +69,10 @@ struct MainTabView: View {
     @Environment(\.modelContext) private var modelContext
 
     var body: some View {
-        let moodRepository = MoodRepository(context: modelContext) // 实例化 MoodRepository
         
         TabView {
             NavigationView {
-                DailyTaskView().modelContainer(for: [Task.self])
-                    .navigationTitle("Daily Tasks")
+                DailyTaskView()
                     .navigationBarItems(trailing: HStack {
                         Text("Welcome, \(userProfile.name)")
                             .font(.subheadline)
@@ -91,11 +89,8 @@ struct MainTabView: View {
             }
             
             NavigationView {
-                // 传递 isActive 和 moodRepository 参数
-                MoodView(context: modelContext)  // 使用 modelContext
-                    .navigationTitle("Mood Tracker")
+                MoodView()
             }
-
             .tabItem {
                 Label("Moods", systemImage: "face.smiling")
             }

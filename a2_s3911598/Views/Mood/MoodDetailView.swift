@@ -54,7 +54,9 @@ struct MoodDetailView: View {
 
             // 完成按钮
             Button(action: {
-                self.isActive = false  // 关闭视图
+                self.isActive = false
+                self.saveMood()
+                print("123")
             }) {
                 HStack {
                     Spacer()
@@ -109,14 +111,8 @@ struct MoodDetailView: View {
 
     
     func saveMood() {
-           let newMood = Mood(date: currentDate, moodLevel: selectedMood, notes: moodText)
-           modelContext.insert(newMood)
-           print(newMood)
-        do {
-            try modelContext.save()
-        } catch {
-            print("Failed to save context: \(error)")
-        }
+        let newMood = Mood(date: currentDate, moodLevel: selectedMood, notes: moodText)
+        modelContext.insert(newMood)
 //        context.save()
        }
 }

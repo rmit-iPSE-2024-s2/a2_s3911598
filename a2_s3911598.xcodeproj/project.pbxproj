@@ -29,7 +29,6 @@
 		B0E0FA302CAF6A0D0028F724 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E0FA2F2CAF6A0D0028F724 /* CalendarView.swift */; };
 		B0E0FA322CAF6A270028F724 /* MoodDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E0FA312CAF6A270028F724 /* MoodDetailView.swift */; };
 		B0E0FA342CAF6A300028F724 /* MoodTrackingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E0FA332CAF6A300028F724 /* MoodTrackingView.swift */; };
-		B0E0FA362CAF6A3A0028F724 /* MoodRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E0FA352CAF6A3A0028F724 /* MoodRepository.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,7 +73,6 @@
 		B0E0FA2F2CAF6A0D0028F724 /* CalendarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CalendarView.swift; path = a2_s3911598/Views/Mood/CalendarView.swift; sourceTree = SOURCE_ROOT; };
 		B0E0FA312CAF6A270028F724 /* MoodDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoodDetailView.swift; sourceTree = "<group>"; };
 		B0E0FA332CAF6A300028F724 /* MoodTrackingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoodTrackingView.swift; sourceTree = "<group>"; };
-		B0E0FA352CAF6A3A0028F724 /* MoodRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoodRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,7 +123,6 @@
 		B081B1002CAA921700508E5D /* Repository */ = {
 			isa = PBXGroup;
 			children = (
-				B0E0FA352CAF6A3A0028F724 /* MoodRepository.swift */,
 				B081B1012CAA923800508E5D /* TaskRepository.swift */,
 			);
 			path = Repository;
@@ -373,7 +370,6 @@
 				B0CF7FB42CAA8E24006D1087 /* Task.swift in Sources */,
 				B0CF7F1A2CAA870D006D1087 /* a2_s3911598App.swift in Sources */,
 				B0CF7FB12CAA8DD7006D1087 /* DailyTaskView.swift in Sources */,
-				B0E0FA362CAF6A3A0028F724 /* MoodRepository.swift in Sources */,
 				B0E0FA2A2CAE262B0028F724 /* TaskCardView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
