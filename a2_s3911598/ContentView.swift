@@ -115,15 +115,6 @@ struct MainTabView: View {
 }
 
 
-
-// 其他视图
-struct FriendView: View {
-    var body: some View {
-        Text("Friends Content")
-            .navigationTitle("Friends")
-    }
-}
-
 //struct SettingView: View {
 //    var body: some View {
 //        Text("Settings Content")

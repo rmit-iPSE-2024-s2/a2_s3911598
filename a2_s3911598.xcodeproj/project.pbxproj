@@ -31,6 +31,10 @@
 		B0A967A22CB50C2A00AB68FD /* ColorThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A9679E2CB50C2A00AB68FD /* ColorThemeView.swift */; };
 		B0A967A32CB50C2A00AB68FD /* GeneralView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A9679F2CB50C2A00AB68FD /* GeneralView.swift */; };
 		B0A967A42CB50C2A00AB68FD /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A967A02CB50C2A00AB68FD /* SettingsView.swift */; };
+		B0A967AB2CB50F7200AB68FD /* FriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A967AA2CB50F7200AB68FD /* FriendView.swift */; };
+		B0A967AF2CB5101100AB68FD /* AddFriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A967AE2CB5101100AB68FD /* AddFriendView.swift */; };
+		B0A967B42CB5123700AB68FD /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A967B22CB5120200AB68FD /* Friend.swift */; };
+		B0A967B72CB5139600AB68FD /* FriendsPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A967B62CB5139600AB68FD /* FriendsPickerView.swift */; };
 		B0CF7F1A2CAA870D006D1087 /* a2_s3911598App.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CF7F192CAA870D006D1087 /* a2_s3911598App.swift */; };
 		B0CF7F1C2CAA870D006D1087 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CF7F1B2CAA870D006D1087 /* ContentView.swift */; };
 		B0CF7F1E2CAA870D006D1087 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CF7F1D2CAA870D006D1087 /* Item.swift */; };
@@ -110,6 +114,10 @@
 		B0A9679E2CB50C2A00AB68FD /* ColorThemeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorThemeView.swift; sourceTree = "<group>"; };
 		B0A9679F2CB50C2A00AB68FD /* GeneralView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralView.swift; sourceTree = "<group>"; };
 		B0A967A02CB50C2A00AB68FD /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		B0A967AA2CB50F7200AB68FD /* FriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendView.swift; sourceTree = "<group>"; };
+		B0A967AE2CB5101100AB68FD /* AddFriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendView.swift; sourceTree = "<group>"; };
+		B0A967B22CB5120200AB68FD /* Friend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
+		B0A967B62CB5139600AB68FD /* FriendsPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsPickerView.swift; sourceTree = "<group>"; };
 		B0CF7F162CAA870D006D1087 /* a2_s3911598.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = a2_s3911598.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0CF7F192CAA870D006D1087 /* a2_s3911598App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = a2_s3911598App.swift; sourceTree = "<group>"; };
 		B0CF7F1B2CAA870D006D1087 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -212,15 +220,16 @@
 			path = CurrentTaskWidget;
 			sourceTree = "<group>";
 		};
-		B0A967992CB50C1D00AB68FD /* DailyTaskView */ = {
+		B0A967992CB50C1D00AB68FD /* DailyTask */ = {
 			isa = PBXGroup;
 			children = (
 				B0A967952CB50C1D00AB68FD /* CreateTaskView.swift */,
 				B0A967962CB50C1D00AB68FD /* DailyTaskView.swift */,
 				B0A967972CB50C1D00AB68FD /* TaskCardView.swift */,
 				B0A967982CB50C1D00AB68FD /* TaskDetailView.swift */,
+				B0A967B62CB5139600AB68FD /* FriendsPickerView.swift */,
 			);
-			path = DailyTaskView;
+			path = DailyTask;
 			sourceTree = "<group>";
 		};
 		B0A967A12CB50C2A00AB68FD /* Settings */ = {
@@ -231,6 +240,15 @@
 				B0A967A02CB50C2A00AB68FD /* SettingsView.swift */,
 			);
 			path = Settings;
+			sourceTree = "<group>";
+		};
+		B0A967A92CB50E4C00AB68FD /* Friends */ = {
+			isa = PBXGroup;
+			children = (
+				B0A967AA2CB50F7200AB68FD /* FriendView.swift */,
+				B0A967AE2CB5101100AB68FD /* AddFriendView.swift */,
+			);
+			path = Friends;
 			sourceTree = "<group>";
 		};
 		B0CF7F0D2CAA870D006D1087 = {
@@ -303,8 +321,9 @@
 		B0CF7FAF2CAA8DC1006D1087 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B0A967A92CB50E4C00AB68FD /* Friends */,
 				B0A967A12CB50C2A00AB68FD /* Settings */,
-				B0A967992CB50C1D00AB68FD /* DailyTaskView */,
+				B0A967992CB50C1D00AB68FD /* DailyTask */,
 				8110FF6B2CB0129F000A5888 /* Mood */,
 			);
 			path = Views;
@@ -313,6 +332,7 @@
 		B0CF7FB22CAA8E14006D1087 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				B0A967B22CB5120200AB68FD /* Friend.swift */,
 				B0E0FA2D2CAF69940028F724 /* Mood.swift */,
 				B0CF7FB32CAA8E24006D1087 /* Task.swift */,
 				B081B1092CAA938000508E5D /* DateFormatter.swift */,
@@ -506,6 +526,7 @@
 				B081B10A2CAA938000508E5D /* DateFormatter.swift in Sources */,
 				B0E0FA322CAF6A270028F724 /* MoodDetailView.swift in Sources */,
 				B0E0FA342CAF6A300028F724 /* MoodTrackingView.swift in Sources */,
+				B0A967B72CB5139600AB68FD /* FriendsPickerView.swift in Sources */,
 				B0E0FA2E2CAF69940028F724 /* Mood.swift in Sources */,
 				B0A9679C2CB50C1D00AB68FD /* TaskCardView.swift in Sources */,
 				B0CF7F1C2CAA870D006D1087 /* ContentView.swift in Sources */,
@@ -517,11 +538,14 @@
 				B0A9676C2CB3FF7300AB68FD /* RandomActivity.swift in Sources */,
 				B081B1082CAA92CE00508E5D /* MoodView.swift in Sources */,
 				B0A967A32CB50C2A00AB68FD /* GeneralView.swift in Sources */,
+				B0A967B42CB5123700AB68FD /* Friend.swift in Sources */,
 				B0CF7FB42CAA8E24006D1087 /* Task.swift in Sources */,
 				B0CF7F1A2CAA870D006D1087 /* a2_s3911598App.swift in Sources */,
 				B0A9676A2CB3F92B00AB68FD /* ImagePicker.swift in Sources */,
+				B0A967AF2CB5101100AB68FD /* AddFriendView.swift in Sources */,
 				B0A967A22CB50C2A00AB68FD /* ColorThemeView.swift in Sources */,
 				B0A9678D2CB40C3400AB68FD /* TaskCodable.swift in Sources */,
+				B0A967AB2CB50F7200AB68FD /* FriendView.swift in Sources */,
 				B0A9679B2CB50C1D00AB68FD /* DailyTaskView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 struct CreateTaskView: View {
     @Binding var isPresented: Bool
     
@@ -14,8 +15,11 @@ struct CreateTaskView: View {
     @State private var time = Date()
     @State private var showImagePicker = false
     @State private var selectedImage: UIImage?
+    @State private var selectedFriends: [Friend] = []
+    @State private var showFriendsPicker = false
     @StateObject private var activityModel = ActivityModel()
     @Environment(\.modelContext) private var modelContext
+    @Query private var friends: [Friend]
     
     var body: some View {
         NavigationView {
@@ -101,7 +105,7 @@ struct CreateTaskView: View {
                     .padding(.top, 16)
                     
                     Button(action: {
-                        // Action for sharing the task with others
+                        showFriendsPicker = true
                     }) {
                         Text("Doing this with...")
                             .font(Font.custom("Chalkboard SE", size: 18))
@@ -140,6 +144,9 @@ struct CreateTaskView: View {
                     .font(.custom("Chalkboard SE", size: 18))
                 }
             }
+            .sheet(isPresented: $showFriendsPicker) {
+                FriendsPickerView(friends: friends, selectedFriends: $selectedFriends)
+            }
         }
     }
     
@@ -152,7 +159,7 @@ struct CreateTaskView: View {
             title: title,
             taskDescription: description,
             time: time,
-            sharedWith: [],
+            sharedWith: selectedFriends.map { $0.name },
             imageData: selectedImage?.jpegData(compressionQuality: 0.8)
         )
         modelContext.insert(newTask)

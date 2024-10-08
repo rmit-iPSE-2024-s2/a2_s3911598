@@ -16,7 +16,7 @@ struct a2_s3911598App: App {
             ContentView()
                 .preferredColorScheme(isDarkMode ? .dark : .light) // base on  isDarkMode to set environment
         }
-        .modelContainer(for: [Mood.self, Task.self])
+        .modelContainer(for: [Mood.self, Task.self, Friend.self])
     }
 }
 
