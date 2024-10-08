@@ -18,8 +18,8 @@ struct ContentView: View {
         } else {
             // 未登录时显示登录页面
             VStack {
-                Text("SwiftUI Login Demo")
-                    .modifier(TitleStyle())
+//                Text("SwiftUI Login Demo")
+//                    .modifier(TitleStyle())
                 
                 Button("Log in") {
                     login()
@@ -73,16 +73,16 @@ struct MainTabView: View {
         TabView {
             NavigationView {
                 DailyTaskView()
-                    .navigationBarItems(trailing: HStack {
-                        Text("Welcome, \(userProfile.name)")
-                            .font(.subheadline)
-                            .foregroundColor(.blue)
-                        Button("Logout", action: logoutAction)
-                            .padding(8)
-                            .background(Color.blue)
-                            .foregroundColor(.white)
-                            .cornerRadius(8)
-                    })
+//                    .navigationBarItems(trailing: HStack {
+//                        Text("Welcome, \(userProfile.name)")
+//                            .font(.subheadline)
+//                            .foregroundColor(.blue)
+//                        Button("Logout", action: logoutAction)
+//                            .padding(8)
+//                            .background(Color.blue)
+//                            .foregroundColor(.white)
+//                            .cornerRadius(8)
+//                    })
             }
             .tabItem {
                 Label("Tasks", systemImage: "list.bullet")
@@ -115,12 +115,7 @@ struct MainTabView: View {
 }
 
 
-//struct SettingView: View {
-//    var body: some View {
-//        Text("Settings Content")
-//            .navigationTitle("Settings")
-//    }
-//}
+
 
 // 自定义 ViewModifier 和 ButtonStyle
 struct TitleStyle: ViewModifier {

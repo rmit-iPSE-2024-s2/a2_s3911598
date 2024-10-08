@@ -28,7 +28,7 @@ struct SettingsView: View {
                             SettingItemView(iconName: "wrench.fill", title: "General", backgroundColor: Color.gray.opacity(0.2))
                         }
             SettingItemView(iconName: "lock.fill", title: "Privacy", backgroundColor: Color.blue.opacity(0.2))
-            SettingItemView(iconName: "doc.text.fill", title: "Terms", backgroundColor: Color.yellow.opacity(0.2))
+            SettingItemView(iconName: "doc.text.fill", title: "About Us", backgroundColor: Color.yellow.opacity(0.2))
             
             Spacer()
             

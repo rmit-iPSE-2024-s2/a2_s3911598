@@ -2,7 +2,7 @@
 //  Friend.swift
 //  a2_s3911598
 //
-//  Created by zachary.zhao on 8/10/2024.
+//  Created by lea.Wang on 8/10/2024.
 //
 
 import SwiftData

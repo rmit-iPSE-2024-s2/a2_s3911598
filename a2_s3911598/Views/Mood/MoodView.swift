@@ -7,7 +7,7 @@ struct MoodView: View {
     @State private var showMoodTracking = false
     @State private var isActive = false
     
-    // SwiftData 相关
+    // SwiftData related
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \Mood.date, order: .reverse) private var moodData: [Mood]
 
@@ -19,7 +19,7 @@ struct MoodView: View {
                     .font(.custom("Chalkboard SE", size: 24))
                     .padding([.leading, .top], 16)
                 
-                // 最近情绪记录部分
+                // Recent mood record section
                 cardView {
                     VStack(alignment: .leading, spacing: 10) {
                         HStack {
@@ -39,12 +39,11 @@ struct MoodView: View {
                             }
                             .sheet(isPresented: $showCalendar) {
                                 CalendarView()
-                            
                             }
                         }
                         .padding(.horizontal)
                         
-                        // 显示最近的情绪数据
+                        // Display recent mood data
                         if let recentMood = moodData.last {
                             HStack(alignment: .top) {
                                 Text("Recent")
@@ -61,7 +60,7 @@ struct MoodView: View {
                     .padding(.vertical)
                 }
                 
-                // “How do you feel today” 卡片
+                // “How do you feel today” card
                 cardView {
                     VStack(alignment: .leading, spacing: 10) {
                         HStack {
@@ -71,7 +70,7 @@ struct MoodView: View {
                         }
                         .padding(.horizontal)
                         
-                        // Go record 按钮
+                        // Go record button
                         Button(action: {
                             showMoodTracking = true
                         }) {
@@ -90,7 +89,7 @@ struct MoodView: View {
                     .padding(.vertical)
                 }
                 
-                // 显示今天的心情记录
+                // Display today's mood record
                 if let todayMood = moodForToday() {
                     cardView {
                         VStack(alignment: .leading, spacing: 10) {
@@ -100,12 +99,24 @@ struct MoodView: View {
                                 .font(Font.custom("Chalkboard SE", size: 18))
                             Text("Mood: \(getMoodDescription(for: todayMood.moodLevel))")
                                 .font(Font.custom("Chalkboard SE", size: 18))
+                            
+                            // Share this mood button
+                            ShareLink(item: "Today I felt \(getMoodDescription(for: todayMood.moodLevel)) at \(timeFormatter.string(from: todayMood.date)).") {
+                                Text("Share this with...")
+                                    .font(Font.custom("Chalkboard SE", size: 16))
+                                    .padding()
+                                    .frame(maxWidth: .infinity)
+                                    .background(Color.green)
+                                    .foregroundColor(.white)
+                                    .cornerRadius(10)
+                            }
+                            .padding(.top, 10)
                         }
                         .padding()
                     }
                     .padding(.bottom)
                 } else {
-                    // 如果没有今天的心情记录，显示提示信息
+                    // If there's no mood record for today, show a placeholder message
                     Text("No mood recorded for today yet.")
                         .font(Font.custom("Chalkboard SE", size: 18))
                         .foregroundColor(.gray)
@@ -118,19 +129,19 @@ struct MoodView: View {
         .background(Color("AppBackground").edgesIgnoringSafeArea(.all))
     }
     
-    // 获取当天的心情记录
+    // Get today's mood record
     func moodForToday() -> Mood? {
         return moodData.first(where: { Calendar.current.isDateInToday($0.date) })
     }
     
-    // 时间格式化器
+    // Time formatter
     var timeFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
         return formatter
     }
     
-    // Helper: 获取情绪描述
+    // Helper: Get mood description
     func getMoodDescription(for mood: String) -> String {
         switch mood {
         case "Very Unpleasant": return "Very Unpleasant"

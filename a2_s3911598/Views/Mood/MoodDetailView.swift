@@ -5,6 +5,7 @@
 //  Created by Lea Wang on 3/10/2024.
 //
 
+
 import SwiftUI
 
 struct MoodDetailView: View {
@@ -16,25 +17,25 @@ struct MoodDetailView: View {
 
     var body: some View {
         VStack(alignment: .center) {
-            // 显示当前日期
+            // Display current date
             Text(currentDate, formatter: dateFormatter)
                 .font(Font.custom("Chalkboard SE", size: 18))
                 .padding(.top, 20)
 
-            // 显示用户选择的情绪图片
+            // Display the selected mood image
             Image(imageName(for: selectedMood))
                 .resizable()
                 .scaledToFit()
                 .frame(width: 100, height: 100)
                 .padding(.top, 20)
 
-            // 显示选择的情绪标签
+            // Display selected mood label
             Text("“ \(selectedMood) ”")
                 .font(Font.custom("Chalkboard SE", size: 30))
                 .fontWeight(.bold)
                 .padding(.vertical, 10)
 
-            // 显示情绪描述文本
+            // Display mood description text
             Text(displayText(for: selectedMood))
                 .font(Font.custom("Chalkboard SE", size: 18))
                 .padding(.bottom, 10)
@@ -42,7 +43,7 @@ struct MoodDetailView: View {
                 .background(Color.white.opacity(0.8))
                 .cornerRadius(10)
 
-            // 输入情绪备注
+            // Input mood notes
             TextField("Write down your mood", text: $moodText)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .font(Font.custom("Chalkboard SE", size: 16))
@@ -52,7 +53,7 @@ struct MoodDetailView: View {
 
             Spacer()
 
-            // 完成按钮
+            // Done button
             Button(action: {
                 self.isActive = false
                 self.saveMood()
@@ -75,27 +76,29 @@ struct MoodDetailView: View {
         .background(Color(UIColor.systemGray5).edgesIgnoringSafeArea(.all))
     }
 
-    // Helper 函数：根据情绪标签返回图片名称
+    // Helper function: returns image name based on mood label
     func imageName(for mood: String) -> String {
         switch mood {
         case "Slightly pleasant":
-            return "slightlyUnpleasant"
+            return "SlightlyPleasant"
         case "Pleasant":
-            return "happy"
+            return "Happy"
         case "Very pleasant":
-            return "very happy"
-        case "Very unpleasant":
+            return "VeryHappy"
+        case "Very Unpleasant":
             return "VeryUnpleasant"
+        case "Slightly UnPleasant":
+            return "SlightlyUnPleasant"
         case "Unpleasant":
-            return "unpleasant"
+            return "Unpleasant"
         default:
-            return "normal"
+            return "Normal"
         }
     }
 
-    // Helper 函数：根据情绪标签返回描述文本
+    // Helper function: returns description text based on mood label
     func displayText(for mood: String) -> String {
-        switch mood.lowercased() {  // 将 mood 转换为小写
+        switch mood.lowercased() {  // Convert mood to lowercase
         case "slightly pleasant":
             return "Keep calm and carry on."
         case "pleasant", "very pleasant":
@@ -113,7 +116,7 @@ struct MoodDetailView: View {
     func saveMood() {
         let newMood = Mood(date: currentDate, moodLevel: selectedMood, notes: moodText)
         modelContext.insert(newMood)
-//        context.save()
-       }
+
+    }
 }
 

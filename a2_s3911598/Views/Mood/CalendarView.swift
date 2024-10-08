@@ -5,13 +5,13 @@ struct CalendarView: View {
     @Environment(\.modelContext) private var modelContext
     @State private var selectedDate: Date? = nil
     @Query private var allMoods: [Mood]
-    // 当前月份
+    // Current month
     @State private var currentMonth: Date = Date()
     
     var body: some View {
         VStack {
             
-            // 月份切换器
+            // Month switcher
             HStack {
                 Button(action: previousMonth) {
                     Image(systemName: "chevron.left")
@@ -31,9 +31,9 @@ struct CalendarView: View {
             }
             .padding()
 
-            // 日历部分包裹在卡片内，带浅灰色背景和圆角
+            // Calendar wrapped in a card with a light gray background and rounded corners
             VStack {
-                // 显示星期几
+                // Display weekdays
                 HStack {
                     ForEach(["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], id: \.self) { day in
                         Text(day)
@@ -44,24 +44,24 @@ struct CalendarView: View {
                 }
                 .padding(.bottom, 5)
 
-                // 日历部分
+                // Calendar
                 let days = generateDaysInMonth(for: currentMonth)
                 LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7), spacing: 10) {
                     ForEach(days, id: \.self) { date in
                         VStack {
                             if let date = date {
                                 Text(dayString(from: date))
-                                    .font(.subheadline)  // 改为较小的字体
+                                    .font(.subheadline)  // Use smaller font size
                                     .foregroundColor(.black)
                                 
-                                // 获取该日期的最后一个情绪记录
+                                // Get the last mood record for the date
                                 if let mood = moodForDate(date) {
                                     moodIcon(for: mood.moodLevel)
                                 } else {
                                     Circle().fill(Color.gray.opacity(0.3)).frame(width: 30, height: 30)
                                 }
                             } else {
-                                // 用于填充空白的天数
+                                // Empty day slots for padding
                                 Text("")
                                     .frame(width: 30, height: 30)
                                     .background(Color.clear)
@@ -79,11 +79,11 @@ struct CalendarView: View {
                 }
             }
             .padding()
-            .background(Color.gray.opacity(0.1))  // 设置浅灰色背景的卡片
+            .background(Color.gray.opacity(0.1))  // Light gray background card
             .cornerRadius(15)
             .padding()
 
-            // 显示选中的日期记录和心情
+            // Display selected date's mood records
             VStack {
                 if let selectedDate = selectedDate {
                     showMoodsForDate(selectedDate)
@@ -92,7 +92,7 @@ struct CalendarView: View {
                         .padding()
                 }
             }
-            .frame(maxWidth: .infinity)  // 让内容容器更大
+            .frame(maxWidth: .infinity)  // Expand container width
             .background(Color(UIColor.systemBackground))
             .cornerRadius(15)
             .padding()
@@ -100,7 +100,7 @@ struct CalendarView: View {
         .background(Color(UIColor.systemGroupedBackground))
     }
 
-    // 显示指定日期的心情记录
+    // Display mood records for the selected date
     @ViewBuilder
     func showMoodsForDate(_ date: Date) -> some View {
         VStack {
@@ -119,12 +119,12 @@ struct CalendarView: View {
         .padding()
     }
 
-    // 获取给定日期的心情记录
+    // Get mood record for a given date
     func moodForDate(_ date: Date) -> Mood? {
         return allMoods.last(where: { Calendar.current.isDate($0.date, inSameDayAs: date) })
     }
     
-    // 显示心情图标
+    // Display mood icon
     func moodIcon(for moodLevel: String) -> some View {
         let imageName: String
         switch moodLevel {
@@ -137,12 +137,12 @@ struct CalendarView: View {
         case "Very Pleasant": imageName = "VeryHappy"
         default: imageName = "questionmark.circle"
         }
-        return Image(imageName)  // 使用你添加的 asset 中的图片
+        return Image(imageName)  // Using images from assets
             .resizable()
             .frame(width: 30, height: 30)
     }
 
-
+    // Generate days in the current month
     func generateDaysInMonth(for date: Date) -> [Date?] {
         guard let range = Calendar.current.range(of: .day, in: .month, for: date),
               let firstOfMonth = Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: date)) else {
@@ -150,7 +150,7 @@ struct CalendarView: View {
         }
         
         var calendar = Calendar.current
-        calendar.firstWeekday = 2 // 将星期一设置为每周的第一天，2表示星期一
+        calendar.firstWeekday = 2 // Set Monday as the first day of the week
         
         let firstDayOfWeek = calendar.component(.weekday, from: firstOfMonth) - calendar.firstWeekday
         let daysBefore = Array(repeating: Date?.none, count: firstDayOfWeek < 0 ? 0 : firstDayOfWeek)
@@ -161,28 +161,27 @@ struct CalendarView: View {
         return daysBefore + daysInMonth
     }
 
-
-    // 获取某天的字符串
+    // Get the string for the day
     func dayString(from date: Date) -> String {
         let components = Calendar.current.dateComponents([.day], from: date)
         return String(components.day ?? 0)
     }
     
-    // 获取月份的字符串
+    // Get the string for the month and year
     func monthYearString(from date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM yyyy"
         return formatter.string(from: date)
     }
 
-    // 切换到上一个月
+    // Switch to the previous month
     func previousMonth() {
         if let newMonth = Calendar.current.date(byAdding: .month, value: -1, to: currentMonth) {
             currentMonth = newMonth
         }
     }
     
-    // 切换到下一个月
+    // Switch to the next month
     func nextMonth() {
         if let newMonth = Calendar.current.date(byAdding: .month, value: 1, to: currentMonth) {
             currentMonth = newMonth

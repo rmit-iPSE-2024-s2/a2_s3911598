@@ -2,7 +2,7 @@
 //  CurrentTaskWidget.swift
 //  CurrentTaskWidget
 //
-//  Created by zachary.zhao on 7/10/2024.
+//  Created by lea.Wang  on 7/10/2024.
 //
 
 import WidgetKit
