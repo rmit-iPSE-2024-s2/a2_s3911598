@@ -1,10 +1,3 @@
-//
-//  DailyTaskView.swift
-//  a1_s3911598
-//
-//  Created by Lea Wang on 27/8/2024.
-//
-
 import SwiftUI
 import SwiftData
 

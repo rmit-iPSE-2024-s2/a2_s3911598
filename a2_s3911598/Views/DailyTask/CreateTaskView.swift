@@ -19,14 +19,15 @@ struct CreateTaskView: View {
     @State private var showFriendsPicker = false
     @StateObject private var activityModel = ActivityModel()
     @Environment(\.modelContext) private var modelContext
+    @State private var showError = false
     @Query private var friends: [Friend]
     
     var body: some View {
         NavigationView {
-            VStack(alignment: .leading, spacing: 20) {
+            VStack(alignment: .leading, spacing: 10) {
                 Text("Create a New Task")
                     .font(.custom("Chalkboard SE", size: 24))
-                    .padding([.top, .leading], 16)
+                    .padding([.leading], 16)
                 
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Task Title")
@@ -39,6 +40,13 @@ struct CreateTaskView: View {
                         .background(Color(white: 0.9))
                         .cornerRadius(10)
                         .padding(.horizontal)
+                    
+                    if showError && title.isEmpty {
+                        Text("Title is required.")
+                            .foregroundColor(.red)
+                            .font(.custom("Chalkboard SE", size: 14))
+                            .padding(.leading, 10)
+                    }
                     
                     Text("Task Description")
                         .font(.custom("Chalkboard SE", size: 18))
@@ -57,7 +65,6 @@ struct CreateTaskView: View {
                     
                     DatePicker("Select Time", selection: $time, displayedComponents: .hourAndMinute)
                         .labelsHidden()
-                        .font(.custom("Chalkboard SE", size: 18))
                         .padding()
                         .background(Color(white: 0.9))
                         .cornerRadius(10)
@@ -70,16 +77,17 @@ struct CreateTaskView: View {
                             Image(uiImage: image)
                                 .resizable()
                                 .scaledToFill()
-                                .frame(height: 200)
+                                .frame(height: 150)
                                 .clipped()
                                 .cornerRadius(10)
                                 .padding(.horizontal)
                         } else {
                             Rectangle()
                                 .fill(Color(white: 0.9))
-                                .frame(height: 200)
+                                .frame(height: 150)
                                 .overlay(
-                                    Text("Tap to select an image")
+                                    Text("Add photos")
+                                        .font(.custom("Chalkboard SE", size: 18))
                                         .foregroundColor(.gray)
                                 )
                                 .cornerRadius(10)
@@ -90,33 +98,34 @@ struct CreateTaskView: View {
                         ImagePicker(selectedImage: $selectedImage)
                     }
                     
-                    Button(action: {
-                        fetchRandomTask()
-                    }) {
-                        Text("Generate Random Task")
-                            .font(Font.custom("Chalkboard SE", size: 18))
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color.blue)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
-                            .padding(.horizontal)
-                    }
-                    .padding(.top, 16)
+                    HStack {
+                         Button(action: {
+                             fetchRandomTask()
+                         }) {
+                             Text("Roll a Random Task!")
+                                 .font(Font.custom("Chalkboard SE", size: 18))
+                                 .frame(maxWidth: .infinity)
+                                 .padding()
+                                 .background(Color("primaryMauve"))
+                                 .foregroundColor(.white)
+                                 .cornerRadius(10)
+                         }
+
+                         Button(action: {
+                             showFriendsPicker = true
+                         }) {
+                             Text("Team Up with Someone")
+                                 .font(Font.custom("Chalkboard SE", size: 18))
+                                 .frame(maxWidth: .infinity)
+                                 .padding()
+                                 .background(Color("primaryMauve"))
+                                 .foregroundColor(.white)
+                                 .cornerRadius(10)
+                         }
+                     }
+                     .padding(.horizontal)
+                     .padding(.top, 16)
                     
-                    Button(action: {
-                        showFriendsPicker = true
-                    }) {
-                        Text("Doing this with...")
-                            .font(Font.custom("Chalkboard SE", size: 18))
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color("primaryMauve"))
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
-                            .padding(.horizontal)
-                    }
-                    .padding(.top, 16)
                 }
                 .padding([.leading, .trailing], 8)
                 .onChange(of: activityModel.result) {
@@ -138,14 +147,18 @@ struct CreateTaskView: View {
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Save") {
-                        saveTask()
-                        isPresented = false
+                        if title.isEmpty {
+                            showError = true
+                        } else {
+                            saveTask()
+                            isPresented = false
+                        }
                     }
                     .font(.custom("Chalkboard SE", size: 18))
                 }
             }
             .sheet(isPresented: $showFriendsPicker) {
-                FriendsPickerView(friends: friends, selectedFriends: $selectedFriends)
+                FriendsPickerView(friends: friends, selectedFriends: $selectedFriends,isPresented: $showFriendsPicker)
             }
         }
     }
@@ -181,3 +194,5 @@ struct CreateTaskView: View {
     }
 
 }
+
+

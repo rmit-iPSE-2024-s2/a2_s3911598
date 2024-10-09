@@ -136,7 +136,7 @@ struct MoodView: View {
             }
         }
         .sheet(isPresented: $showFriendsPicker) {
-            FriendsPickerView(friends: friends, selectedFriends: $selectedFriends)
+            FriendsPickerView(friends: friends, selectedFriends: $selectedFriends,isPresented: $showFriendsPicker)
         }
         .background(Color("AppBackground").edgesIgnoringSafeArea(.all))
     }
