@@ -6,10 +6,15 @@ struct MoodView: View {
     @State private var showCalendar = false
     @State private var showMoodTracking = false
     @State private var isActive = false
+    @State private var selectedFriends: [Friend] = []
+    @State private var showFriendsPicker = false
+   
+   
     
     // SwiftData related
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \Mood.date, order: .reverse) private var moodData: [Mood]
+    @Query private var friends: [Friend]
 
     
     var body: some View {
@@ -75,12 +80,13 @@ struct MoodView: View {
                             showMoodTracking = true
                         }) {
                             Text("Go record")
-                                .font(Font.custom("Chalkboard SE", size: 16))
-                                .padding()
+                                .font(Font.custom("Chalkboard SE", size: 18))
                                 .frame(maxWidth: .infinity)
-                                .background(Color.blue)
+                                .padding()
+                                .background(Color("primaryMauve"))
                                 .foregroundColor(.white)
                                 .cornerRadius(10)
+                                .padding(.horizontal)
                         }
                         .sheet(isPresented: $showMoodTracking) {
                             MoodTrackingView(isActive: $showMoodTracking)
@@ -100,23 +106,26 @@ struct MoodView: View {
                             Text("Mood: \(getMoodDescription(for: todayMood.moodLevel))")
                                 .font(Font.custom("Chalkboard SE", size: 18))
                             
-                            // Share this mood button
-                            ShareLink(item: "Today I felt \(getMoodDescription(for: todayMood.moodLevel)) at \(timeFormatter.string(from: todayMood.date)).") {
+                            // "Share this with..." button
+                            Button(action: {
+                                showFriendsPicker = true
+                            }) {
                                 Text("Share this with...")
-                                    .font(Font.custom("Chalkboard SE", size: 16))
-                                    .padding()
+                                    .font(Font.custom("Chalkboard SE", size: 18))
                                     .frame(maxWidth: .infinity)
-                                    .background(Color.green)
+                                    .padding()
+                                    .background(Color("primaryMauve"))
                                     .foregroundColor(.white)
                                     .cornerRadius(10)
+                                    .padding(.horizontal)
                             }
-                            .padding(.top, 10)
+                            .padding(.top, 16)
                         }
                         .padding()
                     }
                     .padding(.bottom)
                 } else {
-                    // If there's no mood record for today, show a placeholder message
+                    // If no mood record for today, show a placeholder message
                     Text("No mood recorded for today yet.")
                         .font(Font.custom("Chalkboard SE", size: 18))
                         .foregroundColor(.gray)
@@ -125,6 +134,9 @@ struct MoodView: View {
                 
                 Spacer()
             }
+        }
+        .sheet(isPresented: $showFriendsPicker) {
+            FriendsPickerView(friends: friends, selectedFriends: $selectedFriends)
         }
         .background(Color("AppBackground").edgesIgnoringSafeArea(.all))
     }
@@ -148,6 +160,7 @@ struct MoodView: View {
         case "Unpleasant": return "Unpleasant"
         case "Neutral": return "Neutral"
         case "Pleasant": return "Pleasant"
+        case "Slightly Pleasant": return "Slightly Pleasant"
         case "Very Pleasant": return "Very Pleasant"
         default: return "Unknown"
         }

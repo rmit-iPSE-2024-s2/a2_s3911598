@@ -38,11 +38,13 @@ struct SettingsView: View {
                 logoutAction()
             }) {
                 Text("Logout")
+                    .font(Font.custom("Chalkboard SE", size: 18))
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(Color.red)
+                    .background(Color("primaryMauve"))
                     .foregroundColor(.white)
-                    .cornerRadius(8)
+                    .cornerRadius(10)
+                    .padding(.horizontal)
             }
             .padding()
         }
