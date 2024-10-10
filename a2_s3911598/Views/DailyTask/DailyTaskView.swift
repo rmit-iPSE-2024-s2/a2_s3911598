@@ -4,18 +4,16 @@ import SwiftData
 struct DailyTaskView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \Task.time, order: .forward) public var tasks: [Task]
-    var testTasks: [Task]? = nil
     private var injectedModelContext: ModelContext?
 
     @State private var showingCreateTaskView = false
     
-    init(testTasks: [Task]? = nil, modelContext: ModelContext? = nil) {
-        self.testTasks = testTasks
+    init(modelContext: ModelContext? = nil) {
         self.injectedModelContext = modelContext
     }
 
     var body: some View {
-        let currentTasks = testTasks ?? tasks
+        let currentTasks = tasks
         VStack(alignment: .leading) {
             HStack {
                 Text("Daily Tasks")

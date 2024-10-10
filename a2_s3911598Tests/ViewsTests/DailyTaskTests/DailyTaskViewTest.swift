@@ -30,9 +30,10 @@ final class DailyTaskViewTests: XCTestCase {
         // Arrange
         let task1 = Task(title: "My Task", taskDescription: "Test task", time: Date(), sharedWith: [])
         let task2 = Task(title: "Shared Task", taskDescription: "Shared task", time: Date(), sharedWith: ["friend@example.com"])
-        
+        modelContext.insert(task1)
+        modelContext.insert(task2)
         // Act
-        let sut = DailyTaskView(testTasks: [task1, task2])
+        let sut = DailyTaskView(modelContext: modelContext)
         
         let myTasks = sut.getMyTasks(from: [task1, task2])
         let sharedTasks = sut.getSharedTasks(from: [task1, task2])
@@ -51,7 +52,7 @@ final class DailyTaskViewTests: XCTestCase {
         modelContext.insert(task)
         
         // Act
-        let sut = DailyTaskView(testTasks: [task], modelContext: modelContext)
+        let sut = DailyTaskView(modelContext: modelContext)
         sut.deleteTask(task)
         
         // Assert
