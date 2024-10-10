@@ -15,21 +15,31 @@ struct CalendarView: View {
             HStack {
                 Button(action: previousMonth) {
                     Image(systemName: "chevron.left")
+                        .padding()
+                        .background(Color.gray.opacity(0.2))
+                        .cornerRadius(8)
+                        .shadow(radius: 2)
                 }
-                
+
                 Spacer()
                 
                 Text(monthYearString(from: currentMonth))
                     .font(.title)
                     .bold()
+                    .transition(.opacity)
                 
                 Spacer()
                 
                 Button(action: nextMonth) {
                     Image(systemName: "chevron.right")
+                        .padding()
+                        .background(Color.gray.opacity(0.2))
+                        .cornerRadius(8)
+                        .shadow(radius: 2)
                 }
             }
             .padding()
+
 
             // Calendar wrapped in a card with a light gray background and rounded corners
             VStack {
@@ -79,7 +89,7 @@ struct CalendarView: View {
                 }
             }
             .padding()
-            .background(Color.gray.opacity(0.1))  // Light gray background card
+            .background(Color.purple.opacity(0.1))   // Light gray background card
             .cornerRadius(15)
             .padding()
 
@@ -111,7 +121,6 @@ struct CalendarView: View {
             if let mood = moodForDate(date) {
                 Text("Mood Level: \(mood.moodLevel)")
                 Text("Notes: \(mood.notes)")
-                Text("Shared With: \(mood.sharedWith.joined(separator: ", "))")
             } else {
                 Text("No records for this date.")
             }

@@ -67,7 +67,7 @@ struct MoodDetailView: View {
                     Spacer()
                 }
                 .padding()
-                .background(Color.blue)
+                .background(Color("primaryMauve")) 
                 .cornerRadius(10)
             }
             .padding(.bottom, 20)

@@ -158,8 +158,17 @@ struct CreateTaskView: View {
                 }
             }
             .sheet(isPresented: $showFriendsPicker) {
-                FriendsPickerView(friends: friends, selectedFriends: $selectedFriends,isPresented: $showFriendsPicker)
+                FriendsPickerView(
+                    friends: friends,
+                    selectedFriends: $selectedFriends,
+                    isPresented: $showFriendsPicker
+//                    showShareResult: .constant(false),
+//                    shareMessage: .constant(""),
+//                    heartAnimation: .constant(false),
+//                    showShareAnimation: false
+                )
             }
+
         }
     }
     

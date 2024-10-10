@@ -8,15 +8,14 @@ struct MoodView: View {
     @State private var isActive = false
     @State private var selectedFriends: [Friend] = []
     @State private var showFriendsPicker = false
-   
-   
+    @State private var showMoodShareCard = false  // Show the Mood card
+    
     
     // SwiftData related
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \Mood.date, order: .reverse) private var moodData: [Mood]
     @Query private var friends: [Friend]
 
-    
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
@@ -48,19 +47,7 @@ struct MoodView: View {
                         }
                         .padding(.horizontal)
                         
-                        // Display recent mood data
-                        if let recentMood = moodData.last {
-                            HStack(alignment: .top) {
-                                Text("Recent")
-                                    .font(Font.custom("Chalkboard SE", size: 16))
-                                    .foregroundColor(.gray)
-                                Text(dateFormatter.string(from: recentMood.date))
-                                    .font(Font.custom("Chalkboard SE", size: 14))
-                                Text(getMoodDescription(for: recentMood.moodLevel))
-                                    .font(Font.custom("Chalkboard SE", size: 20))
-                                    .foregroundColor(.primary)
-                            }
-                        }
+                    
                     }
                     .padding(.vertical)
                 }
@@ -69,10 +56,10 @@ struct MoodView: View {
                 cardView {
                     VStack(alignment: .leading, spacing: 10) {
                         HStack {
-                            Text("How do you feel today?")
-                                .font(Font.custom("Chalkboard SE", size: 20))
-                            Spacer()
-                        }
+                                            Text("How do you feel today?")
+                                                .font(Font.custom("Chalkboard SE", size: 26))
+                                            Spacer()
+                                        }
                         .padding(.horizontal)
                         
                         // Go record button
@@ -87,12 +74,14 @@ struct MoodView: View {
                                 .foregroundColor(.white)
                                 .cornerRadius(10)
                                 .padding(.horizontal)
-                        }
-                        .sheet(isPresented: $showMoodTracking) {
-                            MoodTrackingView(isActive: $showMoodTracking)
+                            }
+                        
+                            .padding(.top, 16)
+                            .sheet(isPresented: $showMoodTracking) {
+                                MoodTrackingView(isActive: $showMoodTracking)
                         }
                     }
-                    .padding(.vertical)
+                    .padding(.vertical, 16)
                 }
                 
                 // Display today's mood record
@@ -101,10 +90,20 @@ struct MoodView: View {
                         VStack(alignment: .leading, spacing: 10) {
                             Text("Today's Mood Record")
                                 .font(Font.custom("Chalkboard SE", size: 20))
+                            
                             Text("Time: \(timeFormatter.string(from: todayMood.date))")
                                 .font(Font.custom("Chalkboard SE", size: 18))
+                            
                             Text("Mood: \(getMoodDescription(for: todayMood.moodLevel))")
                                 .font(Font.custom("Chalkboard SE", size: 18))
+                            
+                            // Display notes if available
+                            if !todayMood.notes.isEmpty {
+                                            Text("Notes: \(todayMood.notes)")
+                                                .font(Font.custom("Chalkboard SE", size: 18))
+                                                .padding(.top, 4)
+                                        }
+                       
                             
                             // "Share this with..." button
                             Button(action: {
@@ -135,8 +134,19 @@ struct MoodView: View {
                 Spacer()
             }
         }
-        .sheet(isPresented: $showFriendsPicker) {
-            FriendsPickerView(friends: friends, selectedFriends: $selectedFriends,isPresented: $showFriendsPicker)
+        .sheet(isPresented: $showFriendsPicker, onDismiss: {
+            if !selectedFriends.isEmpty {
+                showMoodShareCard = true
+            }
+        }) {
+            FriendsPickerView(friends: friends, selectedFriends: $selectedFriends, isPresented: $showFriendsPicker)
+        }
+        .sheet(isPresented: $showMoodShareCard) {
+            MoodShareCardView(
+                mood: moodForToday()!,
+                selectedFriends: selectedFriends,
+                isPresented: $showMoodShareCard
+            )
         }
         .background(Color("AppBackground").edgesIgnoringSafeArea(.all))
     }
@@ -180,3 +190,84 @@ struct MoodView: View {
         }
     }
 }
+
+struct MoodShareCardView: View {
+    let mood: Mood
+    let selectedFriends: [Friend]
+    @Binding var isPresented: Bool
+
+    var body: some View {
+        VStack(spacing: 20) {
+            Text("Share Your Mood")
+                .font(.custom("Chalkboard SE", size: 24))
+                .padding(.top)
+                .multilineTextAlignment(.center)
+            
+            Text("Mood: \(mood.moodLevel)")
+                .font(.custom("Chalkboard SE", size: 20))
+                .multilineTextAlignment(.center)
+            
+            Text("Time: \(timeFormatter.string(from: mood.date))")
+                .font(.custom("Chalkboard SE", size: 20))
+                .multilineTextAlignment(.center)
+            
+            // Display notes if available
+            if !mood.notes.isEmpty {
+                Text("Notes: \(mood.notes)")
+                    .font(.custom("Chalkboard SE", size: 20))
+                    .padding(.top, 4)
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity, alignment: .center)
+            }
+            
+            HStack {
+                Button(action: {
+                    // Handle share confirmation logic here
+                    isPresented = false
+                }) {
+                    Text("Confirm")
+                        .font(.custom("Chalkboard SE", size: 18))
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color("primaryMauve"))
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                }
+                
+                Button(action: {
+                    isPresented = false
+                }) {
+                    Text("Cancel")
+                        .font(.custom("Chalkboard SE", size: 18))
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color.gray)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                }
+            }
+            .padding(.horizontal)
+        }
+        .padding()
+        .frame(maxWidth: .infinity, alignment: .center)
+        .background(
+            LinearGradient(
+                gradient: Gradient(colors: [Color("primaryMauve"), Color("secondaryLilac")]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        )
+        .cornerRadius(16)
+        .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 4)
+        .padding()
+    }
+    
+    // Time formatter
+    var timeFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        return formatter
+    }
+}
+
+

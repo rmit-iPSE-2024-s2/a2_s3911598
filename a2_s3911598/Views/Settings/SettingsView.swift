@@ -1,10 +1,3 @@
-//
-//  SettingsView.swift
-//  a2_s3911598
-//
-//  Created by Lea Wang on 7/10/2024.
-//
-
 import SwiftUI
 import Auth0
 
@@ -14,7 +7,7 @@ struct SettingsView: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            // show welcome user
+            // Show welcome message
             HStack {
                 Text("Welcome, \(userProfile.name)")
                     .font(.title2)
@@ -23,17 +16,22 @@ struct SettingsView: View {
                 Spacer()
             }
             
-            // setting
+            // Settings options
             NavigationLink(destination: GeneralView()) {
-                            SettingItemView(iconName: "wrench.fill", title: "General", backgroundColor: Color.gray.opacity(0.2))
-                        }
-            SettingItemView(iconName: "lock.fill", title: "Privacy", backgroundColor: Color.blue.opacity(0.2))
-            SettingItemView(iconName: "doc.text.fill", title: "About Us", backgroundColor: Color.yellow.opacity(0.2))
+                SettingItemView(iconName: "wrench.fill", title: "General", backgroundColor: Color.gray.opacity(0.2))
+            }
+            
+            NavigationLink(destination: PrivacyView()) {
+                SettingItemView(iconName: "lock.fill", title: "Privacy", backgroundColor: Color.blue.opacity(0.2))
+            }
+            
+            NavigationLink(destination: AboutUsView()) {
+                SettingItemView(iconName: "doc.text.fill", title: "About Us", backgroundColor: Color.yellow.opacity(0.2))
+            }
             
             Spacer()
             
-            // log out button
-            // TODO: change it to a beauty layout
+            // Logout button with improved layout
             Button(action: {
                 logoutAction()
             }) {
@@ -82,8 +80,66 @@ struct SettingItemView: View {
     }
 }
 
+// About Us View
+struct AboutUsView: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text("About Us")
+                .font(.title)
+                .bold()
+                .padding(.bottom, 8)
+            
+            Text("TogetherWe is designed to bring people closer by allowing users to share their daily activities and emotions with loved ones. Our goal is to help users maintain meaningful connections, even when physical distance separates them.")
+                .font(.body)
+            
+            Text("With TogetherWe, you can easily document and share your moods and moments, ensuring that your friends and family stay updated on your life. We believe that small moments of empathy and understanding can make a big difference in maintaining strong, supportive relationships.")
+                .font(.body)
+            
+            Text("TogetherWe—Connecting hearts, bridging distances.")
+                .font(.body)
+                .italic()
+                .padding(.top, 8)
+            
+            Spacer()
+        }
+        .padding()
+        .background(Color(UIColor.systemGroupedBackground))
+        .navigationTitle("About Us")
+    }
+}
 
-
-
-
-
+// Privacy View
+struct PrivacyView: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text("Privacy")
+                .font(.title)
+                .bold()
+                .padding(.bottom, 8)
+            
+            Text("At TogetherWe, we are committed to protecting your privacy and ensuring that your personal data remains secure. Here’s how we handle your data:")
+                .font(.body)
+            
+            Text("• Data Encryption: All your data, including mood entries, tasks, and account information, is encrypted to ensure that it stays private and secure.")
+                .font(.body)
+            
+            Text("• User Control: You have full control over your data. You can manage, update, or delete your personal information directly from the app at any time.")
+                .font(.body)
+            
+            Text("• No Data Sharing: We do not share your data with third-party services without your explicit consent. Your data is solely used to enhance your experience within the app.")
+                .font(.body)
+            
+            Text("• Secure Authentication: TogetherWe uses secure authentication methods to protect your account from unauthorized access.")
+                .font(.body)
+            
+            Text("We value your trust and are dedicated to maintaining the confidentiality of your information. If you have any questions or concerns regarding your privacy, please contact us at support@togetherwe.com.")
+                .font(.body)
+                .padding(.top, 8)
+            
+            Spacer()
+        }
+        .padding()
+        .background(Color(UIColor.systemGroupedBackground))
+        .navigationTitle("Privacy")
+    }
+}

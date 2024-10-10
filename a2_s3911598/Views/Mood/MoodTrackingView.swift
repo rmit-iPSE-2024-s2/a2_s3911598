@@ -113,7 +113,7 @@ struct MoodTrackingView: View {
 
                 // Save mood and open detail page
                 Button(action: {
-                    // 更新 selectedMoodLabel
+                    // update selectedMoodLabel
                     self.selectedMoodLabel = moodLabels[Int(moodValue * Double(moodLabels.count - 1))]
                     self.showingMoodDetailView = true
                 }) {
@@ -125,7 +125,7 @@ struct MoodTrackingView: View {
                         Spacer()
                     }
                     .padding()
-                    .background(Color.blue)
+                    .background(Color("primaryMauve")) 
                     .cornerRadius(10)
                 }
                 .padding(.horizontal)
