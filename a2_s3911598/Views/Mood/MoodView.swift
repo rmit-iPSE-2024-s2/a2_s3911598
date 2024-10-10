@@ -8,7 +8,7 @@ struct MoodView: View {
     @State private var isActive = false
     @State private var selectedFriends: [Friend] = []
     @State private var showFriendsPicker = false
-    @State private var showMoodShareCard = false  // Show the Mood card
+//    @State private var showMoodShareCard = false  // Show the Mood card
     
     
     // SwiftData related
@@ -136,18 +136,18 @@ struct MoodView: View {
         }
         .sheet(isPresented: $showFriendsPicker, onDismiss: {
             if !selectedFriends.isEmpty {
-                showMoodShareCard = true
+//                showMoodShareCard = true
             }
         }) {
             FriendsPickerView(friends: friends, selectedFriends: $selectedFriends, isPresented: $showFriendsPicker)
         }
-        .sheet(isPresented: $showMoodShareCard) {
-            MoodShareCardView(
-                mood: moodForToday()!,
-                selectedFriends: selectedFriends,
-                isPresented: $showMoodShareCard
-            )
-        }
+//        .sheet(isPresented: $showMoodShareCard) {
+//            MoodShareCardView(
+//                mood: moodForToday()!,
+//                selectedFriends: selectedFriends,
+//                isPresented: $showMoodShareCard
+//            )
+//        }
         .background(Color("AppBackground").edgesIgnoringSafeArea(.all))
     }
     

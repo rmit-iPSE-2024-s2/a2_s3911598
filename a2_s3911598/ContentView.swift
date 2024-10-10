@@ -73,16 +73,7 @@ struct MainTabView: View {
         TabView {
             NavigationView {
                 DailyTaskView()
-//                    .navigationBarItems(trailing: HStack {
-//                        Text("Welcome, \(userProfile.name)")
-//                            .font(.subheadline)
-//                            .foregroundColor(.blue)
-//                        Button("Logout", action: logoutAction)
-//                            .padding(8)
-//                            .background(Color.blue)
-//                            .foregroundColor(.white)
-//                            .cornerRadius(8)
-//                    })
+
             }
             .tabItem {
                 Label("Tasks", systemImage: "list.bullet")
@@ -97,14 +88,14 @@ struct MainTabView: View {
             
             NavigationView {
                 FriendView()
-                    .navigationTitle("Friends")
+//                    .navigationTitle("Friends")
             }
             .tabItem {
                 Label("Friends", systemImage: "person.3.fill")
             }
             
             NavigationView {
-                            SettingsView(userProfile: userProfile, logoutAction: logoutAction) // 修改为 SettingsView
+                            SettingsView(userProfile: userProfile, logoutAction: logoutAction)
                                 .navigationTitle("Settings")
                         }
                         .tabItem {

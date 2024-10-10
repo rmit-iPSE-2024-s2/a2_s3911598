@@ -9,6 +9,7 @@ struct FriendsPickerView: View {
     @State private var showShareResult = false
     @State private var shareMessage = ""
     @State private var heartAnimation = false
+    @State private var showSelectionError = false
 
     var body: some View {
         NavigationView {
@@ -75,18 +76,22 @@ struct FriendsPickerView: View {
                         .listStyle(PlainListStyle())
                         
                         Button(action: {
-                            shareMessage = "Successfully shared with \(selectedFriends.map { $0.name }.joined(separator: ", "))"
-                            withAnimation(.spring()) {
-                                showShareResult = true
-                                heartAnimation = true
-                            }
-                            
-                            // 显示分享结果5秒钟，然后自动关闭页面
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                                withAnimation {
-                                    showShareResult = false
-                                    heartAnimation = false
-                                    isPresented = false
+                            if selectedFriends.isEmpty {
+                                showSelectionError = true
+                            } else {
+                                shareMessage = "Successfully shared with \(selectedFriends.map { $0.name }.joined(separator: ", "))"
+                                withAnimation(.spring()) {
+                                    showShareResult = true
+                                    heartAnimation = true
+                                }
+                                
+                                // 显示分享结果5秒钟，然后自动关闭页面
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                                    withAnimation {
+                                        showShareResult = false
+                                        heartAnimation = false
+                                        isPresented = false
+                                    }
                                 }
                             }
                         }) {
@@ -99,6 +104,13 @@ struct FriendsPickerView: View {
                                 .cornerRadius(10)
                                 .padding([.leading, .trailing], 16)
                                 .padding(.top, 10)
+                        }
+                        .alert(isPresented: $showSelectionError) {
+                            Alert(
+                                title: Text("No Friends Selected"),
+                                message: Text("Please select at least one friend to share with."),
+                                dismissButton: .default(Text("OK"))
+                            )
                         }
                     }
                 }
