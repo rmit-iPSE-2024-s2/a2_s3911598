@@ -3,11 +3,19 @@ import SwiftData
 
 struct DailyTaskView: View {
     @Environment(\.modelContext) private var modelContext
-    @Query(sort: \Task.time, order: .forward) private var tasks: [Task]
+    @Query(sort: \Task.time, order: .forward) public var tasks: [Task]
+    var testTasks: [Task]? = nil
+    private var injectedModelContext: ModelContext?
 
     @State private var showingCreateTaskView = false
+    
+    init(testTasks: [Task]? = nil, modelContext: ModelContext? = nil) {
+        self.testTasks = testTasks
+        self.injectedModelContext = modelContext
+    }
 
     var body: some View {
+        let currentTasks = testTasks ?? tasks
         VStack(alignment: .leading) {
             HStack {
                 Text("Daily Tasks")
@@ -26,8 +34,8 @@ struct DailyTaskView: View {
             }
 
             List {
-                let sharedTasks = tasks.filter { !$0.sharedWith.isEmpty }
-                let myTasks = tasks.filter { $0.sharedWith.isEmpty }
+                let sharedTasks = getSharedTasks(from: currentTasks)
+                let myTasks = getMyTasks(from: currentTasks)
 
                 Section(header: Text("Shared Tasks").font(.custom("Chalkboard SE", size: 20)).padding(.top, -10)) {
                     ForEach(sharedTasks, id: \.id) { task in
@@ -68,8 +76,17 @@ struct DailyTaskView: View {
         }
     }
 
-    private func deleteTask(_ task: Task) {
-        modelContext.delete(task)
+    func getMyTasks(from tasks: [Task]) -> [Task] {
+        tasks.filter { $0.sharedWith.isEmpty }
+    }
+    
+    func getSharedTasks(from tasks: [Task]) -> [Task] {
+        tasks.filter { !$0.sharedWith.isEmpty }
+    }
+    func deleteTask(_ task: Task) {
+        let context = injectedModelContext ?? modelContext
+        context.delete(task)
     }
 }
+
 
