@@ -95,7 +95,7 @@ struct CreateTaskView: View {
                         }
                     }
                     .sheet(isPresented: $showImagePicker) {
-                        ImagePicker(selectedImage: $selectedImage)
+                        ImagePickerViewModel(selectedImage: $selectedImage)
                     }
                     
                     HStack {
@@ -162,10 +162,6 @@ struct CreateTaskView: View {
                     friends: friends,
                     selectedFriends: $selectedFriends,
                     isPresented: $showFriendsPicker
-//                    showShareResult: .constant(false),
-//                    shareMessage: .constant(""),
-//                    heartAnimation: .constant(false),
-//                    showShareAnimation: false
                 )
             }
 

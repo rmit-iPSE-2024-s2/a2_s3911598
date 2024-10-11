@@ -14,7 +14,7 @@
 		81F7C4DE2CAB808C003E366F /* Auth0.plist in Resources */ = {isa = PBXBuildFile; fileRef = 81F7C4DD2CAB808B003E366F /* Auth0.plist */; };
 		B081B1082CAA92CE00508E5D /* MoodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B081B1072CAA92CE00508E5D /* MoodView.swift */; };
 		B081B10A2CAA938000508E5D /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B081B1092CAA938000508E5D /* DateFormatter.swift */; };
-		B0A9676A2CB3F92B00AB68FD /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A967692CB3F92B00AB68FD /* ImagePicker.swift */; };
+		B0A9676A2CB3F92B00AB68FD /* ImagePickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A967692CB3F92B00AB68FD /* ImagePickerViewModel.swift */; };
 		B0A9676C2CB3FF7300AB68FD /* RandomActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A9676B2CB3FF7300AB68FD /* RandomActivity.swift */; };
 		B0A967742CB4068600AB68FD /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0A967732CB4068500AB68FD /* WidgetKit.framework */; };
 		B0A967762CB4068600AB68FD /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0A967752CB4068600AB68FD /* SwiftUI.framework */; };
@@ -99,7 +99,7 @@
 		81F7C4DD2CAB808B003E366F /* Auth0.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Auth0.plist; sourceTree = "<group>"; };
 		B081B1072CAA92CE00508E5D /* MoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodView.swift; sourceTree = "<group>"; };
 		B081B1092CAA938000508E5D /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
-		B0A967692CB3F92B00AB68FD /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		B0A967692CB3F92B00AB68FD /* ImagePickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerViewModel.swift; sourceTree = "<group>"; };
 		B0A9676B2CB3FF7300AB68FD /* RandomActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomActivity.swift; sourceTree = "<group>"; };
 		B0A967712CB4068500AB68FD /* CurrentTaskWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CurrentTaskWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0A967732CB4068500AB68FD /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
@@ -206,12 +206,13 @@
 			path = Data;
 			sourceTree = "<group>";
 		};
-		B0A967682CB3F92200AB68FD /* Utils */ = {
+		B0A967682CB3F92200AB68FD /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				B0A967692CB3F92B00AB68FD /* ImagePicker.swift */,
+				810059FD2CB8C63B001EA0AF /* MoodViewModel.swift */,
+				B0A967692CB3F92B00AB68FD /* ImagePickerViewModel.swift */,
 			);
-			path = Utils;
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		B0A967722CB4068500AB68FD /* Frameworks */ = {
@@ -312,7 +313,7 @@
 			isa = PBXGroup;
 			children = (
 				B0A9678A2CB4077400AB68FD /* a2_s3911598.entitlements */,
-				B0A967682CB3F92200AB68FD /* Utils */,
+				B0A967682CB3F92200AB68FD /* ViewModels */,
 				819F274E2CAF706400F3DF50 /* Data */,
 				B0CF7FB22CAA8E14006D1087 /* Models */,
 				B0CF7FAF2CAA8DC1006D1087 /* Views */,
@@ -372,7 +373,6 @@
 				B081B1092CAA938000508E5D /* DateFormatter.swift */,
 				B0A9676B2CB3FF7300AB68FD /* RandomActivity.swift */,
 				B0A9678C2CB40C3400AB68FD /* TaskCodable.swift */,
-				810059FD2CB8C63B001EA0AF /* MoodViewModel.swift */,
 				B0A967BC2CB92C1200AB68FD /* RandomQuotes.swift */,
 			);
 			path = Models;
@@ -579,7 +579,7 @@
 				B0A967B42CB5123700AB68FD /* Friend.swift in Sources */,
 				B0CF7FB42CAA8E24006D1087 /* Task.swift in Sources */,
 				B0CF7F1A2CAA870D006D1087 /* a2_s3911598App.swift in Sources */,
-				B0A9676A2CB3F92B00AB68FD /* ImagePicker.swift in Sources */,
+				B0A9676A2CB3F92B00AB68FD /* ImagePickerViewModel.swift in Sources */,
 				B0A967AF2CB5101100AB68FD /* AddFriendView.swift in Sources */,
 				B0A967A22CB50C2A00AB68FD /* ColorThemeView.swift in Sources */,
 				B0A9678D2CB40C3400AB68FD /* TaskCodable.swift in Sources */,
