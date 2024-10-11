@@ -95,7 +95,6 @@ struct MainTabView: View {
             
             NavigationView {
                             SettingsView(userProfile: userProfile, logoutAction: logoutAction)
-                                .navigationTitle("Settings")
                         }
                         .tabItem {
                             Label("Settings", systemImage: "gear")
@@ -132,9 +131,3 @@ struct MyButtonStyle: ButtonStyle {
     }
 }
 
-// ContentView 的预览
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}

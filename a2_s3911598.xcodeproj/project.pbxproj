@@ -38,6 +38,7 @@
 		B0A967B42CB5123700AB68FD /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A967B22CB5120200AB68FD /* Friend.swift */; };
 		B0A967B72CB5139600AB68FD /* FriendsPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A967B62CB5139600AB68FD /* FriendsPickerView.swift */; };
 		B0A967BB2CB6774D00AB68FD /* DailyTaskViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A967BA2CB6774D00AB68FD /* DailyTaskViewTest.swift */; };
+		B0A967BD2CB92C1200AB68FD /* RandomQuotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A967BC2CB92C1200AB68FD /* RandomQuotes.swift */; };
 		B0CF7F1A2CAA870D006D1087 /* a2_s3911598App.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CF7F192CAA870D006D1087 /* a2_s3911598App.swift */; };
 		B0CF7F1C2CAA870D006D1087 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CF7F1B2CAA870D006D1087 /* ContentView.swift */; };
 		B0CF7F1E2CAA870D006D1087 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CF7F1D2CAA870D006D1087 /* Item.swift */; };
@@ -124,6 +125,7 @@
 		B0A967B22CB5120200AB68FD /* Friend.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
 		B0A967B62CB5139600AB68FD /* FriendsPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsPickerView.swift; sourceTree = "<group>"; };
 		B0A967BA2CB6774D00AB68FD /* DailyTaskViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyTaskViewTest.swift; sourceTree = "<group>"; };
+		B0A967BC2CB92C1200AB68FD /* RandomQuotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomQuotes.swift; sourceTree = "<group>"; };
 		B0CF7F162CAA870D006D1087 /* a2_s3911598.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = a2_s3911598.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0CF7F192CAA870D006D1087 /* a2_s3911598App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = a2_s3911598App.swift; sourceTree = "<group>"; };
 		B0CF7F1B2CAA870D006D1087 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -371,6 +373,7 @@
 				B0A9676B2CB3FF7300AB68FD /* RandomActivity.swift */,
 				B0A9678C2CB40C3400AB68FD /* TaskCodable.swift */,
 				810059FD2CB8C63B001EA0AF /* MoodViewModel.swift */,
+				B0A967BC2CB92C1200AB68FD /* RandomQuotes.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -562,6 +565,7 @@
 				B0A967B72CB5139600AB68FD /* FriendsPickerView.swift in Sources */,
 				B0E0FA2E2CAF69940028F724 /* Mood.swift in Sources */,
 				B0A9679C2CB50C1D00AB68FD /* TaskCardView.swift in Sources */,
+				B0A967BD2CB92C1200AB68FD /* RandomQuotes.swift in Sources */,
 				B0CF7F1C2CAA870D006D1087 /* ContentView.swift in Sources */,
 				B0E0FA302CAF6A0D0028F724 /* CalendarView.swift in Sources */,
 				B0A9679A2CB50C1D00AB68FD /* CreateTaskView.swift in Sources */,

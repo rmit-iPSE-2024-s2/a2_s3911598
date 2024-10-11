@@ -11,11 +11,15 @@ struct TaskDetailView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
+        VStack(alignment: .leading, spacing: 15) {
             // Task details
+            Text("TiTle:")
+                .font(.custom("Chalkboard SE", size: 18))
+                .padding(.leading, 16)
+                .padding(.top, 0)
             Text(task.title)
-                .font(.custom("Chalkboard SE", size: 24))
-                .padding([.top, .leading], 16)
+                .font(.custom("Chalkboard SE", size: 16))
+                .padding([.leading], 16)
 
             Text("Description:")
                 .font(.custom("Chalkboard SE", size: 18))
@@ -28,7 +32,7 @@ struct TaskDetailView: View {
                 Image(uiImage: image)
                     .resizable()
                     .scaledToFill()
-                    .frame(height: 200)
+                    .frame(width: 150, height: 100)
                     .clipped()
                     .cornerRadius(10)
                     .padding(.horizontal)
@@ -59,12 +63,11 @@ struct TaskDetailView: View {
                 .padding(.horizontal, 16)
                 .foregroundColor(task.isCompleted ? .green : .red)
 
-            Spacer()
 
             // Drawing area
             ZStack {
                 Rectangle()
-                    .fill(Color(white: 0.95))
+                    .fill(Color(white: 1))
                     .cornerRadius(10)
 
                 // Draw the user's gesture path
@@ -72,15 +75,15 @@ struct TaskDetailView: View {
                     Path { path in
                         path.addLines(drawingPoints)
                     }
-                    .stroke(Color.green, lineWidth: 2)
+                    .stroke(Color.green, lineWidth: 4)
                 }
 
                 // Show the prompt when not drawing
-                if drawingPoints.isEmpty {
-                    Text("Draw a checkmark here to mark as completed")
-                        .font(.custom("Chalkboard SE", size: 16))
-                        .foregroundColor(.gray)
-                }
+//                if drawingPoints.isEmpty {
+//                    Text("Draw a checkmark here to mark as completed")
+//                        .font(.custom("Chalkboard SE", size: 16))
+//                        .foregroundColor(.gray)
+//                }
             }
             .contentShape(Rectangle())
             .gesture(
@@ -109,6 +112,7 @@ struct TaskDetailView: View {
             .frame(height: 200)
             .padding()
             .coordinateSpace(name: "drawingArea")
+            Spacer()
         }
         .navigationBarTitle("Task Details", displayMode: .inline)
     }

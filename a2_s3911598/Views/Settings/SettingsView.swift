@@ -4,16 +4,30 @@ import Auth0
 struct SettingsView: View {
     var userProfile: Profile
     var logoutAction: () -> Void
+    @ObservedObject var quoteModel = QuoteModel()
     
     var body: some View {
-        VStack(spacing: 20) {
-            // Show welcome message
+        VStack(alignment: .leading) {
+            Text("Setting")
+                .font(.custom("Chalkboard SE", size: 24))
+                .padding([.leading], 16)
             HStack {
                 Text("Welcome, \(userProfile.name)")
-                    .font(.title2)
+                    .font(.custom("Chalkboard SE", size: 16))
                     .bold()
                     .padding()
-                Spacer()
+            }
+            
+            if let quote = quoteModel.result {
+                Text("\"\(quote.q)\"")
+                    .font(.custom("Chalkboard SE", size: 16))
+                    .padding(.horizontal)
+                Text("- \(quote.a)")
+                    .font(.custom("Chalkboard SE", size: 16))
+                    .padding(.horizontal)
+            } else {
+                Text("Fetching quote...")
+                    .font(.custom("Chalkboard SE", size: 16))
             }
             
             // Settings options
@@ -46,6 +60,9 @@ struct SettingsView: View {
             }
             .padding()
         }
+    .onAppear {
+        quoteModel.fetchQuote()
+    }
         .padding()
         .background(Color(UIColor.systemGroupedBackground))
     }
