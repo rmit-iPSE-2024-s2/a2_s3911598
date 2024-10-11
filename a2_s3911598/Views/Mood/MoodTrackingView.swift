@@ -78,7 +78,7 @@ struct MoodTrackingView: View {
                         .frame(width: 200, height: 100)
                         .offset(y: 130)
                         .animation(.easeInOut, value: curvature)
-                }
+                }.offset(y: -100)
 
                 ZStack {
                     Slider(value: $moodValue)
@@ -96,7 +96,7 @@ struct MoodTrackingView: View {
                         )
                         .offset(x: (CGFloat(moodValue) - 0.5) * 300, y: -50)
                         .animation(.easeInOut, value: moodValue)
-                }
+                }.offset(y: 100)
 
                 HStack {
                     Text("Very Unpleasant")
@@ -108,6 +108,7 @@ struct MoodTrackingView: View {
                         .foregroundColor(.gray)
                 }
                 .padding(.horizontal)
+                .offset(y: 100)
 
                 Spacer()
 

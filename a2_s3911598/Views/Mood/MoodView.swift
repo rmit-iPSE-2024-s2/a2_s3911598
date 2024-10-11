@@ -269,6 +269,7 @@
 
 import SwiftUI
 import SwiftData
+import Auth0
 
 struct MoodView: View {
     @State private var showCalendar = false
@@ -276,11 +277,14 @@ struct MoodView: View {
     @State private var isActive = false
     @State private var selectedFriends: [Friend] = []
     @State private var showFriendsPicker = false
+    var userProfile: Profile
+    @ObservedObject var quoteModel: QuoteModel = QuoteModel()
 
     // 使用 ViewModel
     @StateObject private var viewModel: MoodViewModel
 
-    init(modelContext: ModelContext) {
+    init(userProfile: Profile, modelContext: ModelContext) {
+        self.userProfile = userProfile
         _viewModel = StateObject(wrappedValue: MoodViewModel(modelContext: modelContext))
     }
 
@@ -290,8 +294,24 @@ struct MoodView: View {
                 Text("Moods")
                     .font(.custom("Chalkboard SE", size: 24))
                     .padding([.leading, .top], 16)
-
-                // 最近的心情记录部分
+                Text("Welcome, \(userProfile.name)")
+                    .font(.custom("Chalkboard SE", size: 16))
+                    .bold()
+                    .padding([.leading], 16)
+                    .padding([.top], 0)
+                VStack(alignment: .leading) {
+                    if let quote = quoteModel.result{
+                        Text("\"\(quote.q)\"")
+                            .font(.custom("Chalkboard SE", size: 16))
+                            .multilineTextAlignment(.leading)
+                            .onTapGesture {
+                                quoteModel.fetchQuote()
+                            }
+                    }
+                    }
+                    .padding([.leading, .trailing])
+                    .frame(minHeight: 60, maxHeight: 60, alignment: .top)
+                
                 cardView {
                     VStack(alignment: .leading, spacing: 10) {
                         HStack {
@@ -406,6 +426,8 @@ struct MoodView: View {
             FriendsPickerView(friends: viewModel.friends, selectedFriends: $selectedFriends, isPresented: $showFriendsPicker)
         }
         .background(Color("AppBackground").edgesIgnoringSafeArea(.all))
+        .onAppear{
+            quoteModel.fetchQuote()}
     }
 
     // 时间格式化器

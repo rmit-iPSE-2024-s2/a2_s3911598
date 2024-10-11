@@ -87,7 +87,6 @@ struct ContentView: View {
     }
 }
 
-// 主 TabView，用户登录后显示
 struct MainTabView: View {
     var userProfile: Profile
     var logoutAction: () -> Void
@@ -100,7 +99,7 @@ struct MainTabView: View {
         TabView {
 
             NavigationView {
-                MoodView(modelContext: modelContext)
+                MoodView(userProfile: userProfile, modelContext: modelContext)
             }
             .tabItem {
                 Label("Moods", systemImage: "face.smiling")

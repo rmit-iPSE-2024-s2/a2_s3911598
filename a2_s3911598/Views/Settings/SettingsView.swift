@@ -11,24 +11,6 @@ struct SettingsView: View {
             Text("Setting")
                 .font(.custom("Chalkboard SE", size: 24))
                 .padding([.leading], 16)
-            HStack {
-                Text("Welcome, \(userProfile.name)")
-                    .font(.custom("Chalkboard SE", size: 16))
-                    .bold()
-                    .padding()
-            }
-            
-            if let quote = quoteModel.result {
-                Text("\"\(quote.q)\"")
-                    .font(.custom("Chalkboard SE", size: 16))
-                    .padding(.horizontal)
-                Text("- \(quote.a)")
-                    .font(.custom("Chalkboard SE", size: 16))
-                    .padding(.horizontal)
-            } else {
-                Text("Fetching quote...")
-                    .font(.custom("Chalkboard SE", size: 16))
-            }
             
             // Settings options
             NavigationLink(destination: GeneralView()) {
@@ -60,9 +42,6 @@ struct SettingsView: View {
             }
             .padding()
         }
-    .onAppear {
-        quoteModel.fetchQuote()
-    }
         .padding()
         .background(Color(UIColor.systemGroupedBackground))
     }
