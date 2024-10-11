@@ -10,28 +10,38 @@ enum MoodViewDestination: Hashable {
 struct ContentView: View {
     @State private var isAuthenticated = false
     @State var userProfile = Profile.empty
-    
+
     var body: some View {
         if isAuthenticated {
             // 显示主 TabView 页面
             MainTabView(userProfile: userProfile, logoutAction: logout)
         } else {
             // 未登录时显示登录页面
-            VStack {
-//                Text("SwiftUI Login Demo")
-//                    .modifier(TitleStyle())
-                
-                Button("Log in") {
+            VStack(spacing: 20) {
+                Text("Welcome to TogetherWe")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .multilineTextAlignment(.center)
+                    .padding()
+
+                Button("Login") {
                     login()
                 }
                 .buttonStyle(MyButtonStyle())
+
+                Button("Signup") {
+                    signup()
+                }
+                .buttonStyle(MyButtonStyle())
             }
+            .padding()
         }
     }
-    
+
     func login() {
         Auth0
             .webAuth()
+            .parameters(["screen_hint": "login"])
             .start { result in
                 switch result {
                 case .failure(let error):
@@ -44,7 +54,24 @@ struct ContentView: View {
                 }
             }
     }
-    
+
+    func signup() {
+        Auth0
+            .webAuth()
+            .parameters(["screen_hint": "signup"])
+            .start { result in
+                switch result {
+                case .failure(let error):
+                    print("Failed with: \(error)")
+                case .success(let credentials):
+                    self.isAuthenticated = true
+                    self.userProfile = Profile.from(credentials.idToken)
+                    print("Credentials: \(credentials)")
+                    print("ID token: \(credentials.idToken)")
+                }
+            }
+    }
+
     func logout() {
         Auth0
             .webAuth()
@@ -64,21 +91,14 @@ struct ContentView: View {
 struct MainTabView: View {
     var userProfile: Profile
     var logoutAction: () -> Void
-    
+
     @State private var isShowingMoodTracking = false
     @Environment(\.modelContext) private var modelContext
 
     var body: some View {
-        
-        TabView {
-            NavigationView {
-                DailyTaskView()
 
-            }
-            .tabItem {
-                Label("Tasks", systemImage: "list.bullet")
-            }
-            
+        TabView {
+
             NavigationView {
                 MoodView(modelContext: modelContext)
             }
@@ -87,30 +107,35 @@ struct MainTabView: View {
             }
             
             NavigationView {
+                DailyTaskView()
+
+            }
+            .tabItem {
+                Label("Tasks", systemImage: "list.bullet")
+            }
+
+            NavigationView {
                 FriendView()
             }
             .tabItem {
                 Label("Friends", systemImage: "person.3.fill")
             }
-            
+
             NavigationView {
-                            SettingsView(userProfile: userProfile, logoutAction: logoutAction)
-                        }
-                        .tabItem {
-                            Label("Settings", systemImage: "gear")
-                        }
+                SettingsView(userProfile: userProfile, logoutAction: logoutAction)
+            }
+            .tabItem {
+                Label("Settings", systemImage: "gear")
+            }
         }
     }
 }
-
-
-
 
 // 自定义 ViewModifier 和 ButtonStyle
 struct TitleStyle: ViewModifier {
     let titleFontBold = Font.title.weight(.bold)
     let navyBlue = Color(red: 0, green: 0, blue: 0.5)
-    
+
     func body(content: Content) -> some View {
         content
             .font(titleFontBold)
@@ -121,13 +146,14 @@ struct TitleStyle: ViewModifier {
 
 struct MyButtonStyle: ButtonStyle {
     let navyBlue = Color(red: 0, green: 0, blue: 0.5)
-    
+
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .padding()
+            .frame(maxWidth: .infinity)
             .background(navyBlue)
             .foregroundColor(.white)
             .clipShape(Capsule())
+            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
     }
 }
-
