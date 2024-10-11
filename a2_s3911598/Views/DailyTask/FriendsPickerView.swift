@@ -16,6 +16,7 @@ struct FriendsPickerView: View {
             ZStack {
                 VStack(alignment: .leading, spacing: 10) {
                     if friends.isEmpty {
+                        // If no friends are available, display a message and options to add friends or close the view
                         VStack {
                             Text("You don't have any friends yet.")
                                 .font(.custom("Chalkboard SE", size: 18))
@@ -48,6 +49,7 @@ struct FriendsPickerView: View {
                             }
                         }
                     } else {
+                        // Display list of friends for selection
                         Text("Select Friends")
                             .font(.custom("Chalkboard SE", size: 24))
                             .padding([.leading], 16)
@@ -75,8 +77,10 @@ struct FriendsPickerView: View {
                         }
                         .listStyle(PlainListStyle())
                         
+                        // Button to confirm selection and share with selected friends
                         Button(action: {
                             if selectedFriends.isEmpty {
+                                // Show an alert if no friends are selected
                                 showSelectionError = true
                             } else {
                                 shareMessage = "Successfully shared with \(selectedFriends.map { $0.name }.joined(separator: ", "))"
@@ -85,7 +89,7 @@ struct FriendsPickerView: View {
                                     heartAnimation = true
                                 }
                                 
-                                // 显示分享结果5秒钟，然后自动关闭页面
+                                // Show share result for 3 seconds, then close the view
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                                     withAnimation {
                                         showShareResult = false
@@ -115,9 +119,9 @@ struct FriendsPickerView: View {
                     }
                 }
                 
-                // 分享结果的弹出视图和动画
+                // Share result overlay with animation
                 if showShareResult {
-                    Color.black.opacity(0.4) // 背景虚化效果
+                    Color.black.opacity(0.4) // Background blur effect
                         .edgesIgnoringSafeArea(.all)
                     
                     VStack {
@@ -131,7 +135,7 @@ struct FriendsPickerView: View {
                             .padding()
                             .transition(.move(edge: .bottom))
                         
-                        // 心形动画
+                        // Heart animation when sharing is successful
                         ZStack {
                             ForEach(0..<20, id: \.self) { index in
                                 HeartView()
@@ -150,6 +154,7 @@ struct FriendsPickerView: View {
                         }
                     }
                     .onTapGesture {
+                        // Close the share result view on tap
                         withAnimation {
                             showShareResult = false
                             heartAnimation = false
@@ -164,6 +169,7 @@ struct FriendsPickerView: View {
         }
     }
 
+    // Toggle friend selection state
     private func toggleFriendSelection(_ friend: Friend) {
         if let index = selectedFriends.firstIndex(where: { $0.id == friend.id }) {
             selectedFriends.remove(at: index)
@@ -173,7 +179,7 @@ struct FriendsPickerView: View {
     }
 }
 
-// 心形视图
+// View for the animated hearts
 struct HeartView: View {
     var body: some View {
         Image(systemName: "heart.fill")

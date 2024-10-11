@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		810059FE2CB8C63B001EA0AF /* MoodViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810059FD2CB8C63B001EA0AF /* MoodViewModel.swift */; };
 		810196022CB7DB0E00AAFA03 /* MoodViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810196012CB7DB0E00AAFA03 /* MoodViewTest.swift */; };
 		819F27502CAF707C00F3DF50 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819F274F2CAF707C00F3DF50 /* Profile.swift */; };
 		81B7E1AB2CAB9119001BA47F /* Auth0 in Frameworks */ = {isa = PBXBuildFile; productRef = 81B7E1AA2CAB9119001BA47F /* Auth0 */; };
@@ -91,6 +92,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		810059FD2CB8C63B001EA0AF /* MoodViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodViewModel.swift; sourceTree = "<group>"; };
 		810196012CB7DB0E00AAFA03 /* MoodViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodViewTest.swift; sourceTree = "<group>"; };
 		819F274F2CAF707C00F3DF50 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		81F7C4DD2CAB808B003E366F /* Auth0.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Auth0.plist; sourceTree = "<group>"; };
@@ -368,6 +370,7 @@
 				B081B1092CAA938000508E5D /* DateFormatter.swift */,
 				B0A9676B2CB3FF7300AB68FD /* RandomActivity.swift */,
 				B0A9678C2CB40C3400AB68FD /* TaskCodable.swift */,
+				810059FD2CB8C63B001EA0AF /* MoodViewModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -565,6 +568,7 @@
 				B0A9679D2CB50C1D00AB68FD /* TaskDetailView.swift in Sources */,
 				B0CF7F1E2CAA870D006D1087 /* Item.swift in Sources */,
 				819F27502CAF707C00F3DF50 /* Profile.swift in Sources */,
+				810059FE2CB8C63B001EA0AF /* MoodViewModel.swift in Sources */,
 				B0A9676C2CB3FF7300AB68FD /* RandomActivity.swift in Sources */,
 				B081B1082CAA92CE00508E5D /* MoodView.swift in Sources */,
 				B0A967A32CB50C2A00AB68FD /* GeneralView.swift in Sources */,

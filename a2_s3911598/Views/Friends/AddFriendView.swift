@@ -62,6 +62,6 @@ struct AddFriendView: View {
 
     private func saveFriend() {
         let newFriend = Friend(name: name, email: email)
-        modelContext.insert(newFriend)  // 插入新对象到 SwiftData 的上下文
+        modelContext.insert(newFriend)  
     }
 }

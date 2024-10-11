@@ -84,8 +84,8 @@ struct SettingItemView: View {
 
 struct AboutUsView: View {
     var body: some View {
-        VStack(alignment: .center, spacing: 16) {
-            // 背景装饰
+        VStack(alignment: .leading, spacing: 16) {
+            // Background decoration
             RoundedRectangle(cornerRadius: 12)
                 .fill(LinearGradient(
                     gradient: Gradient(colors: [Color("primaryMauve").opacity(0.2), Color("secondaryLilac").opacity(0.1)]),
@@ -101,7 +101,7 @@ struct AboutUsView: View {
                 )
                 .padding(.bottom, 16)
 
-            // 描述文字
+            // Description texts
             VStack(alignment: .leading, spacing: 10) {
                 Text("TogetherWe is designed to bring people closer by allowing users to share their daily activities and emotions with loved ones. Our goal is to help users maintain meaningful connections, even when physical distance separates them.")
                     .font(.body)
@@ -126,6 +126,7 @@ struct AboutUsView: View {
                     .shadow(radius: 2)
             }
             .padding(.horizontal)
+            .frame(maxWidth: .infinity, alignment: .leading)
 
             Spacer()
         }
@@ -136,30 +137,31 @@ struct AboutUsView: View {
     }
 }
 
-
 // Privacy View
 struct PrivacyView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             Text("Privacy")
-                .font(.title)
+                .font(.largeTitle)
                 .bold()
                 .padding(.bottom, 8)
             
             Text("At TogetherWe, we are committed to protecting your privacy and ensuring that your personal data remains secure. Here’s how we handle your data:")
                 .font(.body)
+                .padding(.bottom, 4)
             
-            Text("• Data Encryption: All your data, including mood entries, tasks, and account information, is encrypted to ensure that it stays private and secure.")
-                .font(.body)
-            
-            Text("• User Control: You have full control over your data. You can manage, update, or delete your personal information directly from the app at any time.")
-                .font(.body)
-            
-            Text("• No Data Sharing: We do not share your data with third-party services without your explicit consent. Your data is solely used to enhance your experience within the app.")
-                .font(.body)
-            
-            Text("• Secure Authentication: TogetherWe uses secure authentication methods to protect your account from unauthorized access.")
-                .font(.body)
+            Group {
+                Text("• Data Encryption: All your data, including mood entries, tasks, and account information, is encrypted to ensure that it stays private and secure.")
+                
+                Text("• User Control: You have full control over your data. You can manage, update, or delete your personal information directly from the app at any time.")
+                
+                Text("• No Data Sharing: We do not share your data with third-party services without your explicit consent. Your data is solely used to enhance your experience within the app.")
+                
+                Text("• Secure Authentication: TogetherWe uses secure authentication methods to protect your account from unauthorized access.")
+            }
+            .font(.body)
+            .padding(.leading, 8)
+            .padding(.bottom, 4)
             
             Text("We value your trust and are dedicated to maintaining the confidentiality of your information. If you have any questions or concerns regarding your privacy, please contact us at support@togetherwe.com.")
                 .font(.body)
@@ -170,5 +172,6 @@ struct PrivacyView: View {
         .padding()
         .background(Color(UIColor.systemGroupedBackground))
         .navigationTitle("Privacy")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }

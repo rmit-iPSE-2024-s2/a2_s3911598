@@ -80,7 +80,7 @@ struct MainTabView: View {
             }
             
             NavigationView {
-                MoodView()
+                MoodView(modelContext: modelContext)
             }
             .tabItem {
                 Label("Moods", systemImage: "face.smiling")
@@ -88,7 +88,6 @@ struct MainTabView: View {
             
             NavigationView {
                 FriendView()
-//                    .navigationTitle("Friends")
             }
             .tabItem {
                 Label("Friends", systemImage: "person.3.fill")
