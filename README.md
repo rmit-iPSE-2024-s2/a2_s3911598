@@ -5,7 +5,7 @@
 
 ## App Name: TogetherWe
 
-TogetherWe is an iOS app designed for task management, mood tracking, and fostering social interactions among friends.
+TogetherWe is an iOS app designed for task management, mood tracking, and fostering social interactions among friends/family.
 
 ### Miro URL
 [https://miro.com/app/board/uXjVLaHyTgU=/](https://miro.com/app/board/uXjVLaHyTgU=/)
