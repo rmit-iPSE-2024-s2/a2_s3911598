@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import WidgetKit
 struct CreateTaskView: View {
     @Binding var isPresented: Bool
     
@@ -20,12 +21,32 @@ struct CreateTaskView: View {
     @StateObject private var activityModel = ActivityModel()
     @Environment(\.modelContext) private var modelContext
     private var injectedModelContext: ModelContext?
+    private var injectUserDefaults: UserDefaults?
     @State private var showError = false
     @Query private var friends: [Friend]
     
-    init(isPresented: Binding<Bool>, modelContext: ModelContext? = nil) {
+    init(
+        isPresented: Binding<Bool>,
+        title: String = "",
+        description: String = "",
+        time: Date = Date(),
+        showImagePicker: Bool = false,
+        selectedImage: UIImage? = nil,
+        selectedFriends: [Friend] = [],
+        showFriendsPicker: Bool = false,
+        modelContext: ModelContext? = nil,
+        userDefaults:UserDefaults?=nil
+    ) {
         _isPresented = isPresented
+        _title = State(initialValue: title)
+        _description = State(initialValue: description)
+        _time = State(initialValue: time)
+        _showImagePicker = State(initialValue: showImagePicker)
+        _selectedImage = State(initialValue: selectedImage)
+        _selectedFriends = State(initialValue: selectedFriends)
+        _showFriendsPicker = State(initialValue: showFriendsPicker)
         self.injectedModelContext = modelContext
+        self.injectUserDefaults = userDefaults
     }
     
     var body: some View {
@@ -188,6 +209,9 @@ struct CreateTaskView: View {
             sharedWith: selectedFriends.map { $0.name },
             imageData: selectedImage?.jpegData(compressionQuality: 0.8)
         )
+        if newTask.title.isEmpty {
+            return
+        }
         context.insert(newTask)
 
         let taskCodable = TaskCodable(
@@ -198,11 +222,11 @@ struct CreateTaskView: View {
             isCompleted: newTask.isCompleted,
             imageData: newTask.imageData
         )
+        let defaults = injectUserDefaults ?? UserDefaults(suiteName: "group.com.a2-s3911598.a2-s3911598")
 
-        if let sharedDefaults = UserDefaults(suiteName: "group.com.a2-s3911598.a2-s3911598") {
-            if let taskData = try? JSONEncoder().encode(taskCodable) {
-                sharedDefaults.set(taskData, forKey: "currentTask")
-            }
+        if let taskData = try? JSONEncoder().encode(taskCodable) {
+            defaults?.set(taskData, forKey: "currentTask")
+            WidgetCenter.shared.reloadTimelines(ofKind: "CurrentTaskWidget")
         }
     }
 

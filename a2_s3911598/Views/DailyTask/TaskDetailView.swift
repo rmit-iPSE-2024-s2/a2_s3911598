@@ -1,13 +1,16 @@
 import SwiftUI
+import SwiftData
 
 struct TaskDetailView: View {
     @Environment(\.modelContext) private var modelContext
     @State private var task: Task
     @State private var drawingPoints: [CGPoint] = []
     @State private var isLongPressActive = false
+    private var injectedModelContext: ModelContext?
 
-    init(task: Task) {
+    init(task: Task,modelContext: ModelContext? = nil ) {
         _task = State(initialValue: task)
+        self.injectedModelContext = modelContext
     }
 
     var body: some View {
@@ -117,13 +120,14 @@ struct TaskDetailView: View {
         .navigationBarTitle("Task Details", displayMode: .inline)
     }
 
-    private func markTaskCompleted() {
+    func markTaskCompleted() {
         task.isCompleted = true
+        let context = injectedModelContext ?? modelContext
         // Update the task in the model context
-        modelContext.insert(task)
+        context.insert(task)
     }
 
-    private func isCheckmarkShape(points: [CGPoint]) -> Bool {
+    func isCheckmarkShape(points: [CGPoint]) -> Bool {
         // Simplified checkmark detection logic
         guard points.count >= 5 else {
             return false

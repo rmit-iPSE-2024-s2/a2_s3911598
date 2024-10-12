@@ -6,9 +6,9 @@ import SwiftData
 final class CreateTaskViewTests: XCTestCase {
     
     // Test environment setup properties
-    var modelContainer: ModelContainer!  // Holds the model data, configured for testing.
-    var modelContext: ModelContext!      // Provides access to the model data context for performing operations.
-    @State private var isPresented = false
+    var modelContainer: ModelContainer!
+    var modelContext: ModelContext!
+    var testDefaults: UserDefaults!
     
     // Set up the test environment before each test method is run.
     // This method initializes an in-memory model container and context,
@@ -19,6 +19,9 @@ final class CreateTaskViewTests: XCTestCase {
         let configuration = ModelConfiguration(isStoredInMemoryOnly: true)
         modelContainer = try! ModelContainer(for: Task.self, configurations: configuration)
         modelContext = modelContainer.mainContext
+        
+        testDefaults = UserDefaults(suiteName: "test.suite.name")
+        testDefaults.removePersistentDomain(forName: "test.suite.name")
     }
     
     // Tear down the test environment after each test method is run.
@@ -27,36 +30,66 @@ final class CreateTaskViewTests: XCTestCase {
     override func tearDown() {
         modelContext = nil
         modelContainer = nil
+        testDefaults = nil
         super.tearDown()
     }
     
     // Test task creation with valid input
     @MainActor
-    func testTaskCreation() {
-        // Arrange: Set up test input values
-        let sut = CreateTaskView(isPresented: $isPresented)
-        sut.title = "Test Task"
-        sut.description = "This is a test task description"
-        sut.time = Date()
-        
-        // Act: Save the task
+    func testTaskCreationWithoutFriend() {
+        // Arrange: Create a view with specific test values
+        let sut = CreateTaskView(
+            isPresented: .constant(false),
+            title: "Test Task",
+            description: "Test Description",
+            time: Date(),
+            modelContext: modelContext  // Inject the test model context
+        )
+
+        // Act: Simulate saving the task
         sut.saveTask()
-        
-        // Assert: Verify the task was inserted into the model context
+
+        // Assert: Verify the task was saved correctly in the test context
         let fetchDescriptor = FetchDescriptor<Task>()
         let tasks = try! modelContext.fetch(fetchDescriptor)
         XCTAssertEqual(tasks.count, 1, "There should be 1 task created.")
         XCTAssertEqual(tasks.first?.title, "Test Task", "The task title should be 'Test Task'.")
-        XCTAssertEqual(tasks.first?.taskDescription, "This is a test task description", "The task description should match.")
+        XCTAssertEqual(tasks.first?.taskDescription, "Test Description", "The task description should match.")
     }
     
-    // Test empty title validation
+    func testTaskCreationWithFriend() {
+        // Arrange: Create a view with specific test values
+        let sut = CreateTaskView(
+            isPresented: .constant(false),
+            title: "Test Task",
+            description: "Test Description",
+            time: Date(),
+            selectedFriends: [Friend(name: "Test Friend", email: "Test@gmail.com")],
+            modelContext: modelContext  // Inject the test model context
+        )
+
+        // Act: Simulate saving the task
+        sut.saveTask()
+
+        // Assert: Verify the task was saved correctly in the test context
+        let fetchDescriptor = FetchDescriptor<Task>()
+        let tasks = try! modelContext.fetch(fetchDescriptor)
+        XCTAssertEqual(tasks.count, 1, "There should be 1 task created.")
+        XCTAssertEqual(tasks.first?.title, "Test Task", "The task title should be 'Test Task'.")
+        XCTAssertEqual(tasks.first?.taskDescription, "Test Description", "The task description should match.")
+        XCTAssertEqual(tasks.first?.sharedWith, ["Test Friend"])
+    }
+    
     @MainActor
     func testEmptyTitleValidation() {
         // Arrange: Set up test input with empty title
-        let sut = CreateTaskView(isPresented: $isPresented)
-        sut.description = "This is a test task description"
-        sut.time = Date()
+        let sut = CreateTaskView(
+            isPresented: .constant(false),
+            description: "Test Description",
+            time: Date(),
+            selectedFriends: [Friend(name: "Test Friend", email: "Test@gmail.com")],
+            modelContext: modelContext
+        )
         
         // Act: Attempt to save the task
         sut.saveTask()
@@ -67,25 +100,36 @@ final class CreateTaskViewTests: XCTestCase {
         XCTAssertEqual(tasks.count, 0, "No tasks should be created with an empty title.")
     }
     
-    // Test that the task is saved with selected friends
     @MainActor
-    func testTaskWithFriends() {
-        // Arrange: Set up test input with friends
-        let friend = Friend(name: "John Doe", email: "John@gmail.com")
-        let sut = CreateTaskView(isPresented: $isPresented)
-        sut.title = "Team Task"
-        sut.description = "A task with a friend"
-        sut.time = Date()
-        sut.selectedFriends = [friend]
-        
-        // Act: Save the task
+    func testSaveTaskToUserDefaults() {
+        // Arrange: Set up test in-memory UserDefaults
+        let testDefaults = UserDefaults(suiteName: "test.suite.name")
+        testDefaults?.removePersistentDomain(forName: "test.suite.name")
+
+        // Arrange: Create a view with specific test values
+        let sut = CreateTaskView(
+            isPresented: .constant(false),
+            title: "Test Task",
+            description: "Test Description",
+            time: Date(),
+            modelContext: modelContext,  // Inject the test model context
+            userDefaults: testDefaults   // Inject the in-memory UserDefaults
+        )
+
+        // Act: Simulate saving the task
         sut.saveTask()
-        
-        // Assert: Verify that the task includes the selected friend
-        let fetchDescriptor = FetchDescriptor<Task>()
-        let tasks = try! modelContext.fetch(fetchDescriptor)
-        XCTAssertEqual(tasks.first?.sharedWith, ["John Doe"], "The task should be shared with 'John Doe'.")
+
+        // Assert: Check if the task was saved correctly to UserDefaults
+        if let taskData = testDefaults?.data(forKey: "currentTask") {
+            let decoder = JSONDecoder()
+            let savedTask = try? decoder.decode(TaskCodable.self, from: taskData)
+
+            XCTAssertNotNil(savedTask, "The task should be saved in UserDefaults.")
+            XCTAssertEqual(savedTask?.title, "Test Task", "The saved task title should be 'Test Task'.")
+            XCTAssertEqual(savedTask?.taskDescription, "Test Description", "The saved task description should be 'Test Description'.")
+        } else {
+            XCTFail("Task data not found in UserDefaults.")
+        }
     }
-    
 }
 

@@ -55,23 +55,22 @@ struct CurrentTaskWidgetEntryView: View {
     var entry: TaskEntry
 
     var body: some View {
-        if let task = entry.task {
-            VStack(alignment: .leading, spacing: 5) {
-                Text(task.title)
-                    .font(.headline)
-                    .bold()
-                Text(task.taskDescription)
-                    .font(.subheadline)
-                    .lineLimit(2)
-            }
-            .padding()
-        } else {
-            Text("No current task")
+            if let task = entry.task {
+                VStack(alignment: .leading, spacing: 5) {
+                    Text(task.title)
+                        .font(.custom("Chalkboard SE", size: 20))
+                        .bold()
+                    Text(task.taskDescription)
+                        .font(.custom("Chalkboard SE", size: 16))
+                        .lineLimit(2)
+                }
                 .padding()
-        }
+            } else {
+                Text("No current task")
+                    .padding()
+            }
     }
 }
-
 
 struct CurrentTaskWidget: Widget {
     let kind: String = "CurrentTaskWidget"
@@ -79,6 +78,9 @@ struct CurrentTaskWidget: Widget {
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
             CurrentTaskWidgetEntryView(entry: entry)
+                .containerBackground(Color("secondaryLilac"), for: .widget)
+//                .frame(maxWidth: .infinity, maxHeight: .infinity)    // << here !!
+//                .background(Color("secondaryLilac"))
         }
         .configurationDisplayName("Current Task")
         .description("Displays your current task.")
