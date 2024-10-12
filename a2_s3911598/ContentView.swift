@@ -113,7 +113,7 @@ struct MainTabView: View {
     var body: some View {
         TabView {
             NavigationView {
-                MoodView(userProfile: userProfile, modelContext: modelContext)
+                MoodView(userProfile: userProfile)
             }
             .tabItem {
                 Label("Moods", systemImage: "face.smiling")

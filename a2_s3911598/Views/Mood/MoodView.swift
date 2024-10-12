@@ -37,10 +37,12 @@ struct MoodView: View {
     @ObservedObject var quoteModel: QuoteModel = QuoteModel()
     
     /// The environment's model context used for interacting with the `Mood` data model.
-    @Environment(\.modelContext) private var modelContext
+    @Environment(\.modelContext) private var defaultModelContext
     
     /// A query that fetches the mood data, sorted by date in descending order.
-    @Query(sort: \Mood.date, order: .reverse) private var moodData: [Mood]
+    @Query(sort: \Mood.date, order: .reverse) private var moodDataFromContext: [Mood]
+    var injectedMoodData: [Mood]?
+
     
     /// A query that fetches the list of friends.
     @Query private var friends: [Friend]
@@ -50,11 +52,13 @@ struct MoodView: View {
     /// - Parameters:
     ///   - userProfile: The profile of the current user.
     ///   - modelContext: The model context for managing data.
-    init(userProfile: Profile, modelContext: ModelContext) {
+    init(userProfile: Profile, injectedMoodData: [Mood]? = nil) {
         self.userProfile = userProfile
+        self.injectedMoodData = injectedMoodData
     }
 
     var body: some View {
+        let moodData = injectedMoodData ?? moodDataFromContext
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
                 Text("Moods")
@@ -139,7 +143,7 @@ struct MoodView: View {
                 }
 
                 // Display today's mood record
-                if let todayMood = moodForToday() {
+                if let todayMood = moodForToday(moodData: moodData) {
                     cardView {
                         VStack(alignment: .leading, spacing: 10) {
                             Text("Today's Mood Record")
@@ -148,8 +152,9 @@ struct MoodView: View {
                             Text("Time: \(timeFormatter.string(from: todayMood.date))")
                                 .font(Font.custom("Chalkboard SE", size: 18))
                             
-                            Text("Mood: \(getMoodDescription(for: todayMood.moodLevel))")
+                            Text("Mood: \(todayMood.moodLevel)")
                                 .font(Font.custom("Chalkboard SE", size: 18))
+
                             
                             if !todayMood.notes.isEmpty {
                                 Text("Notes: \(todayMood.notes)")
@@ -197,31 +202,17 @@ struct MoodView: View {
     /// Retrieves today's mood record from the list of mood data.
     ///
     /// - Returns: The `Mood` instance for today's date, if available.
-    func moodForToday() -> Mood? {
-        return moodData.first(where: { Calendar.current.isDateInToday($0.date) })
+    func moodForToday(moodData: [Mood]) -> Mood? {
+        let moodsForToday = moodData.filter { Calendar.current.isDateInToday($0.date) }
+        return moodsForToday.sorted(by: { $0.date > $1.date }).first
     }
+
 
     /// A time formatter for formatting mood record times.
     var timeFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
         return formatter
-    }
-
-    /// Returns a description string for the given mood level.
-    ///
-    /// - Parameter mood: A string representing the mood level.
-    /// - Returns: A human-readable description of the mood level.
-    func getMoodDescription(for mood: String) -> String {
-        switch mood {
-        case "Very Unpleasant": return "Very Unpleasant"
-        case "Unpleasant": return "Unpleasant"
-        case "Neutral": return "Neutral"
-        case "Pleasant": return "Pleasant"
-        case "Slightly Pleasant": return "Slightly Pleasant"
-        case "Very Pleasant": return "Very Pleasant"
-        default: return "Unknown"
-        }
     }
 
     /// A reusable card view style used for various sections in the view.

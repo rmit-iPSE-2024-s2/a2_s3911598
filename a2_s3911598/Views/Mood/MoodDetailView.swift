@@ -134,8 +134,6 @@ struct MoodDetailView: View {
     func saveMood() {
         let newMood = Mood(date: currentDate, moodLevel: selectedMood, notes: moodText)
         modelContext.insert(newMood)
- 
-
     }
 }
 

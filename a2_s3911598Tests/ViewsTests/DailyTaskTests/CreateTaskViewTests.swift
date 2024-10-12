@@ -112,24 +112,26 @@ final class CreateTaskViewTests: XCTestCase {
             title: "Test Task",
             description: "Test Description",
             time: Date(),
-            modelContext: modelContext,  // Inject the test model context
-            userDefaults: testDefaults   // Inject the in-memory UserDefaults
+            modelContext: modelContext,
+            userDefaults: testDefaults
         )
 
         // Act: Simulate saving the task
         sut.saveTask()
 
-        // Assert: Check if the task was saved correctly to UserDefaults
-        if let taskData = testDefaults?.data(forKey: "currentTask") {
+        // Assert: Check if the tasks were saved correctly to UserDefaults
+        if let taskData = testDefaults?.data(forKey: "allTasks") {
             let decoder = JSONDecoder()
-            let savedTask = try? decoder.decode(TaskCodable.self, from: taskData)
+            let savedTasks = try? decoder.decode([TaskCodable].self, from: taskData)
 
-            XCTAssertNotNil(savedTask, "The task should be saved in UserDefaults.")
-            XCTAssertEqual(savedTask?.title, "Test Task", "The saved task title should be 'Test Task'.")
-            XCTAssertEqual(savedTask?.taskDescription, "Test Description", "The saved task description should be 'Test Description'.")
+            XCTAssertNotNil(savedTasks, "The tasks should be saved in UserDefaults.")
+            XCTAssertEqual(savedTasks?.count, 1, "There should be 1 task saved in UserDefaults.")
+            XCTAssertEqual(savedTasks?.first?.title, "Test Task", "The saved task title should be 'Test Task'.")
+            XCTAssertEqual(savedTasks?.first?.taskDescription, "Test Description", "The saved task description should be 'Test Description'.")
         } else {
             XCTFail("Task data not found in UserDefaults.")
         }
     }
+
 }
 

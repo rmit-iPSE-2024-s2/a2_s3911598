@@ -262,7 +262,12 @@ struct CreateTaskView: View {
         }
         context.insert(newTask)
 
-        let allTasks = tasks
+        let allTasks: [Task]
+        if let injectedContext = injectedModelContext {
+            allTasks = try! injectedContext.fetch(FetchDescriptor<Task>())
+        } else {
+            allTasks = tasks
+        }
 
         // Convert all tasks to TaskCodable objects for storage
         let taskCodables = allTasks.map { task in
