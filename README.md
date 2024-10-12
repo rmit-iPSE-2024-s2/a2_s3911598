@@ -8,7 +8,7 @@
 TogetherWe is an iOS app designed for task management, mood tracking, and fostering social interactions among friends/family.
 
 ### Miro URL
-[https://miro.com/app/board/uXjVLaHyTgU=/](https://miro.com/app/board/uXjVLaHyTgU=/)
+[https://miro.com/app/board/uXjVLaHyTgU=/](https://miro.com/app/board/uXjVLaHyTgU=/) (Shared with Professor SK on September 28th)
 
 ### GitHub URL
 [https://github.com/rmit-iPSE-2024-s2/a2_s3911598](https://github.com/rmit-iPSE-2024-s2/a2_s3911598)
