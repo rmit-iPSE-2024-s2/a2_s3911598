@@ -10,17 +10,23 @@ import SwiftData
 struct CreateTaskView: View {
     @Binding var isPresented: Bool
     
-    @State private var title = ""
-    @State private var description = ""
-    @State private var time = Date()
-    @State private var showImagePicker = false
-    @State private var selectedImage: UIImage?
-    @State private var selectedFriends: [Friend] = []
-    @State private var showFriendsPicker = false
+    @State var title = ""
+    @State var description = ""
+    @State var time = Date()
+    @State var showImagePicker = false
+    @State var selectedImage: UIImage?
+    @State var selectedFriends: [Friend] = []
+    @State var showFriendsPicker = false
     @StateObject private var activityModel = ActivityModel()
     @Environment(\.modelContext) private var modelContext
+    private var injectedModelContext: ModelContext?
     @State private var showError = false
     @Query private var friends: [Friend]
+    
+    init(isPresented: Binding<Bool>, modelContext: ModelContext? = nil) {
+        _isPresented = isPresented
+        self.injectedModelContext = modelContext
+    }
     
     var body: some View {
         NavigationView {
@@ -168,11 +174,13 @@ struct CreateTaskView: View {
         }
     }
     
-    private func fetchRandomTask() {
+    func fetchRandomTask() {
         activityModel.fetchActivity()
     }
     
-    private func saveTask() {
+    func saveTask() {
+        let context = injectedModelContext ?? modelContext
+        
         let newTask = Task(
             title: title,
             taskDescription: description,
@@ -180,7 +188,7 @@ struct CreateTaskView: View {
             sharedWith: selectedFriends.map { $0.name },
             imageData: selectedImage?.jpegData(compressionQuality: 0.8)
         )
-        modelContext.insert(newTask)
+        context.insert(newTask)
 
         let taskCodable = TaskCodable(
             title: newTask.title,
