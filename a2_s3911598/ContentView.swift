@@ -1,5 +1,6 @@
 import SwiftUI
 import Auth0
+import WidgetKit
 
 /// Represents the destinations within the MoodView, specifically for navigating to mood tracking.
 enum MoodViewDestination: Hashable {
@@ -124,21 +125,22 @@ struct MainTabView: View {
             .tabItem {
                 Label("Tasks", systemImage: "list.bullet")
             }
-
+            
             NavigationView {
                 FriendView()
             }
             .tabItem {
                 Label("Friends", systemImage: "person.3.fill")
             }
-
+            
             NavigationView {
                 SettingsView(userProfile: userProfile, logoutAction: logoutAction)
             }
             .tabItem {
                 Label("Settings", systemImage: "gear")
             }
-        }
+        }.onAppear{
+            WidgetCenter.shared.reloadTimelines(ofKind: "CurrentTaskWidget")}
     }
 }
 

@@ -16,14 +16,14 @@ struct Provider: TimelineProvider {
 
     func getSnapshot(in context: Context, completion: @escaping (TaskEntry) -> Void) {
         // Provide a snapshot for the widget
-        let entry = TaskEntry(date: Date(), task: getCurrentTask())
+        let entry = TaskEntry(date: Date(), task: getLatestTask())
         completion(entry)
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<TaskEntry>) -> Void) {
         // Generate a timeline consisting of a single entry
         let currentDate = Date()
-        let entry = TaskEntry(date: currentDate, task: getCurrentTask())
+        let entry = TaskEntry(date: currentDate, task: getLatestTask())
 
         // Refresh after 15 minutes or when you expect the data to change
         let nextUpdateDate = Calendar.current.date(byAdding: .minute, value: 15, to: currentDate)!
@@ -34,20 +34,23 @@ struct Provider: TimelineProvider {
 }
 
 
+
 struct TaskEntry: TimelineEntry {
     let date: Date
     let task: TaskCodable?
 }
 
-func getCurrentTask() -> TaskCodable? {
-    if let sharedDefaults = UserDefaults(suiteName: "group.com.a2-s3911598.a2-s3911598") {
-        if let taskData = sharedDefaults.data(forKey: "currentTask"),
-           let taskCodable = try? JSONDecoder().decode(TaskCodable.self, from: taskData) {
-            return taskCodable
-        }
+func getLatestTask() -> TaskCodable? {
+    if let sharedDefaults = UserDefaults(suiteName: "group.com.a2-s3911598.a2-s3911598"),
+       let taskData = sharedDefaults.data(forKey: "allTasks"),
+       let tasks = try? JSONDecoder().decode([TaskCodable].self, from: taskData) {
+        
+        // Get the latest task based on the time (you can adjust this based on your logic)
+        return tasks.sorted { $0.time > $1.time }.first
     }
     return nil
 }
+
 
 
 
@@ -67,6 +70,7 @@ struct CurrentTaskWidgetEntryView: View {
                 .padding()
             } else {
                 Text("No current task")
+                    .font(.custom("Chalkboard SE", size: 20))
                     .padding()
             }
     }

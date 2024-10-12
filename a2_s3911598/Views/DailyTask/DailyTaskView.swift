@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import WidgetKit
 
 struct DailyTaskView: View {
     @Environment(\.modelContext) private var modelContext
@@ -84,6 +85,27 @@ struct DailyTaskView: View {
     func deleteTask(_ task: Task) {
         let context = injectedModelContext ?? modelContext
         context.delete(task)
+        let allTasks = tasks
+
+        // Convert all tasks to TaskCodable objects for storage
+        let taskCodables = allTasks.map { task in
+            TaskCodable(
+                title: task.title,
+                taskDescription: task.taskDescription,
+                time: task.time,
+                sharedWith: task.sharedWith,
+                isCompleted: task.isCompleted,
+                imageData: task.imageData
+            )
+        }
+
+        // Save all tasks to the shared UserDefaults
+        let defaults = UserDefaults(suiteName: "group.com.a2-s3911598.a2-s3911598")
+
+        if let taskData = try? JSONEncoder().encode(taskCodables) {
+            defaults?.set(taskData, forKey: "allTasks")
+            WidgetCenter.shared.reloadTimelines(ofKind: "CurrentTaskWidget")
+        }
     }
 }
 

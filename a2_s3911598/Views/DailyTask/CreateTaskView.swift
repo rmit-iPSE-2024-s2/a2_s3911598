@@ -24,6 +24,7 @@ struct CreateTaskView: View {
     private var injectUserDefaults: UserDefaults?
     @State private var showError = false
     @Query private var friends: [Friend]
+    @Query(sort: \Task.time, order: .forward) public var tasks: [Task]
     
     init(
         isPresented: Binding<Bool>,
@@ -214,18 +215,25 @@ struct CreateTaskView: View {
         }
         context.insert(newTask)
 
-        let taskCodable = TaskCodable(
-            title: newTask.title,
-            taskDescription: newTask.taskDescription,
-            time: newTask.time,
-            sharedWith: newTask.sharedWith,
-            isCompleted: newTask.isCompleted,
-            imageData: newTask.imageData
-        )
+        let allTasks = tasks
+
+        // Convert all tasks to TaskCodable objects for storage
+        let taskCodables = allTasks.map { task in
+            TaskCodable(
+                title: task.title,
+                taskDescription: task.taskDescription,
+                time: task.time,
+                sharedWith: task.sharedWith,
+                isCompleted: task.isCompleted,
+                imageData: task.imageData
+            )
+        }
+
+        // Save all tasks to the shared UserDefaults
         let defaults = injectUserDefaults ?? UserDefaults(suiteName: "group.com.a2-s3911598.a2-s3911598")
 
-        if let taskData = try? JSONEncoder().encode(taskCodable) {
-            defaults?.set(taskData, forKey: "currentTask")
+        if let taskData = try? JSONEncoder().encode(taskCodables) {
+            defaults?.set(taskData, forKey: "allTasks")
             WidgetCenter.shared.reloadTimelines(ofKind: "CurrentTaskWidget")
         }
     }
