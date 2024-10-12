@@ -30,6 +30,10 @@ struct MoodView: View {
     /// Controls whether the friends picker is shown.
     @State private var showFriendsPicker = false
     
+    @State private var heartBeat = false
+    
+    @State private var username: String = UserDefaults.standard.string(forKey: "username") ?? "Default User"
+    
     /// The user's profile, containing basic user information.
     var userProfile: Profile
     
@@ -64,7 +68,9 @@ struct MoodView: View {
                 Text("Moods")
                     .font(.custom("Chalkboard SE", size: 24))
                     .padding([.leading, .top], 16)
-                Text("Welcome, \(userProfile.name)")
+
+                // Dynamically display the username
+                Text("Welcome, \(username.isEmpty ? userProfile.name : username)")
                     .font(.custom("Chalkboard SE", size: 16))
                     .bold()
                     .padding([.leading], 16)
@@ -91,6 +97,12 @@ struct MoodView: View {
                         HStack {
                             Image(systemName: "heart.fill")
                                 .foregroundColor(.red)
+                                .scaleEffect(heartBeat ? 1.2 : 1.0)  // Set the scaling effect for heartbeat animation
+                                .animation(.easeInOut(duration: 0.8).repeatForever(autoreverses: true), value: heartBeat)  // Loop the heartbeat animation
+                                .onAppear {
+                                    heartBeat = true  // Start the animation when the view appears
+                                }
+
                             Text("My daily mood record")
                                 .font(Font.custom("Chalkboard SE", size: 20))
                             Spacer()
@@ -196,6 +208,9 @@ struct MoodView: View {
         .background(Color("AppBackground").edgesIgnoringSafeArea(.all))
         .onAppear {
             quoteModel.fetchQuote()
+            if let savedUsername = UserDefaults.standard.string(forKey: "username") {
+                            username = savedUsername
+                        }
         }
     }
 
