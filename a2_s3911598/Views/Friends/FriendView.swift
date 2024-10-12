@@ -6,16 +6,29 @@
 //
 
 
-
 import SwiftUI
 import SwiftData
 
+/// The `FriendView` struct represents the user interface for displaying and managing a list of friends.
+///
+/// This view allows users to add, display, and delete friends. The list of friends is sorted alphabetically and users can swipe to delete individual friends.
+///
+/// - Note: This view interacts with a model context (`modelContext`) to manage the friend data and uses SwiftData for persistent storage.
 struct FriendView: View {
+    
+    /// The environment model context used for managing friend data.
     @Environment(\.modelContext) private var modelContext
+    
+    /// A query that fetches and sorts the list of friends by their names in ascending order.
     @Query(sort: \Friend.name, order: .forward) private var friends: [Friend]
     
+    /// A state variable that controls the presentation of the add friend sheet.
     @State private var showingAddFriendView = false
+    
+    /// A state variable that controls the presentation of the delete confirmation alert.
     @State private var showDeleteConfirmation = false
+    
+    /// A state variable to keep track of the friend selected for deletion.
     @State private var friendToDelete: Friend?
 
     var body: some View {
@@ -36,8 +49,6 @@ struct FriendView: View {
                         .foregroundColor(Color.purple)
                 }
                 .padding(.trailing, 16)
-
-
             }
             Divider()
                 .background(Color.gray)
@@ -126,10 +137,14 @@ struct FriendView: View {
         }
     }
 
+   
+    ///
+    /// - Parameter friend: The friend to be deleted.
     private func deleteFriend(_ friend: Friend) {
         modelContext.delete(friend)
     }
 }
+
 
                    
 

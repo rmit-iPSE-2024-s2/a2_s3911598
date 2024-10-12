@@ -8,6 +8,10 @@
 import SwiftData
 import Foundation
 
+/// The `Friend` class represents a friend with a name and email.
+///
+/// This class stores basic contact information for a friend.
+
 @Model
 class Friend {
     var name: String

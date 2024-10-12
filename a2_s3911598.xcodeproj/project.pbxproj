@@ -11,6 +11,7 @@
 		810196022CB7DB0E00AAFA03 /* MoodViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 810196012CB7DB0E00AAFA03 /* MoodViewTest.swift */; };
 		819F27502CAF707C00F3DF50 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819F274F2CAF707C00F3DF50 /* Profile.swift */; };
 		81B7E1AB2CAB9119001BA47F /* Auth0 in Frameworks */ = {isa = PBXBuildFile; productRef = 81B7E1AA2CAB9119001BA47F /* Auth0 */; };
+		81F3B07D2CBA029D006ADA51 /* MoodDetailViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F3B07C2CBA029D006ADA51 /* MoodDetailViewTest.swift */; };
 		81F6E8222CB93D730079A5AC /* CalendarViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F6E8212CB93D730079A5AC /* CalendarViewTest.swift */; };
 		81F7C4DE2CAB808C003E366F /* Auth0.plist in Resources */ = {isa = PBXBuildFile; fileRef = 81F7C4DD2CAB808B003E366F /* Auth0.plist */; };
 		B081B1082CAA92CE00508E5D /* MoodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B081B1072CAA92CE00508E5D /* MoodView.swift */; };
@@ -98,6 +99,7 @@
 		810059FD2CB8C63B001EA0AF /* MoodViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodViewModel.swift; sourceTree = "<group>"; };
 		810196012CB7DB0E00AAFA03 /* MoodViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodViewTest.swift; sourceTree = "<group>"; };
 		819F274F2CAF707C00F3DF50 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		81F3B07C2CBA029D006ADA51 /* MoodDetailViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodDetailViewTest.swift; sourceTree = "<group>"; };
 		81F6E8212CB93D730079A5AC /* CalendarViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewTest.swift; sourceTree = "<group>"; };
 		81F7C4DD2CAB808B003E366F /* Auth0.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Auth0.plist; sourceTree = "<group>"; };
 		B081B1072CAA92CE00508E5D /* MoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodView.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 			children = (
 				810196012CB7DB0E00AAFA03 /* MoodViewTest.swift */,
 				81F6E8212CB93D730079A5AC /* CalendarViewTest.swift */,
+				81F3B07C2CBA029D006ADA51 /* MoodDetailViewTest.swift */,
 			);
 			path = MoodTests;
 			sourceTree = "<group>";
@@ -602,6 +605,7 @@
 				B0A967BB2CB6774D00AB68FD /* DailyTaskViewTest.swift in Sources */,
 				B0A967BF2CB9EE8600AB68FD /* CreateTaskViewTests.swift in Sources */,
 				810196022CB7DB0E00AAFA03 /* MoodViewTest.swift in Sources */,
+				81F3B07D2CBA029D006ADA51 /* MoodDetailViewTest.swift in Sources */,
 				81F6E8222CB93D730079A5AC /* CalendarViewTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

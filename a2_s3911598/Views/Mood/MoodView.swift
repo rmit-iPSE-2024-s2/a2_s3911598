@@ -1,21 +1,55 @@
+//
+//  MoodDetailView.swift
+//  a2_s3911598
+//
+//  Created by Lea Wang on 3/10/2024.
+//
+
+
 import SwiftUI
 import Charts
 import SwiftData
 
+/// The `MoodView` struct provides an interface for tracking and displaying the user's mood records.
+///
+/// This view allows users to view their daily mood records, record new moods, display a motivational quote, and share mood data with friends. It interacts with the `Mood` model to fetch and display mood data, and uses `QuoteModel` to fetch random quotes from an API.
 struct MoodView: View {
+    
+    /// Controls whether the calendar view is shown.
     @State private var showCalendar = false
+    
+    /// Controls whether the mood tracking view is shown.
     @State private var showMoodTracking = false
+    
+    /// Indicates if the view is currently active.
     @State private var isActive = false
+    
+    /// A list of selected friends to share mood data with.
     @State private var selectedFriends: [Friend] = []
+    
+    /// Controls whether the friends picker is shown.
     @State private var showFriendsPicker = false
+    
+    /// The user's profile, containing basic user information.
     var userProfile: Profile
+    
+    /// The model responsible for fetching random quotes.
     @ObservedObject var quoteModel: QuoteModel = QuoteModel()
     
-    // SwiftData related
+    /// The environment's model context used for interacting with the `Mood` data model.
     @Environment(\.modelContext) private var modelContext
+    
+    /// A query that fetches the mood data, sorted by date in descending order.
     @Query(sort: \Mood.date, order: .reverse) private var moodData: [Mood]
+    
+    /// A query that fetches the list of friends.
     @Query private var friends: [Friend]
     
+    /// Initializes the `MoodView` with a user's profile and the model context.
+    ///
+    /// - Parameters:
+    ///   - userProfile: The profile of the current user.
+    ///   - modelContext: The model context for managing data.
     init(userProfile: Profile, modelContext: ModelContext) {
         self.userProfile = userProfile
     }
@@ -31,8 +65,10 @@ struct MoodView: View {
                     .bold()
                     .padding([.leading], 16)
                     .padding([.top], -10)
+                
+                // Displays a random motivational quote
                 VStack(alignment: .leading) {
-                    if let quote = quoteModel.result{
+                    if let quote = quoteModel.result {
                         Text("\"\(quote.q)\"")
                             .font(.custom("Chalkboard SE", size: 16))
                             .multilineTextAlignment(.leading)
@@ -40,11 +76,11 @@ struct MoodView: View {
                                 quoteModel.fetchQuote()
                             }
                     }
-                    }
-                    .padding([.leading, .trailing])
-                    .padding([.top], -10)
-                    .frame(minHeight: 40, maxHeight: 90, alignment: .top)
-                
+                }
+                .padding([.leading, .trailing])
+                .padding([.top], -10)
+                .frame(minHeight: 40, maxHeight: 90, alignment: .top)
+
                 // Recent mood record section
                 cardView {
                     VStack(alignment: .leading, spacing: 10) {
@@ -68,23 +104,20 @@ struct MoodView: View {
                             }
                         }
                         .padding(.horizontal)
-                        
-                    
                     }
                     .padding(.vertical)
                 }
-                
-                // “How do you feel today” card
+
+                // "How do you feel today" card with mood tracking
                 cardView {
                     VStack(alignment: .leading, spacing: 10) {
                         HStack {
-                                            Text("How do you feel today?")
-                                                .font(Font.custom("Chalkboard SE", size: 26))
-                                            Spacer()
-                                        }
+                            Text("How do you feel today?")
+                                .font(Font.custom("Chalkboard SE", size: 26))
+                            Spacer()
+                        }
                         .padding(.horizontal)
                         
-                        // Go record button
                         Button(action: {
                             showMoodTracking = true
                         }) {
@@ -96,16 +129,15 @@ struct MoodView: View {
                                 .foregroundColor(.white)
                                 .cornerRadius(10)
                                 .padding(.horizontal)
-                            }
-                        
-                            .padding(.top, 16)
-                            .sheet(isPresented: $showMoodTracking) {
-                                MoodTrackingView(isActive: $showMoodTracking)
+                        }
+                        .padding(.top, 16)
+                        .sheet(isPresented: $showMoodTracking) {
+                            MoodTrackingView(isActive: $showMoodTracking)
                         }
                     }
                     .padding(.vertical, 16)
                 }
-                
+
                 // Display today's mood record
                 if let todayMood = moodForToday() {
                     cardView {
@@ -119,15 +151,12 @@ struct MoodView: View {
                             Text("Mood: \(getMoodDescription(for: todayMood.moodLevel))")
                                 .font(Font.custom("Chalkboard SE", size: 18))
                             
-                            // Display notes if available
                             if !todayMood.notes.isEmpty {
-                                            Text("Notes: \(todayMood.notes)")
-                                                .font(Font.custom("Chalkboard SE", size: 18))
-                                                .padding(.top, 4)
-                                        }
-                       
+                                Text("Notes: \(todayMood.notes)")
+                                    .font(Font.custom("Chalkboard SE", size: 18))
+                                    .padding(.top, 4)
+                            }
                             
-                            // "Share this with..." button
                             Button(action: {
                                 showFriendsPicker = true
                             }) {
@@ -152,36 +181,37 @@ struct MoodView: View {
                         .foregroundColor(.gray)
                         .padding()
                 }
-                
+
                 Spacer()
             }
         }
-        .sheet(isPresented: $showFriendsPicker, onDismiss: {
-            if !selectedFriends.isEmpty {
-
-            }
-        }) {
+        .sheet(isPresented: $showFriendsPicker) {
             FriendsPickerView(friends: friends, selectedFriends: $selectedFriends, isPresented: $showFriendsPicker)
         }
-
         .background(Color("AppBackground").edgesIgnoringSafeArea(.all))
-        .onAppear{
-            quoteModel.fetchQuote()}
+        .onAppear {
+            quoteModel.fetchQuote()
+        }
     }
-    
-    // Get today's mood record
+
+    /// Retrieves today's mood record from the list of mood data.
+    ///
+    /// - Returns: The `Mood` instance for today's date, if available.
     func moodForToday() -> Mood? {
         return moodData.first(where: { Calendar.current.isDateInToday($0.date) })
     }
-    
-    // Time formatter
+
+    /// A time formatter for formatting mood record times.
     var timeFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
         return formatter
     }
-    
-    // Helper: Get mood description
+
+    /// Returns a description string for the given mood level.
+    ///
+    /// - Parameter mood: A string representing the mood level.
+    /// - Returns: A human-readable description of the mood level.
     func getMoodDescription(for mood: String) -> String {
         switch mood {
         case "Very Unpleasant": return "Very Unpleasant"
@@ -193,8 +223,11 @@ struct MoodView: View {
         default: return "Unknown"
         }
     }
-    
-    // Unified card view style
+
+    /// A reusable card view style used for various sections in the view.
+    ///
+    /// - Parameter content: The content to be displayed inside the card.
+    /// - Returns: A styled card view.
     @ViewBuilder
     func cardView<Content: View>(@ViewBuilder content: () -> Content) -> some View {
         ZStack {
@@ -206,84 +239,5 @@ struct MoodView: View {
             content()
                 .padding()
         }
-    }
-}
-
-struct MoodShareCardView: View {
-    let mood: Mood
-    let selectedFriends: [Friend]
-    @Binding var isPresented: Bool
-
-    var body: some View {
-        VStack(spacing: 20) {
-            Text("Share Your Mood")
-                .font(.custom("Chalkboard SE", size: 24))
-                .padding(.top)
-                .multilineTextAlignment(.center)
-            
-            Text("Mood: \(mood.moodLevel)")
-                .font(.custom("Chalkboard SE", size: 20))
-                .multilineTextAlignment(.center)
-            
-            Text("Time: \(timeFormatter.string(from: mood.date))")
-                .font(.custom("Chalkboard SE", size: 20))
-                .multilineTextAlignment(.center)
-            
-            // Display notes if available
-            if !mood.notes.isEmpty {
-                Text("Notes: \(mood.notes)")
-                    .font(.custom("Chalkboard SE", size: 20))
-                    .padding(.top, 4)
-                    .multilineTextAlignment(.center)
-                    .frame(maxWidth: .infinity, alignment: .center)
-            }
-            
-            HStack {
-                Button(action: {
-                    // Handle share confirmation logic here
-                    isPresented = false
-                }) {
-                    Text("Confirm")
-                        .font(.custom("Chalkboard SE", size: 18))
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color("primaryMauve"))
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                }
-                
-                Button(action: {
-                    isPresented = false
-                }) {
-                    Text("Cancel")
-                        .font(.custom("Chalkboard SE", size: 18))
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.gray)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                }
-            }
-            .padding(.horizontal)
-        }
-        .padding()
-        .frame(maxWidth: .infinity, alignment: .center)
-        .background(
-            LinearGradient(
-                gradient: Gradient(colors: [Color("primaryMauve"), Color("secondaryLilac")]),
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-        )
-        .cornerRadius(16)
-        .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 4)
-        .padding()
-    }
-    
-    // Time formatter
-    var timeFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"
-        return formatter
     }
 }

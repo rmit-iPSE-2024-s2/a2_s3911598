@@ -8,6 +8,11 @@
 import Foundation
 import SwiftData
 
+
+/// The `Mood` class represents a user's mood entry for a specific date.
+///
+/// This class stores the mood level, any additional notes, and the list of people the mood is shared with.
+
 @Model
 class Mood {
     var date: Date

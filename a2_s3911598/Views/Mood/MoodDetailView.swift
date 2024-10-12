@@ -8,11 +8,24 @@
 
 import SwiftUI
 
+/// The `MoodDetailView` struct allows users to review and save their mood for the current date.
+///
+/// This view displays the current date, the selected mood, an image representing the mood, and allows users to input additional mood notes. It provides a button to save the mood to the data model.
+
 struct MoodDetailView: View {
+    /// The environment model context used for managing mood data.
     @Environment(\.modelContext) private var modelContext
-    @State private var moodText: String = ""
+    
+    /// The text entered by the user to describe their mood.
+    @State private(set) var moodText: String = "" // Allow reading moodText in tests
+    
+    /// A binding that controls whether this view is active.
     @Binding var isActive: Bool
+    
+    /// The mood selected by the user.
     @Binding var selectedMood: String
+    
+    /// The current date, used to record the mood.
     let currentDate = Date()
 
     var body: some View {
@@ -97,6 +110,9 @@ struct MoodDetailView: View {
     }
 
     // Helper function: returns description text based on mood label
+    
+    /// - Parameter mood: The mood selected by the user.
+    /// - Returns: A text description of the mood.
     func displayText(for mood: String) -> String {
         switch mood.lowercased() {  // Convert mood to lowercase
         case "slightly pleasant":
@@ -111,11 +127,14 @@ struct MoodDetailView: View {
             return "Good to know you're feeling \(mood.lowercased())!"
         }
     }
-
     
+    /// Saves the selected mood and notes to the model context.
+    ///
+    /// This function creates a new `Mood` instance using the selected mood and user notes, and inserts it into the model context.
     func saveMood() {
         let newMood = Mood(date: currentDate, moodLevel: selectedMood, notes: moodText)
         modelContext.insert(newMood)
+ 
 
     }
 }

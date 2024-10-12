@@ -1,10 +1,20 @@
 import SwiftUI
 import SwiftData
 
+/// The `CalendarView` struct provides an interface for displaying a calendar and viewing mood records by date.
+///
+/// This view allows users to navigate through months, select specific dates, and view any mood records associated with those dates.
 struct CalendarView: View {
+    
+    /// The environment's model context used for managing mood data.
     @Environment(\.modelContext) private var modelContext
+    
+    /// The currently selected date.
     @State private var selectedDate: Date? = nil
+    
+    /// A query that fetches all mood records.
     @Query private var allMoods: [Mood]
+    
     // Current month
     @State private var currentMonth: Date = Date()
     
@@ -116,13 +126,16 @@ struct CalendarView: View {
     @ViewBuilder
     func showMoodsForDate(_ date: Date) -> some View {
         VStack {
-            Text("Moods on \(dateFormatter.string(from: date))")
+            Text("Moods \(dateFormatter.string(from: date))")
                 .font(.headline)
                 .padding(.top)
             
             if let mood = moodForDate(date) {
                 Text("Mood Level: \(mood.moodLevel)")
-                Text("Notes: \(mood.notes)")
+                // Only show the notes if they are not empty
+                if !mood.notes.isEmpty {
+                    Text("Notes: \(mood.notes)")
+                }
             } else {
                 Text("No records for this date.")
             }
@@ -136,12 +149,15 @@ struct CalendarView: View {
     }
     
     // Display mood icon
+    
+    /// - Parameter moodLevel: The mood level.
+    /// - Returns: A view containing the appropriate icon for the mood level.
     func moodIcon(for moodLevel: String) -> some View {
         let imageName: String
         switch moodLevel {
         case "Very Unpleasant": imageName = "VeryUnpleasant"
         case "Slightly UnPleasant":imageName = "SlightlyUnPleasant"
-        case "Unpleasant": imageName = "Unpleaset"
+        case "Unpleasant": imageName = "Unpleasant"
         case "Neutral": imageName = "Normal"
         case "Slightly Pleasant": imageName = "SlightlyPleasant"
         case "Pleasant": imageName = "Happy"

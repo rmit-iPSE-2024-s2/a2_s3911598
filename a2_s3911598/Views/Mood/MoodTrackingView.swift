@@ -1,14 +1,34 @@
+//
+//  MoodDetailView.swift
+//  a2_s3911598
+//
+//  Created by Lea Wang on 3/10/2024.
+//
+
+
 import SwiftUI
 
+/// The `MoodTrackingView` struct provides a user interface for tracking the user's mood using a slider.
+///
+/// This view allows users to adjust their mood on a scale from "Very Unpleasant" to "Very Pleasant" using a slider, and updates the facial expression and background color accordingly. Once the user selects their mood, they can proceed to the next view to record additional details.
 struct MoodTrackingView: View {
+    
+    /// A binding to control whether the view is active.
     @Binding var isActive: Bool
-
+    
+    /// The current value of the mood slider (0.0 to 1.0).
     @State private var moodValue: Double = 0.5
+    
+    /// The label representing the currently selected mood.
     @State private var selectedMoodLabel = "Neutral"
+    
+    /// Controls whether the mood detail view is presented.
     @State private var showingMoodDetailView = false
-    @State private var eyeOffsetX: CGFloat = 0  // Horizontal offset of the eyes
-
-    // Mood color gradient
+    
+    /// The horizontal offset for the eyes in the facial expression.
+    @State private var eyeOffsetX: CGFloat = 0
+    
+    /// A gradient of colors corresponding to different mood levels.
     let moodColors = [
         Color(red: 0.68, green: 0.77, blue: 0.89),
         Color(red: 0.74, green: 0.83, blue: 0.91),
@@ -18,8 +38,8 @@ struct MoodTrackingView: View {
         Color(red: 0.99, green: 0.80, blue: 0.67),
         Color(red: 0.99, green: 0.70, blue: 0.63)
     ]
-
-    // Mood description labels
+    
+    /// Labels describing different mood levels.
     let moodLabels = [
         "Very Unpleasant",
         "Unpleasant",
@@ -29,14 +49,15 @@ struct MoodTrackingView: View {
         "Pleasant",
         "Very Pleasant"
     ]
-
+    
+    /// The curvature of the mouth, where -1 represents a frown and 1 represents a smile.
     var curvature: Double {
         return (moodValue - 0.5) * 2
     }
 
     var body: some View {
         ZStack {
-            // Set background gradient color based on moodValue
+            // Background color changes based on moodValue
             moodColors[Int(moodValue * Double(moodColors.count - 1))]
                 .edgesIgnoringSafeArea(.all)
                 .animation(.easeInOut, value: moodValue)
@@ -44,7 +65,7 @@ struct MoodTrackingView: View {
             VStack(spacing: 20) {
                 Spacer(minLength: 50)
 
-                // Facial expression, including eyes, nose, and mouth
+                // Facial expression with eyes, nose, and mouth
                 ZStack {
                     // Eyes
                     HStack(spacing: 20) {
@@ -80,11 +101,11 @@ struct MoodTrackingView: View {
                         .animation(.easeInOut, value: curvature)
                 }.offset(y: -100)
 
+                // Mood slider with a label that changes based on moodValue
                 ZStack {
                     Slider(value: $moodValue)
                         .padding(.horizontal)
 
-                    // Mood label that changes with the slider
                     Text(moodLabels[Int(moodValue * Double(moodLabels.count - 1))])
                         .font(Font.custom("Chalkboard SE", size: 20))
                         .padding(8)
@@ -98,6 +119,7 @@ struct MoodTrackingView: View {
                         .animation(.easeInOut, value: moodValue)
                 }.offset(y: 100)
 
+                // Mood description labels
                 HStack {
                     Text("Very Unpleasant")
                         .font(Font.custom("Chalkboard SE", size: 14))
@@ -112,9 +134,8 @@ struct MoodTrackingView: View {
 
                 Spacer()
 
-                // Save mood and open detail page
+                // Button to save the mood and navigate to the mood detail view
                 Button(action: {
-                    // update selectedMoodLabel
                     self.selectedMoodLabel = moodLabels[Int(moodValue * Double(moodLabels.count - 1))]
                     self.showingMoodDetailView = true
                 }) {
@@ -126,7 +147,7 @@ struct MoodTrackingView: View {
                         Spacer()
                     }
                     .padding()
-                    .background(Color("primaryMauve")) 
+                    .background(Color("primaryMauve"))
                     .cornerRadius(10)
                 }
                 .padding(.horizontal)
@@ -139,11 +160,15 @@ struct MoodTrackingView: View {
     }
 }
 
-// Custom mouth shape
+/// A custom shape representing the mouth in the mood facial expression.
+///
+/// The `MouthShape` changes its curvature based on the `curvature` value, where -1 represents a frown and 1 represents a smile.
 struct MouthShape: Shape {
-    var curvature: Double  // From -1 (frown) to 1 (smile)
-
-    // Make curvature property animatable
+    
+    /// The curvature of the mouth, ranging from -1 (frown) to 1 (smile).
+    var curvature: Double
+    
+    // Make `curvature` animatable.
     var animatableData: Double {
         get { curvature }
         set { curvature = newValue }
