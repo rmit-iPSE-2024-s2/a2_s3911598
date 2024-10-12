@@ -2,7 +2,7 @@
 //  a2_s3911598UITestsLaunchTests.swift
 //  a2_s3911598UITests
 //
-//  Created by zachary.zhao on 30/9/2024.
+//  Created by Lea Wang on 30/9/2024.
 //
 
 import XCTest

@@ -2,7 +2,7 @@
 //  AppIntent.swift
 //  CurrentTaskWidget
 //
-//  Created by zachary.zhao on 7/10/2024.
+//  Created by Lea Wang on 7/10/2024.
 //
 
 import WidgetKit

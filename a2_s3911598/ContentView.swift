@@ -1,22 +1,28 @@
 import SwiftUI
 import Auth0
 
-// 代表 MoodView 的枚举
+/// Represents the destinations within the MoodView, specifically for navigating to mood tracking.
 enum MoodViewDestination: Hashable {
     case moodTracking
 }
 
-// 合并后的 ContentView
+/// The `ContentView` struct handles the authentication flow and displays the main content based on the user's authentication state.
+///
+/// If the user is authenticated, the main content view (`MainTabView`) is displayed. Otherwise, a login/signup interface is shown.
 struct ContentView: View {
+    
+    /// Tracks whether the user is authenticated.
     @State private var isAuthenticated = false
+    
+    /// Stores the authenticated user's profile information.
     @State var userProfile = Profile.empty
 
     var body: some View {
         if isAuthenticated {
-            // 显示主 TabView 页面
+            // Display the main tab view if authenticated
             MainTabView(userProfile: userProfile, logoutAction: logout)
         } else {
-            // 未登录时显示登录页面
+            // Display the login/signup view if not authenticated
             VStack(spacing: 20) {
                 Text("Welcome to TogetherWe")
                     .font(.largeTitle)
@@ -38,6 +44,7 @@ struct ContentView: View {
         }
     }
 
+    /// Initiates the login flow using Auth0.
     func login() {
         Auth0
             .webAuth()
@@ -49,12 +56,11 @@ struct ContentView: View {
                 case .success(let credentials):
                     self.isAuthenticated = true
                     self.userProfile = Profile.from(credentials.idToken)
-                    print("Credentials: \(credentials)")
-                    print("ID token: \(credentials.idToken)")
                 }
             }
     }
 
+    /// Initiates the signup flow using Auth0.
     func signup() {
         Auth0
             .webAuth()
@@ -66,12 +72,11 @@ struct ContentView: View {
                 case .success(let credentials):
                     self.isAuthenticated = true
                     self.userProfile = Profile.from(credentials.idToken)
-                    print("Credentials: \(credentials)")
-                    print("ID token: \(credentials.idToken)")
                 }
             }
     }
 
+    /// Logs the user out and clears the session.
     func logout() {
         Auth0
             .webAuth()
@@ -87,17 +92,25 @@ struct ContentView: View {
     }
 }
 
+/// The `MainTabView` struct provides the main tab navigation for the app, including mood tracking, tasks, friends, and settings.
+///
+/// It displays a `TabView` with four tabs, each corresponding to different functionality of the app.
 struct MainTabView: View {
+    
+    /// The user's profile information.
     var userProfile: Profile
+    
+    /// The action to be performed when the user logs out.
     var logoutAction: () -> Void
-
+    
+    /// Manages the presentation of the mood tracking view.
     @State private var isShowingMoodTracking = false
+    
+    /// The environment's model context for managing data.
     @Environment(\.modelContext) private var modelContext
 
     var body: some View {
-
         TabView {
-
             NavigationView {
                 MoodView(userProfile: userProfile, modelContext: modelContext)
             }
@@ -107,7 +120,6 @@ struct MainTabView: View {
             
             NavigationView {
                 DailyTaskView()
-
             }
             .tabItem {
                 Label("Tasks", systemImage: "list.bullet")
@@ -130,9 +142,13 @@ struct MainTabView: View {
     }
 }
 
-// 自定义 ViewModifier 和 ButtonStyle
+/// A custom view modifier that applies a bold title style to text elements.
 struct TitleStyle: ViewModifier {
+    
+    /// The font for the title text.
     let titleFontBold = Font.title.weight(.bold)
+    
+    /// The color used for the title text.
     let navyBlue = Color(red: 0, green: 0, blue: 0.5)
 
     func body(content: Content) -> some View {
@@ -143,7 +159,10 @@ struct TitleStyle: ViewModifier {
     }
 }
 
+/// A custom button style that applies a navy blue background with scaling when pressed.
 struct MyButtonStyle: ButtonStyle {
+    
+    /// The color used for the button background.
     let navyBlue = Color(red: 0, green: 0, blue: 0.5)
 
     func makeBody(configuration: Configuration) -> some View {
