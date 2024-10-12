@@ -8,25 +8,71 @@
 import SwiftUI
 import SwiftData
 import WidgetKit
+
+/// The `CreateTaskView` struct allows users to create a new task with a title, description, time, image, and team members.
+///
+/// This view provides input fields for task details, including options to upload an image, select friends to collaborate with, and fetch a random task.
 struct CreateTaskView: View {
+    
+    /// Controls whether the view is presented.
     @Binding var isPresented: Bool
     
+    /// The title of the task.
     @State var title = ""
+    
+    /// The description of the task.
     @State var description = ""
+    
+    /// The time selected for the task.
     @State var time = Date()
+    
+    /// Controls whether the image picker is shown.
     @State var showImagePicker = false
+    
+    /// The image selected for the task.
     @State var selectedImage: UIImage?
+    
+    /// The friends selected to collaborate on the task.
     @State var selectedFriends: [Friend] = []
+    
+    /// Controls whether the friends picker is shown.
     @State var showFriendsPicker = false
+    
+    /// The model object responsible for fetching random activities.
     @StateObject private var activityModel = ActivityModel()
+    
+    /// The environment's model context for managing task data.
     @Environment(\.modelContext) private var modelContext
+    
+    /// Optional injected model context (for testing or dependency injection).
     private var injectedModelContext: ModelContext?
+    
+    /// Optional injected `UserDefaults` for storing tasks.
     private var injectUserDefaults: UserDefaults?
+    
+    /// Tracks whether to show an error message if the title is empty.
     @State private var showError = false
+    
+    /// A query that fetches a list of friends.
     @Query private var friends: [Friend]
+    
+    /// A query that fetches tasks sorted by time.
     @Query(sort: \Task.time, order: .forward) public var tasks: [Task]
     
-    init(
+       /// Initializes the `CreateTaskView` with optional parameters for dependency injection.
+       ///
+       /// - Parameters:
+       ///   - isPresented: A binding to control whether the view is presented.
+       ///   - title: The initial task title (default: empty).
+       ///   - description: The initial task description (default: empty).
+       ///   - time: The initial task time (default: current date).
+       ///   - showImagePicker: Whether to show the image picker (default: false).
+       ///   - selectedImage: The initial selected image (default: nil).
+       ///   - selectedFriends: The initial selected friends (default: empty array).
+       ///   - showFriendsPicker: Whether to show the friends picker (default: false).
+       ///   - modelContext: An optional model context for managing data (default: nil).
+       ///   - userDefaults: Optional `UserDefaults` for saving tasks (default: nil).
+       init(
         isPresented: Binding<Bool>,
         title: String = "",
         description: String = "",
@@ -200,6 +246,7 @@ struct CreateTaskView: View {
         activityModel.fetchActivity()
     }
     
+    /// Saves the created task to the model context and stores it in shared `UserDefaults` for widget updates.
     func saveTask() {
         let context = injectedModelContext ?? modelContext
         

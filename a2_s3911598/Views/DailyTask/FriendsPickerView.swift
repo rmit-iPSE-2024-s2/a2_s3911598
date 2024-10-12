@@ -1,22 +1,41 @@
 import SwiftUI
 import SwiftData
 
+/// The `FriendsPickerView` struct allows users to select friends to share tasks or other content with.
+///
+/// If no friends are available, it provides an option to add new friends. After selecting friends, users can confirm the selection and share with the selected friends. If no friends are selected, an alert is displayed. An animated heart effect shows success when the sharing action is completed.
 struct FriendsPickerView: View {
+
+    /// The list of friends available for selection.
     let friends: [Friend]
+
+    /// A binding that stores the selected friends.
     @Binding var selectedFriends: [Friend]
-    @State private var showingAddFriendView = false
+
+    /// A binding that controls whether the view is presented.
     @Binding var isPresented: Bool
+
+    /// Controls the presentation of the `AddFriendView`.
+    @State private var showingAddFriendView = false
+
+    /// Controls whether the share result is shown.
     @State private var showShareResult = false
+
+    /// The message displayed when sharing is successful.
     @State private var shareMessage = ""
+
+    /// Controls the animation of hearts when sharing is successful.
     @State private var heartAnimation = false
+
+    /// Controls whether the selection error alert is shown.
     @State private var showSelectionError = false
 
     var body: some View {
         NavigationView {
             ZStack {
                 VStack(alignment: .leading, spacing: 10) {
+                    // If there are no friends available
                     if friends.isEmpty {
-                        // If no friends are available, display a message and options to add friends or close the view
                         VStack {
                             Text("You don't have any friends yet.")
                                 .font(.custom("Chalkboard SE", size: 18))
@@ -49,13 +68,13 @@ struct FriendsPickerView: View {
                             }
                         }
                     } else {
-                        // Display list of friends for selection
+                        // Friends list for selection
                         Text("Select Friends")
                             .font(.custom("Chalkboard SE", size: 24))
                             .padding([.leading], 16)
                             .padding([.top], 20)
                             .padding([.bottom], 10)
-                        
+
                         List {
                             ForEach(friends) { friend in
                                 HStack {
@@ -76,11 +95,10 @@ struct FriendsPickerView: View {
                             .listRowSeparator(.hidden)
                         }
                         .listStyle(PlainListStyle())
-                        
-                        // Button to confirm selection and share with selected friends
+
+                        // Confirm button for sharing
                         Button(action: {
                             if selectedFriends.isEmpty {
-                                // Show an alert if no friends are selected
                                 showSelectionError = true
                             } else {
                                 shareMessage = "Successfully shared with \(selectedFriends.map { $0.name }.joined(separator: ", "))"
@@ -88,8 +106,7 @@ struct FriendsPickerView: View {
                                     showShareResult = true
                                     heartAnimation = true
                                 }
-                                
-                                // Show share result for 3 seconds, then close the view
+
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                                     withAnimation {
                                         showShareResult = false
@@ -118,12 +135,12 @@ struct FriendsPickerView: View {
                         }
                     }
                 }
-                
-                // Share result overlay with animation
+
+                // Share result overlay with animated hearts
                 if showShareResult {
-                    Color.black.opacity(0.4) // Background blur effect
+                    Color.black.opacity(0.4)
                         .edgesIgnoringSafeArea(.all)
-                    
+
                     VStack {
                         Text(shareMessage)
                             .font(.custom("Chalkboard SE", size: 18))
@@ -134,8 +151,7 @@ struct FriendsPickerView: View {
                             .shadow(radius: 5)
                             .padding()
                             .transition(.move(edge: .bottom))
-                        
-                        // Heart animation when sharing is successful
+
                         ZStack {
                             ForEach(0..<20, id: \.self) { index in
                                 HeartView()
@@ -154,7 +170,6 @@ struct FriendsPickerView: View {
                         }
                     }
                     .onTapGesture {
-                        // Close the share result view on tap
                         withAnimation {
                             showShareResult = false
                             heartAnimation = false
@@ -169,7 +184,9 @@ struct FriendsPickerView: View {
         }
     }
 
-    // Toggle friend selection state
+    /// Toggles the selection state of the given friend.
+    ///
+    /// - Parameter friend: The friend to toggle selection for.
     private func toggleFriendSelection(_ friend: Friend) {
         if let index = selectedFriends.firstIndex(where: { $0.id == friend.id }) {
             selectedFriends.remove(at: index)
@@ -179,7 +196,7 @@ struct FriendsPickerView: View {
     }
 }
 
-// View for the animated hearts
+/// A custom view that displays a heart symbol used in the share result animation.
 struct HeartView: View {
     var body: some View {
         Image(systemName: "heart.fill")

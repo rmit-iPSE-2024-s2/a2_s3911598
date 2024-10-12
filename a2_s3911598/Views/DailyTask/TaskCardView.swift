@@ -7,7 +7,12 @@
 
 import SwiftUI
 
+
+/// The `TaskCard` struct displays a task's title, description, time, and shared participants in a stylized card.
+///
+/// This view represents a single task as a card, showing relevant task information. It uses different background colors depending on whether the task is completed.
 struct TaskCard: View {
+    /// The task to be displayed.
     var task: Task
 
     var body: some View {

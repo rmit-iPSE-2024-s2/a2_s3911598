@@ -1,29 +1,47 @@
 import SwiftUI
 import SwiftData
 
+/// The `TaskDetailView` struct displays detailed information about a task, including the title, description, time, collaborators, and task status.
+///
+/// The view also includes an interactive drawing area where users can draw a checkmark to mark the task as completed.
 struct TaskDetailView: View {
+    
+    /// The environment's model context for managing task data.
     @Environment(\.modelContext) private var modelContext
+    
+    /// The task whose details are being displayed.
     @State private var task: Task
+    
+    /// Stores points drawn by the user for the checkmark gesture.
     @State private var drawingPoints: [CGPoint] = []
+    
+    /// Tracks whether the long press gesture is active.
     @State private var isLongPressActive = false
+    
+    /// Optional injected model context (for testing or dependency injection).
     private var injectedModelContext: ModelContext?
 
-    init(task: Task,modelContext: ModelContext? = nil ) {
+    /// Initializes the `TaskDetailView` with the task to be displayed and an optional model context.
+    ///
+    /// - Parameters:
+    ///   - task: The task to display.
+    ///   - modelContext: Optional model context for managing task data (default: nil).
+    init(task: Task, modelContext: ModelContext? = nil) {
         _task = State(initialValue: task)
         self.injectedModelContext = modelContext
     }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 15) {
-            // Task details
-            Text("TiTle:")
+            // Task title
+            Text("Title:")
                 .font(.custom("Chalkboard SE", size: 18))
                 .padding(.leading, 16)
-                .padding(.top, 0)
             Text(task.title)
                 .font(.custom("Chalkboard SE", size: 16))
                 .padding([.leading], 16)
 
+            // Task description
             Text("Description:")
                 .font(.custom("Chalkboard SE", size: 18))
                 .padding(.leading, 16)
@@ -31,6 +49,7 @@ struct TaskDetailView: View {
                 .font(.custom("Chalkboard SE", size: 16))
                 .padding(.horizontal, 16)
             
+            // Task image (if available)
             if let imageData = task.imageData, let image = UIImage(data: imageData) {
                 Image(uiImage: image)
                     .resizable()
@@ -41,7 +60,7 @@ struct TaskDetailView: View {
                     .padding(.horizontal)
             }
 
-
+            // Task time
             Text("Time:")
                 .font(.custom("Chalkboard SE", size: 18))
                 .padding(.leading, 16)
@@ -49,6 +68,7 @@ struct TaskDetailView: View {
                 .font(.custom("Chalkboard SE", size: 16))
                 .padding(.horizontal, 16)
 
+            // Collaborators (if any)
             if !task.sharedWith.isEmpty {
                 Text("Shared With:")
                     .font(.custom("Chalkboard SE", size: 18))
@@ -58,6 +78,7 @@ struct TaskDetailView: View {
                     .padding(.horizontal, 16)
             }
 
+            // Task status
             Text("Status:")
                 .font(.custom("Chalkboard SE", size: 18))
                 .padding(.leading, 16)
@@ -66,8 +87,7 @@ struct TaskDetailView: View {
                 .padding(.horizontal, 16)
                 .foregroundColor(task.isCompleted ? .green : .red)
 
-
-            // Drawing area
+            // Drawing area for checkmark
             ZStack {
                 Rectangle()
                     .fill(Color(white: 1))
@@ -80,13 +100,6 @@ struct TaskDetailView: View {
                     }
                     .stroke(Color.green, lineWidth: 4)
                 }
-
-                // Show the prompt when not drawing
-//                if drawingPoints.isEmpty {
-//                    Text("Draw a checkmark here to mark as completed")
-//                        .font(.custom("Chalkboard SE", size: 16))
-//                        .foregroundColor(.gray)
-//                }
             }
             .contentShape(Rectangle())
             .gesture(
@@ -115,18 +128,23 @@ struct TaskDetailView: View {
             .frame(height: 200)
             .padding()
             .coordinateSpace(name: "drawingArea")
+
             Spacer()
         }
         .navigationBarTitle("Task Details", displayMode: .inline)
     }
 
+    /// Marks the task as completed and updates the task in the model context.
     func markTaskCompleted() {
         task.isCompleted = true
         let context = injectedModelContext ?? modelContext
-        // Update the task in the model context
         context.insert(task)
     }
 
+    /// Determines if the user's drawn points form a checkmark shape.
+    ///
+    /// - Parameter points: The list of points drawn by the user.
+    /// - Returns: `true` if the points resemble a checkmark shape, otherwise `false`.
     func isCheckmarkShape(points: [CGPoint]) -> Bool {
         // Simplified checkmark detection logic
         guard points.count >= 5 else {
@@ -167,4 +185,3 @@ struct TaskDetailView: View {
         return true
     }
 }
-
