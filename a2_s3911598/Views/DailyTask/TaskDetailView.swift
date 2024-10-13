@@ -32,7 +32,8 @@ struct TaskDetailView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 15) {
+        VStack(alignment: .leading, spacing: 10) {
+
             // Task title
             Text("Title:")
                 .font(.custom("Chalkboard SE", size: 18))
@@ -40,6 +41,7 @@ struct TaskDetailView: View {
             Text(task.title)
                 .font(.custom("Chalkboard SE", size: 16))
                 .padding([.leading], 16)
+                .padding([.top], -10)
 
             // Task description
             Text("Description:")
@@ -47,7 +49,8 @@ struct TaskDetailView: View {
                 .padding(.leading, 16)
             Text(task.taskDescription)
                 .font(.custom("Chalkboard SE", size: 16))
-                .padding(.horizontal, 16)
+                .padding(.leading, 16)
+                .padding([.top], -10)
             
             // Task image (if available)
             if let imageData = task.imageData, let image = UIImage(data: imageData) {
@@ -66,7 +69,8 @@ struct TaskDetailView: View {
                 .padding(.leading, 16)
             Text(task.time, style: .time)
                 .font(.custom("Chalkboard SE", size: 16))
-                .padding(.horizontal, 16)
+                .padding(.leading, 16)
+                .padding([.top], -10)
 
             // Collaborators (if any)
             if !task.sharedWith.isEmpty {
@@ -75,7 +79,8 @@ struct TaskDetailView: View {
                     .padding(.leading, 16)
                 Text(task.sharedWith.joined(separator: ", "))
                     .font(.custom("Chalkboard SE", size: 16))
-                    .padding(.horizontal, 16)
+                    .padding(.leading, 16)
+                    .padding([.top], -10)
             }
 
             // Task status
@@ -84,7 +89,8 @@ struct TaskDetailView: View {
                 .padding(.leading, 16)
             Text(task.isCompleted ? "Completed" : "Not Completed")
                 .font(.custom("Chalkboard SE", size: 16))
-                .padding(.horizontal, 16)
+                .padding(.leading, 16)
+                .padding([.top], -10)
                 .foregroundColor(task.isCompleted ? .green : .red)
 
             // Drawing area for checkmark
