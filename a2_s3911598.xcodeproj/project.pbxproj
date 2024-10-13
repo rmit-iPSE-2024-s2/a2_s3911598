@@ -45,7 +45,6 @@
 		B0A967C62CBB926D00AB68FD /* ImagePickerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A967C52CBB926D00AB68FD /* ImagePickerCoordinator.swift */; };
 		B0CF7F1A2CAA870D006D1087 /* a2_s3911598App.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CF7F192CAA870D006D1087 /* a2_s3911598App.swift */; };
 		B0CF7F1C2CAA870D006D1087 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CF7F1B2CAA870D006D1087 /* ContentView.swift */; };
-		B0CF7F1E2CAA870D006D1087 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CF7F1D2CAA870D006D1087 /* Item.swift */; };
 		B0CF7F232CAA870E006D1087 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B0CF7F222CAA870E006D1087 /* Preview Assets.xcassets */; };
 		B0CF7FB42CAA8E24006D1087 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CF7FB32CAA8E24006D1087 /* Task.swift */; };
 		B0E0FA1C2CACD2380028F724 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B0E0FA1B2CACD2380028F724 /* Assets.xcassets */; };
@@ -133,7 +132,6 @@
 		B0CF7F162CAA870D006D1087 /* a2_s3911598.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = a2_s3911598.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0CF7F192CAA870D006D1087 /* a2_s3911598App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = a2_s3911598App.swift; sourceTree = "<group>"; };
 		B0CF7F1B2CAA870D006D1087 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		B0CF7F1D2CAA870D006D1087 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		B0CF7F222CAA870E006D1087 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B0CF7F282CAA870E006D1087 /* a2_s3911598Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = a2_s3911598Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0CF7F322CAA870E006D1087 /* a2_s3911598UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = a2_s3911598UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -313,7 +311,6 @@
 				B0CF7FAF2CAA8DC1006D1087 /* Views */,
 				B0CF7F192CAA870D006D1087 /* a2_s3911598App.swift */,
 				B0CF7F1B2CAA870D006D1087 /* ContentView.swift */,
-				B0CF7F1D2CAA870D006D1087 /* Item.swift */,
 				B0CF7F212CAA870E006D1087 /* Preview Content */,
 				81F7C4DD2CAB808B003E366F /* Auth0.plist */,
 				B0E0FA1B2CACD2380028F724 /* Assets.xcassets */,
@@ -559,7 +556,6 @@
 				B0A9679A2CB50C1D00AB68FD /* CreateTaskView.swift in Sources */,
 				81F3B0812CBAA1C9006ADA51 /* ProfileView.swift in Sources */,
 				B0A9679D2CB50C1D00AB68FD /* TaskDetailView.swift in Sources */,
-				B0CF7F1E2CAA870D006D1087 /* Item.swift in Sources */,
 				819F27502CAF707C00F3DF50 /* Profile.swift in Sources */,
 				B0A9676C2CB3FF7300AB68FD /* RandomActivity.swift in Sources */,
 				B081B1082CAA92CE00508E5D /* MoodView.swift in Sources */,

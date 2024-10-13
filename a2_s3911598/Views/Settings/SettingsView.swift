@@ -1,9 +1,15 @@
 import SwiftUI
 import Auth0
 
+/// The `SettingsView` struct provides an interface for adjusting user settings, including changing the username, viewing privacy policies, and logging out.
 struct SettingsView: View {
+    /// The username is loaded from `UserDefaults` and can be changed by the user.
     @State private var username: String = UserDefaults.standard.string(forKey: "username") ?? "Default User"
+    
+    /// The profile of the current user.
     var userProfile: Profile
+    
+    /// The action to be performed when the user logs out.
     var logoutAction: () -> Void
 
     var body: some View {
@@ -53,10 +59,15 @@ struct SettingsView: View {
     }
 }
 
-
+/// The `SettingItemView` struct represents a row in the settings list with an icon, title, and background color.
 struct SettingItemView: View {
+    /// The name of the system icon to display.
     let iconName: String
+    
+    /// The title of the setting item.
     let title: String
+    
+    /// The background color for the icon.
     let backgroundColor: Color
     
     var body: some View {
@@ -84,10 +95,9 @@ struct SettingItemView: View {
 }
 
 
-
-
 // About Us View
 
+/// The `AboutUsView` struct provides a description of the app's purpose and its features.
 struct AboutUsView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -146,9 +156,9 @@ struct AboutUsView: View {
 }
 
 
-
 // Privacy View
 
+/// The `PrivacyView` struct provides information about how the app handles user data and ensures privacy.
 struct PrivacyView: View {
     var body: some View {
         ScrollView {

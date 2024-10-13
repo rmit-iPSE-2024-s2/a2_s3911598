@@ -7,7 +7,17 @@ This project is an iOS app that focuses on task management, mood tracking, and s
 UIKit components in the project follow the MVVM (Model-View-ViewModel) architecture.
 
 ## Overview
-The app allows users to create and manage tasks, track their moods, and share tasks with friends. It features interactive views like mood sliders, friend pickers, and task creation forms. The app also integrates with Auth0 for authentication and uses Core Data (via SwiftData) for persistent storage of tasks and moods.
+The app allows users to create and manage tasks, track their moods, and share tasks with friends. It features interactive views like mood sliders, friend pickers, and task creation forms. The app also integrates with Auth0 for authentication and uses SwiftData for persistent storage of tasks and moods.
+
+## Technology Stack
+
+- **Frontend**: SwiftUI for declarative UI, UIKit integration for components like image pickers.
+- **Backend**: SwiftData for local storage.
+- **Authentication**: Auth0 for secure login.
+- **Network**: URLSession for API calls.
+- **Widget Extension**: SwiftUI for widget development.
+- **Testing**: XCTest for unit tests.
+
 
 ## Topics
 
@@ -28,18 +38,6 @@ The app employs several modal views to handle user interactions:
 
 
 
-
-## Topics
-
-### Group: Core Features
-- **Task Creation**: Create, manage, and share tasks with friends.
-- **Mood Tracking**: Record and monitor moods over time.
-- **Friend Management**: Add, select, and share tasks or moods with friends.
-
-### Group: MVVM (UIKit)
-- **ActivityModel**
-- **QuoteModel**
-- **TaskCodable**
 
 
 ### SwiftUI Structure
@@ -82,6 +80,7 @@ Mood
 
 ### ViewModel
 - ``ImagePickerViewModel``
+- ``ImagePickerCoordinator``
 
 
 ## Custom Gesture
@@ -94,7 +93,7 @@ In the ``TaskDetailView``, a custom gesture is implemented that allows users to 
 - **Checkmark Detection**: After the user completes the drawing, the app verifies if the drawn shape resembles a checkmark. If it does, the task is marked as completed.
 - **User Feedback**: This adds a gamified element to task management, making it more engaging for users to complete tasks.
 
-By allowing users to interact with tasks in this unique way, the gesture not only makes task completion more enjoyable but also provides instant visual feedback when the task is successfully marked as completed. The gesture detection is handled through custom logic in the `isCheckmarkShape` function, which analyzes the points drawn on the screen.
+The gesture detection is handled through custom logic in the isCheckmarkShape function, which analyzes the points drawn on the screen.
 
 ---
 
@@ -108,7 +107,7 @@ This app includes a **Widget Extension** that provides users with quick access t
 
 - **Task Display**: The widget shows task titles and time, allowing users to stay on top of their schedule.
 
-- **SwiftUI and UIKit**: While the widget is built with SwiftUI, it integrates seamlessly with UIKit for data persistence through `UserDefaults`. The `TaskCodable` model conforms to `Codable` for encoding and decoding task information to and from JSON, which makes the data easy to store and retrieve across the app and widget.
+
 
 ---
 

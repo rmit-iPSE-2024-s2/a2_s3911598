@@ -27,6 +27,7 @@ struct ContentView: View {
             VStack(spacing: 20) {
                 Text("Welcome to TogetherWe")
                     .font(.largeTitle)
+                    .font(.custom("Chalkboard SE", size: 24))
                     .fontWeight(.bold)
                     .multilineTextAlignment(.center)
                     .padding()
