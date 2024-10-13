@@ -21,7 +21,6 @@
 		B0A967742CB4068600AB68FD /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0A967732CB4068500AB68FD /* WidgetKit.framework */; };
 		B0A967762CB4068600AB68FD /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0A967752CB4068600AB68FD /* SwiftUI.framework */; };
 		B0A967792CB4068600AB68FD /* CurrentTaskWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A967782CB4068600AB68FD /* CurrentTaskWidgetBundle.swift */; };
-		B0A9677B2CB4068600AB68FD /* CurrentTaskWidgetLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A9677A2CB4068600AB68FD /* CurrentTaskWidgetLiveActivity.swift */; };
 		B0A9677D2CB4068600AB68FD /* CurrentTaskWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A9677C2CB4068600AB68FD /* CurrentTaskWidget.swift */; };
 		B0A9677F2CB4068600AB68FD /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A9677E2CB4068600AB68FD /* AppIntent.swift */; };
 		B0A967812CB4068800AB68FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B0A967802CB4068800AB68FD /* Assets.xcassets */; };
@@ -107,7 +106,6 @@
 		B0A967732CB4068500AB68FD /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		B0A967752CB4068600AB68FD /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		B0A967782CB4068600AB68FD /* CurrentTaskWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentTaskWidgetBundle.swift; sourceTree = "<group>"; };
-		B0A9677A2CB4068600AB68FD /* CurrentTaskWidgetLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentTaskWidgetLiveActivity.swift; sourceTree = "<group>"; };
 		B0A9677C2CB4068600AB68FD /* CurrentTaskWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentTaskWidget.swift; sourceTree = "<group>"; };
 		B0A9677E2CB4068600AB68FD /* AppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntent.swift; sourceTree = "<group>"; };
 		B0A967802CB4068800AB68FD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -220,7 +218,6 @@
 			isa = PBXGroup;
 			children = (
 				B0A967782CB4068600AB68FD /* CurrentTaskWidgetBundle.swift */,
-				B0A9677A2CB4068600AB68FD /* CurrentTaskWidgetLiveActivity.swift */,
 				B0A9677C2CB4068600AB68FD /* CurrentTaskWidget.swift */,
 				B0A9677E2CB4068600AB68FD /* AppIntent.swift */,
 				B0A967802CB4068800AB68FD /* Assets.xcassets */,
@@ -532,7 +529,6 @@
 				B0A9678E2CB40C3800AB68FD /* TaskCodable.swift in Sources */,
 				B0A967792CB4068600AB68FD /* CurrentTaskWidgetBundle.swift in Sources */,
 				B0A9677F2CB4068600AB68FD /* AppIntent.swift in Sources */,
-				B0A9677B2CB4068600AB68FD /* CurrentTaskWidgetLiveActivity.swift in Sources */,
 				B0A9677D2CB4068600AB68FD /* CurrentTaskWidget.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

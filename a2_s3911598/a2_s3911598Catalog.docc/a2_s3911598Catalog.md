@@ -1,6 +1,6 @@
 # ``a2_s3911598``
 
-、
+
 
 ## Summary
 This project is an iOS app that focuses on task management, mood tracking, and social interactions among friends. It uses SwiftUI as the main framework with a Model-View structure. 
@@ -11,8 +11,8 @@ The app allows users to create and manage tasks, track their moods, and share ta
 
 ## Technology Stack
 
-- **Frontend**: SwiftUI for declarative UI, UIKit integration for components like image pickers.
-- **Backend**: SwiftData for local storage.
+- **View**: SwiftUI for declarative UI, UIKit integration for components like image pickers.
+- **Data**: SwiftData for local storage.
 - **Authentication**: Auth0 for secure login.
 - **Network**: URLSession for API calls.
 - **Widget Extension**: SwiftUI for widget development.
@@ -26,7 +26,7 @@ In the ``TaskDetailView``, a custom gesture is implemented that allows users to 
 
 - **Long Press and Drag Gesture**: The gesture is initiated with a long press, and then users can drag their finger across the screen to draw the checkmark.
 - **Checkmark Detection**: After the user completes the drawing, the app verifies if the drawn shape resembles a checkmark. If it does, the task is marked as completed.
-- **User Feedback**: This adds a gamified element to task management, making it more engaging for users to complete tasks.
+
 
 The gesture detection is handled through custom logic in the isCheckmarkShape function, which analyzes the points drawn on the screen.
 
@@ -36,7 +36,7 @@ The gesture detection is handled through custom logic in the isCheckmarkShape fu
 
 ### Widget Extension for Task Display
 
-This app includes a **Widget Extension** that provides users with quick access to their current tasks directly from the home screen, using the `TaskWidgetView`. This extension is a crucial feature for task-oriented apps, as it allows users to view their tasks at a glance without needing to open the app.
+This app includes a **Widget Extension** that provides users with quick access to their current tasks directly from the home screen, using the `CurrentTaskWidget`. This extension is a crucial feature for task-oriented apps, as it allows users to view their tasks at a glance without needing to open the app.
 
 - **Widget Logic**: The widget fetches task data from `UserDefaults` via the `TaskCodable` model. By storing task information in `UserDefaults`, the widget can remain updated with the latest task details even when the app is not actively running. To ensure data consistency, every time a task is added or deleted in the database, all current tasks are synchronized to `UserDefaults`. The widget is also refreshed to ensure it always displays the most up-to-date information. This synchronization ensures that the widget remains in sync with the app's task data, even when the app is not in the foreground.
 
@@ -60,6 +60,25 @@ The app integrates networking capabilities to fetch data from external APIs usin
 ### ActivityModel - Fetching Random Activities
 
 The `ActivityModel` is responsible for fetching random activity suggestions from the **Bored API**. This allows users to receive random tasks or activities that they can engage in.
+
+### QuoteModel - Fetching Random Quotes
+
+
+The `QuoteModel` fetches motivational quotes via `URLSession`. It provides fresh, randomized content in the mood tracking section, allowing users to receive new inspirational quotes with each refresh.
+
+## Animation Overview
+
+### Files with Animation
+
+1. **MoodTrackingView.swift**
+   - **Effect**: Implements a smooth transition for the mood slider and background color. The facial expression (mouth curvature) animates based on the mood value, providing a dynamic feedback mechanism. The background color of the view also changes in response to the mood slider.
+   - **Animation Details**: The `curvature` of the mouth and the background color transition smoothly as the mood slider is adjusted.
+
+2. **MoodView.swift**
+   - **Effect**: A heart icon is animated to simulate a "heartbeat" effect. The heart grows and shrinks in size repeatedly, giving a pulsing effect.
+   - **Animation Details**: The `scaleEffect` is used in combination with a repeating `easeInOut` animation to create the heartbeat effect when displaying the user's daily mood record.
+
+
 
 ## Unit Testing
 
@@ -143,6 +162,11 @@ Mood
 ### ViewModel
 - ``ImagePickerViewModel``
 - ``ImagePickerCoordinator``
+
+
+
+
+
 
 
 

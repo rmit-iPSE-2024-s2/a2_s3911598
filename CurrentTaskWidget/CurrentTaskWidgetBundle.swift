@@ -12,6 +12,6 @@ import SwiftUI
 struct CurrentTaskWidgetBundle: WidgetBundle {
     var body: some Widget {
         CurrentTaskWidget()
-        CurrentTaskWidgetLiveActivity()
+       
     }
 }

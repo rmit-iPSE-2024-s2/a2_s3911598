@@ -1,10 +1,9 @@
 //
-//  MoodDetailView.swift
+// 
 //  a2_s3911598
 //
 //  Created by Lea Wang on 3/10/2024.
 //
-
 
 import SwiftUI
 
@@ -58,6 +57,7 @@ struct MoodTrackingView: View {
     var body: some View {
         ZStack {
             // Background color changes based on moodValue
+            /// Animate the background color smoothly as the `moodValue` changes.
             moodColors[Int(moodValue * Double(moodColors.count - 1))]
                 .edgesIgnoringSafeArea(.all)
                 .animation(.easeInOut, value: moodValue)
@@ -93,19 +93,23 @@ struct MoodTrackingView: View {
                         .frame(width: 30, height: 30)
                         .foregroundColor(Color.orange)
                         .offset(y: 50)
+
                     // Mouth
+                    /// The mouth curve smoothly animates between a frown and a smile based on `moodValue`.
                     MouthShape(curvature: curvature)
                         .stroke(Color.black, lineWidth: 5)
                         .frame(width: 200, height: 100)
                         .offset(y: 130)
-                        .animation(.easeInOut, value: curvature)
+                        .animation(.easeInOut, value: curvature)  // Smooth transition for mouth shape animation.
                 }.offset(y: -100)
 
                 // Mood slider with a label that changes based on moodValue
                 ZStack {
+                    /// The slider value updates smoothly and triggers animations in the facial expression and mood label.
                     Slider(value: $moodValue)
                         .padding(.horizontal)
 
+                    /// A floating label that moves along with the slider, displaying the current mood description.
                     Text(moodLabels[Int(moodValue * Double(moodLabels.count - 1))])
                         .font(Font.custom("Chalkboard SE", size: 20))
                         .padding(8)
@@ -116,7 +120,7 @@ struct MoodTrackingView: View {
                                 .stroke(Color.gray, lineWidth: 1)
                         )
                         .offset(x: (CGFloat(moodValue) - 0.5) * 300, y: -50)
-                        .animation(.easeInOut, value: moodValue)
+                        .animation(.easeInOut, value: moodValue)  // Smooth animation for the mood label.
                 }.offset(y: 100)
 
                 // Mood description labels
