@@ -6,6 +6,8 @@ struct FriendsPickerView: View {
 
     /// The list of friends available for selection.
     let friends: [Friend]
+    
+    var showsharemessgae: Bool
 
     /// A binding that stores the selected friends.
     @Binding var selectedFriends: [Friend]
@@ -97,19 +99,24 @@ struct FriendsPickerView: View {
                             if selectedFriends.isEmpty {
                                 showSelectionError = true
                             } else {
-                                shareMessage = "Successfully shared with \(selectedFriends.map { $0.name }.joined(separator: ", "))"
-                                withAnimation(.spring()) {
-                                    showShareResult = true
-                
+                                if showsharemessgae {
+                                    shareMessage = "Successfully shared with \(selectedFriends.map { $0.name }.joined(separator: ", "))"
+                                    withAnimation(.spring()) {
+                                        showShareResult = true
+                                        
+                                    }
+                                    
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                        withAnimation {
+                                            showShareResult = false
+                                            
+                                            isPresented = false
+                                        }
+                                    }
+                                }else{
+                                    isPresented = false
                                 }
 
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                                    withAnimation {
-                                        showShareResult = false
-                                     
-                                        isPresented = false
-                                    }
-                                }
                             }
                         }) {
                             Text("OK")

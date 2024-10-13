@@ -15,6 +15,15 @@ struct AddFriendView: View {
     /// The email of the friend to be added.
     @State private var email = ""
     
+    /// Tracks whether to show an error message if the name field is empty.
+    @State private var showNameError = false
+    
+    /// Tracks whether to show an error message if the email field is empty or invalid.
+    @State private var showEmailError = false
+    
+    /// Error message to display when the email format is invalid.
+    @State private var emailErrorMessage = ""
+    
     /// The environment model context used for managing friend data.
     @Environment(\.modelContext) private var modelContext
     
@@ -37,6 +46,13 @@ struct AddFriendView: View {
                         .cornerRadius(10)
                         .padding(.horizontal)
                     
+                    if showNameError {
+                        Text("Name is required.")
+                            .foregroundColor(.red)
+                            .font(.custom("Chalkboard SE", size: 14))
+                            .padding(.leading, 10)
+                    }
+                    
                     Text("Friend Email")
                         .font(.custom("Chalkboard SE", size: 18))
                         .padding(.leading, 10)
@@ -47,6 +63,13 @@ struct AddFriendView: View {
                         .background(Color(white: 0.9))
                         .cornerRadius(10)
                         .padding(.horizontal)
+                    
+                    if showEmailError {
+                        Text(emailErrorMessage)
+                            .foregroundColor(.red)
+                            .font(.custom("Chalkboard SE", size: 14))
+                            .padding(.leading, 10)
+                    }
                 }
                 
                 Spacer()
@@ -60,8 +83,7 @@ struct AddFriendView: View {
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Save") {
-                        saveFriend()
-                        isPresented = false
+                        validateAndSaveFriend()
                     }
                     .font(.custom("Chalkboard SE", size: 18))
                 }
@@ -75,5 +97,39 @@ struct AddFriendView: View {
     private func saveFriend() {
         let newFriend = Friend(name: name, email: email)
         modelContext.insert(newFriend)
+    }
+    
+    private func validateAndSaveFriend() {
+        var isValid = true
+        
+        if name.isEmpty {
+            showNameError = true
+            isValid = false
+        } else {
+            showNameError = false
+        }
+        
+        if email.isEmpty {
+            emailErrorMessage = "Email is required."
+            showEmailError = true
+            isValid = false
+        } else if !isValidEmail(email) {
+            emailErrorMessage = "Invalid email format."
+            showEmailError = true
+            isValid = false
+        } else {
+            showEmailError = false
+        }
+        
+        if isValid {
+            saveFriend()
+            isPresented = false
+        }
+    }
+    
+    private func isValidEmail(_ email: String) -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegEx)
+        return emailPredicate.evaluate(with: email)
     }
 }

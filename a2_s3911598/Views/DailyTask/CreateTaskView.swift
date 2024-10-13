@@ -243,6 +243,7 @@ struct CreateTaskView: View {
             .sheet(isPresented: $showFriendsPicker) {
                 FriendsPickerView(
                     friends: friends,
+                    showsharemessgae: false,
                     selectedFriends: $selectedFriends,
                     isPresented: $showFriendsPicker
                 )
