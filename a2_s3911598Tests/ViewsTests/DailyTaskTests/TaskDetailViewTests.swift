@@ -43,7 +43,7 @@ final class TaskDetailViewTests: XCTestCase {
         modelContext.insert(mockTask)
 
         // Create the TaskDetailView and call markTaskCompleted directly
-        var sut = TaskDetailView(task: mockTask,modelContext: modelContext )
+        let sut = TaskDetailView(task: mockTask,modelContext: modelContext )
         
         // Act: Simulate marking task as completed
         sut.markTaskCompleted()

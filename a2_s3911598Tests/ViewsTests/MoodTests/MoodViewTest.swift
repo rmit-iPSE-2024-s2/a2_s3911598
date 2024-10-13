@@ -4,30 +4,6 @@ import SwiftUI
 @testable import a2_s3911598
 
 final class MoodViewTests: XCTestCase {
-
-    // Test environment setup properties
-    var modelContainer: ModelContainer!  // Holds the model data, configured for testing.
-    var modelContext: ModelContext!      // Provides access to the model data context for performing operations.
-
-    // Set up the test environment before each test method is run.
-    // This method initializes an in-memory model container and context,
-    // ensuring that the tests do not affect the actual database.
-    @MainActor
-    override func setUp() {
-        super.setUp()
-        let configuration = ModelConfiguration(isStoredInMemoryOnly: true)
-        modelContainer = try! ModelContainer(for: Mood.self, configurations: configuration)
-        modelContext = modelContainer.mainContext
-    }
-
-    // Tear down the test environment after each test method is run.
-    // This method clears the model context and container to ensure a clean state for the next test.
-    @MainActor
-    override func tearDown() {
-        modelContext = nil
-        modelContainer = nil
-        super.tearDown()
-    }
     
     var mockProfile = Profile(
         id: "1",

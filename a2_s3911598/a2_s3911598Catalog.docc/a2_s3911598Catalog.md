@@ -104,7 +104,7 @@ By allowing users to interact with tasks in this unique way, the gesture not onl
 
 This app includes a **Widget Extension** that provides users with quick access to their current tasks directly from the home screen, using the `TaskWidgetView`. This extension is a crucial feature for task-oriented apps, as it allows users to view their tasks at a glance without needing to open the app.
 
-- **Widget Logic**: The widget fetches task data from `UserDefaults` via the `TaskCodable` model. By storing task information in `UserDefaults`, the widget can remain updated with the latest task details even when the app is not actively running.
+- **Widget Logic**: The widget fetches task data from `UserDefaults` via the `TaskCodable` model. By storing task information in `UserDefaults`, the widget can remain updated with the latest task details even when the app is not actively running. To ensure data consistency, every time a task is added or deleted in the database, all current tasks are synchronized to `UserDefaults`. The widget is also refreshed to ensure it always displays the most up-to-date information. This synchronization ensures that the widget remains in sync with the app's task data, even when the app is not in the foreground.
 
 - **Task Display**: The widget shows task titles and time, allowing users to stay on top of their schedule.
 
@@ -116,10 +116,9 @@ This app includes a **Widget Extension** that provides users with quick access t
 
  UIKit components are used in the following areas:
 
-- **ImagePicker**: In some areas of the app, UIKit’s `UIImagePickerController` is used for handling image selection, encapsulated in the `ImagePickerViewModel`. This demonstrates how UIKit can be effectively integrated into SwiftUI applications to provide access to system-level services like photo libraries.
+- **ImagePicker**: UIKit’s `UIImagePickerController` is used for handling image selection tasks that are not natively available in SwiftUI. The integration is handled using the `UIViewControllerRepresentable` protocol, which allows SwiftUI to present UIKit views and controllers within a SwiftUI interface. Specifically, `ImagePickerCoordinator` is responsible for presenting the image picker, while ensuring seamless data flow between the SwiftUI view and UIKit.
   
-- **MVVM Pattern in UIKit**: The `ImagePickerViewModel` adheres to the MVVM pattern by abstracting the logic for image picking, ensuring a clear separation between the view (SwiftUI), the model (image data), and the view model (handling image selection logic).
-
+- **MVVM Pattern in UIKit**: The image selection logic is abstracted into the `ImagePickerViewModel`, which plays a key role in the MVVM pattern. The `ImagePickerViewModel` is responsible for handling the business logic related to image selection, including setting the selected image, clearing the image, and providing an interface for the SwiftUI view to access these operations. By doing so, the view model ensures a clear separation of concerns, allowing the SwiftUI view (`CreateTaskView`) to focus on the UI layer while delegating logic-heavy tasks to the view model.
 ---
 
 ## Networking with URLSession
@@ -129,6 +128,26 @@ The app integrates networking capabilities to fetch data from external APIs usin
 ### ActivityModel - Fetching Random Activities
 
 The `ActivityModel` is responsible for fetching random activity suggestions from the **Bored API**. This allows users to receive random tasks or activities that they can engage in.
+
+## Unit Testing
+
+The project employs a **Unit Testing** strategy to ensure the reliability of core functionality. This approach emphasizes testing business logic and functionality rather than user interface (UI) elements. The primary focus is on testing critical features related to **Task** and **Mood** management.
+
+### Unit Testing Approach
+
+1. **Unit Testing**: 
+   - All tests are strictly **unit tests** aimed at validating the underlying logic of core functionalities.
+   - The goal is to verify the correctness of important functions, such as task creation, deletion, filtering, and management of state within the app.
+
+2. **Mood Management Testing**:
+   - **Mood Storage**: Unit tests validate that mood records are stored correctly in the database. These tests guarantee that mood entries persist over time and can be retrieved later as needed.
+   - **Fetching Logic**: Tests also check that mood data is accurately retrieved based on specific conditions, such as filtering moods by date or fetching moods for a specific day. This ensures users can effectively track and view their mood history.
+
+3. **Daily Task Testing**:
+   - **Task Filtering**: Unit tests ensure that tasks are correctly categorized as "My Tasks" or "Shared Tasks." This verifies that tasks with collaborators are properly labeled and separated from personal tasks, ensuring accurate task representation for the user.
+   - **Task Storage and Deletion**: The ability to store and delete tasks in the model context is rigorously tested. These tests confirm that tasks are created without missing information and can be removed from the database when required.
+   - **Core Functionality**: Additional tests focus on verifying key functionalities, such as the completion of tasks through gestures, ensuring that these actions update the task’s state as expected.
+
 
 
 

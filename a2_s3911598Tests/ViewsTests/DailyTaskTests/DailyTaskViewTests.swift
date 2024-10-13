@@ -77,9 +77,5 @@ final class DailyTaskViewTests: XCTestCase {
         let tasksAfterDeletion = try! modelContext.fetch(fetchDescriptor)
         XCTAssertFalse(tasksAfterDeletion.contains { $0.title == "Task to Delete" },
                        "The task titled 'Task to Delete' should not be present after deletion.")
-        
-        // This test ensures that when a user deletes a task, it is properly removed from the model context,
-        // which would prevent it from being displayed in the app. It verifies that the deleteTask method
-        // works as expected, providing confidence that the app's deletion functionality is robust.
     }
 }

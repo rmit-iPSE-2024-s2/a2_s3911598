@@ -16,8 +16,11 @@ struct CalendarView: View {
     @Query private var allMoods: [Mood]
     
     // Current month
-    @State private var currentMonth: Date = Date()
-    
+    @State var currentMonth: Date = Date()
+    var injectedMoods: [Mood]?
+    init(injectedMoods: [Mood]? = nil) {
+        self.injectedMoods = injectedMoods
+    }
     
     
     var body: some View {
@@ -25,7 +28,11 @@ struct CalendarView: View {
             
             // Month switcher
             HStack {
-                Button(action: previousMonth) {
+                Button(action: {
+                    if let previous = previousMonth(from: currentMonth) {
+                        currentMonth = previous
+                    }
+                }) {
                     Image(systemName: "chevron.left")
                         .padding()
                         .background(Color.gray.opacity(0.2))
@@ -42,7 +49,11 @@ struct CalendarView: View {
                 
                 Spacer()
                 
-                Button(action: nextMonth) {
+                Button(action: {
+                    if let next = nextMonth(from: currentMonth) {
+                        currentMonth = next
+                    }
+                }) {
                     Image(systemName: "chevron.right")
                         .padding()
                         .background(Color.gray.opacity(0.2))
@@ -145,7 +156,8 @@ struct CalendarView: View {
 
     // Get mood record for a given date
     func moodForDate(_ date: Date) -> Mood? {
-        return allMoods.last(where: { Calendar.current.isDate($0.date, inSameDayAs: date) })
+        let moods = injectedMoods ?? allMoods
+        return moods.last(where: { Calendar.current.isDate($0.date, inSameDayAs: date) })
     }
     
     // Display mood icon
@@ -202,16 +214,12 @@ struct CalendarView: View {
     }
 
     // Switch to the previous month
-    func previousMonth() {
-        if let newMonth = Calendar.current.date(byAdding: .month, value: -1, to: currentMonth) {
-            currentMonth = newMonth
-        }
+    func previousMonth(from date: Date) -> Date? {
+        return Calendar.current.date(byAdding: .month, value: -1, to: date)
     }
-    
+
     // Switch to the next month
-    func nextMonth() {
-        if let newMonth = Calendar.current.date(byAdding: .month, value: 1, to: currentMonth) {
-            currentMonth = newMonth
-        }
+    func nextMonth(from date: Date) -> Date? {
+        return Calendar.current.date(byAdding: .month, value: 1, to: date)
     }
 }

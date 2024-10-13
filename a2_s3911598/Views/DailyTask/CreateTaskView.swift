@@ -29,9 +29,6 @@ struct CreateTaskView: View {
     /// Controls whether the image picker is shown.
     @State var showImagePicker = false
     
-    /// The image selected for the task.
-    @State var selectedImage: UIImage?
-    
     /// The friends selected to collaborate on the task.
     @State var selectedFriends: [Friend] = []
     
@@ -56,6 +53,9 @@ struct CreateTaskView: View {
     /// A query that fetches a list of friends.
     @Query private var friends: [Friend]
     
+    /// The view model object responsible for image picker
+    @StateObject private var imagePickerViewModel = ImagePickerViewModel()
+    
     /// A query that fetches tasks sorted by time.
     @Query(sort: \Task.time, order: .forward) public var tasks: [Task]
     
@@ -78,7 +78,6 @@ struct CreateTaskView: View {
         description: String = "",
         time: Date = Date(),
         showImagePicker: Bool = false,
-        selectedImage: UIImage? = nil,
         selectedFriends: [Friend] = [],
         showFriendsPicker: Bool = false,
         modelContext: ModelContext? = nil,
@@ -89,7 +88,6 @@ struct CreateTaskView: View {
         _description = State(initialValue: description)
         _time = State(initialValue: time)
         _showImagePicker = State(initialValue: showImagePicker)
-        _selectedImage = State(initialValue: selectedImage)
         _selectedFriends = State(initialValue: selectedFriends)
         _showFriendsPicker = State(initialValue: showFriendsPicker)
         self.injectedModelContext = modelContext
@@ -147,30 +145,41 @@ struct CreateTaskView: View {
                     Button(action: {
                         showImagePicker = true
                     }) {
-                        if let image = selectedImage {
-                            Image(uiImage: image)
-                                .resizable()
-                                .scaledToFill()
-                                .frame(height: 150)
-                                .clipped()
-                                .cornerRadius(10)
-                                .padding(.horizontal)
-                        } else {
-                            Rectangle()
-                                .fill(Color(white: 0.9))
-                                .frame(height: 150)
-                                .overlay(
-                                    Text("Add photos")
-                                        .font(.custom("Chalkboard SE", size: 18))
-                                        .foregroundColor(.gray)
-                                )
-                                .cornerRadius(10)
-                                .padding(.horizontal)
+                        ZStack(alignment: .topTrailing) {
+                            if let image = imagePickerViewModel.selectedImage {
+                                Image(uiImage: image)
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(height: 150)
+                                    .clipped()
+                                    .cornerRadius(10)
+                                    .padding(.horizontal)
+                                
+                                Button(action: {
+                                    imagePickerViewModel.clearImage()
+                                }) {
+                                    Image(systemName: "xmark.circle.fill")
+                                        .foregroundColor(.red)
+                                        .padding(8)
+                                }.offset(x: 5, y: -15)
+                            } else {
+                                Rectangle()
+                                    .fill(Color(white: 0.9))
+                                    .frame(height: 150)
+                                    .overlay(
+                                        Text("Add photos")
+                                            .font(.custom("Chalkboard SE", size: 18))
+                                            .foregroundColor(.gray)
+                                    )
+                                    .cornerRadius(10)
+                                    .padding(.horizontal)
+                            }
                         }
                     }
                     .sheet(isPresented: $showImagePicker) {
-                        ImagePickerViewModel(selectedImage: $selectedImage)
+                        ImagePickerCoordinator(viewModel: imagePickerViewModel)
                     }
+
                     
                     HStack {
                          Button(action: {
@@ -255,7 +264,7 @@ struct CreateTaskView: View {
             taskDescription: description,
             time: time,
             sharedWith: selectedFriends.map { $0.name },
-            imageData: selectedImage?.jpegData(compressionQuality: 0.8)
+            imageData: imagePickerViewModel.selectedImage?.jpegData(compressionQuality: 0.8)
         )
         if newTask.title.isEmpty {
             return
