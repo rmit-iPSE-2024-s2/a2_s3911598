@@ -96,64 +96,66 @@ struct SettingItemView: View {
 
 
 // About Us View
-
 /// The `AboutUsView` struct provides a description of the app's purpose and its features.
 struct AboutUsView: View {
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            // Background decoration
-            RoundedRectangle(cornerRadius: 12)
-                .fill(LinearGradient(
-                    gradient: Gradient(colors: [Color("primaryMauve").opacity(0.2), Color("secondaryLilac").opacity(0.1)]),
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing))
-                .frame(height: 150)
-                .overlay(
-                    Text("About Us")
-                        .font(.largeTitle)
-                        .bold()
-                        .foregroundColor(Color("primaryMauve"))
+        ScrollView {  // Add ScrollView here
+            VStack(alignment: .leading, spacing: 16) {
+                // Background decoration
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(LinearGradient(
+                        gradient: Gradient(colors: [Color("primaryMauve").opacity(0.2), Color("secondaryLilac").opacity(0.1)]),
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing))
+                    .frame(height: 150)
+                    .overlay(
+                        Text("About Us")
+                            .font(.largeTitle)
+                            .bold()
+                            .foregroundColor(Color("primaryMauve"))
+                            .shadow(radius: 2)
+                    )
+                    .padding(.bottom, 16)
+
+                // Description texts
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("TogetherWe is designed to bring people closer by allowing users to share their daily activities and emotions with loved ones. Our goal is to help users maintain meaningful connections, even when physical distance separates them.")
+                        .font(.body)
+                        .padding()
+                        .background(Color.white.opacity(0.6))
+                        .cornerRadius(10)
                         .shadow(radius: 2)
-                )
-                .padding(.bottom, 16)
+                        .fixedSize(horizontal: false, vertical: true) // Ensures the text wraps vertically
 
-            // Description texts
-            VStack(alignment: .leading, spacing: 10) {
-                Text("TogetherWe is designed to bring people closer by allowing users to share their daily activities and emotions with loved ones. Our goal is to help users maintain meaningful connections, even when physical distance separates them.")
-                    .font(.body)
-                    .padding()
-                    .background(Color.white.opacity(0.6))
-                    .cornerRadius(10)
-                    .shadow(radius: 2)
-                    .fixedSize(horizontal: false, vertical: true) // Ensures the text wraps vertically
+                    Text("With TogetherWe, you can easily document and share your moods and moments, ensuring that your friends and family stay updated on your life. We believe that small moments of empathy and understanding can make a big difference in maintaining strong, supportive relationships.")
+                        .font(.body)
+                        .padding()
+                        .background(Color.white.opacity(0.6))
+                        .cornerRadius(10)
+                        .shadow(radius: 2)
+                        .fixedSize(horizontal: false, vertical: true) // Ensures the text wraps vertically
 
-                Text("With TogetherWe, you can easily document and share your moods and moments, ensuring that your friends and family stay updated on your life. We believe that small moments of empathy and understanding can make a big difference in maintaining strong, supportive relationships.")
-                    .font(.body)
-                    .padding()
-                    .background(Color.white.opacity(0.6))
-                    .cornerRadius(10)
-                    .shadow(radius: 2)
-                    .fixedSize(horizontal: false, vertical: true) // Ensures the text wraps vertically
+                    Text("TogetherWe—Connecting hearts, bridging distances.")
+                        .font(.body)
+                        .italic()
+                        .padding()
+                        .background(Color("primaryMauve").opacity(0.2))
+                        .cornerRadius(10)
+                        .shadow(radius: 2)
+                        .fixedSize(horizontal: false, vertical: true) // Ensures the text wraps vertically
+                }
+                .padding(.horizontal)
+                .frame(maxWidth: .infinity, alignment: .leading)
 
-                Text("TogetherWe—Connecting hearts, bridging distances.")
-                    .font(.body)
-                    .italic()
-                    .padding()
-                    .background(Color("primaryMauve").opacity(0.2))
-                    .cornerRadius(10)
-                    .shadow(radius: 2)
-                    .fixedSize(horizontal: false, vertical: true) // Ensures the text wraps vertically
+                Spacer()
             }
-            .padding(.horizontal)
-            .frame(maxWidth: .infinity, alignment: .leading)
-
-            Spacer()
+            .padding()
+            .background(Color(UIColor.systemGroupedBackground))
+            .navigationBarTitleDisplayMode(.inline)
         }
-        .padding()
-        .background(Color(UIColor.systemGroupedBackground))
-        .navigationBarTitleDisplayMode(.inline)
     }
 }
+
 
 
 // Privacy View

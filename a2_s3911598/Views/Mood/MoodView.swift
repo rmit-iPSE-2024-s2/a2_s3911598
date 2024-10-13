@@ -96,6 +96,8 @@ struct MoodView: View {
                     VStack(alignment: .leading, spacing: 10) {
                         HStack {
                             Image(systemName: "heart.fill")
+                                .resizable()  // Make the image resizable
+                                .frame(width: 30, height: 30) 
                                 .foregroundColor(.red)
                                 .scaleEffect(heartBeat ? 1.2 : 1.0)  // Set the scaling effect for heartbeat animation
                                 .animation(.easeInOut(duration: 0.8).repeatForever(autoreverses: true), value: heartBeat)  // Loop the heartbeat animation
